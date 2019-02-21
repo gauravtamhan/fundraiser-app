@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, TouchableHighlight, View, TextInput, StyleSheet, ScrollView, ActivityIndicator, Text, SafeAreaView } from 'react-native';
-import { auth, database, provider } from '../firebase';
+import { auth, database, provider } from '../../firebase';
 
 export default class Signup extends Component {
-
-    static navigationOptions = {
-        title: 'Create Account',
-    };
 
     constructor(props) {
         super(props);

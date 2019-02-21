@@ -1,26 +1,37 @@
 import React, { Component } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-
 import { 
     createAppContainer, 
     createSwitchNavigator, 
     createStackNavigator, 
     createBottomTabNavigator 
 } from 'react-navigation';
-import Tasks from './src/screens/Tasks';
-import Profile from './src/screens/Profile';
-import Loading from './src/screens/Loading';
-import Login from './src/screens/Login';
-import Signup from './src/screens/Signup';
+import Tasks from './src/screens/Tabs/Tasks';
+import Profile from './src/screens/Tabs/Profile';
+import Loading from './src/screens/Auth/Loading';
+import Login from './src/screens/Auth/Login';
+import Signup from './src/screens/Auth/Signup';
 
 const AuthStack = createStackNavigator(
     { 
-        Login,
-        Signup
+        Login: {
+            screen: Login,
+            navigationOptions: {
+                title: null,
+                headerTransparent: true
+            }
+        },
+        Signup: {
+            screen: Signup,
+            navigationOptions: {
+                title: null,
+                headerTransparent: true
+            }
+        },
     },
     {
         headerMode: 'float',
-        headerTransitionPreset: 'uikit'
+        // headerTransitionPreset: 'uikit',
     }
 );
 

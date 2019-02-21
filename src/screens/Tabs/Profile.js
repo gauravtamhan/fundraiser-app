@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, TouchableHighlight, StyleSheet, AlertIOS } from 'react-native';
 import { SafeAreaView } from 'react-navigation'
-import { auth, database, provider } from '../firebase';
+import { auth, database, provider } from '../../firebase';
 
 export default class Profile extends Component {
 

@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, TouchableHighlight, View, TextInput, StyleSheet, ScrollView, ActivityIndicator, Text, SafeAreaView } from 'react-native';
-import { auth, database, provider } from '../firebase';
+import { auth, database, provider } from '../../firebase';
 
 export default class Login extends Component {
-
-    static navigationOptions = {
-        title: 'Login',
-    };
     
     constructor(props) {
         super(props);
