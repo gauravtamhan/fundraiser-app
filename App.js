@@ -60,21 +60,6 @@ const TasksTab = createStackNavigator(
     }
 );
 
-const TasksTabRoot = createStackNavigator(
-    {
-        Main: {
-            screen: TasksTab,
-        },
-        AddTaskModal: {
-            screen: AddTaskModal,
-        },
-    },
-    {
-        mode: 'modal',
-        headerMode: 'none',
-    }
-)
-
 const ProfileTab = createStackNavigator(
     {
         Profile: {
@@ -93,7 +78,7 @@ const ProfileTab = createStackNavigator(
 const AppTabs = createBottomTabNavigator(
     {
         TasksTab: {
-            screen: TasksTabRoot,
+            screen: TasksTab,
             navigationOptions: {
                 tabBarLabel: 'Tasks',
                 tabBarIcon: ({ tintColor, focused }) => (
@@ -124,8 +109,22 @@ const AppTabs = createBottomTabNavigator(
         tabBarOptions: {
             labelStyle: { fontWeight: '500' },
             activeTintColor: THEME_COLOR,
-            // inactiveTintColor: 'darkgray',
         }
+    }
+);
+
+const RootStack = createStackNavigator(
+    {
+        Main: {
+            screen: AppTabs,
+        },
+        AddTaskModal: {
+            screen: AddTaskModal,
+        },
+    },
+    {
+        mode: 'modal',
+        headerMode: 'none',
     }
 );
 
@@ -133,7 +132,7 @@ const Navigator = createAppContainer(createSwitchNavigator(
     {
         Loading,
         AuthStack,
-        AppTabs
+        RootStack,
     },
     {
         initialRouteName: 'Loading'
