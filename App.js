@@ -11,6 +11,7 @@ import Profile from './src/screens/Tabs/Profile';
 import Loading from './src/screens/Auth/Loading';
 import Login from './src/screens/Auth/Login';
 import Signup from './src/screens/Auth/Signup';
+import { THEME_COLOR } from '@assets/colors';
 
 const AuthStack = createStackNavigator(
     { 
@@ -18,14 +19,16 @@ const AuthStack = createStackNavigator(
             screen: Login,
             navigationOptions: {
                 title: null,
-                headerTransparent: true
+                headerTransparent: true,
+                headerTintColor: THEME_COLOR,
             }
         },
         Signup: {
             screen: Signup,
             navigationOptions: {
                 title: null,
-                headerTransparent: true
+                headerTransparent: true,
+                headerTintColor: THEME_COLOR,
             }
         },
     },
@@ -98,7 +101,7 @@ const AppTabs = createBottomTabNavigator(
         animationEnabled: true,
         tabBarOptions: {
             labelStyle: { fontWeight: '500' },
-            // activeTintColor: 'tomato',
+            activeTintColor: THEME_COLOR,
             // inactiveTintColor: 'darkgray',
         }
     }
