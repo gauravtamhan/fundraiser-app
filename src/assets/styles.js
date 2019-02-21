@@ -1,61 +1,53 @@
 import { StyleSheet } from 'react-native';
+import { THEME_COLOR } from '@assets/colors';
 
 var styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#f2f2f2',
-        flex: 1,
+
+    /*=================================================
+                Login/Signup - CSS Styles
+    ==================================================*/
+
+    formContainer: {
+        height: 700,
+        paddingTop: 60,
+        // backgroundColor: '#eff35e',
     },
-    listview: {
-        flex: 1,
+    title: {
+        fontWeight: '700',
+        fontSize: 30,
+        color: 'rgb(40, 40, 40)',
+        alignSelf: 'center',
     },
-    li: {
-        backgroundColor: '#fff',
-        borderBottomColor: '#eee',
-        borderColor: 'transparent',
-        borderWidth: 1,
-        paddingLeft: 16,
-        paddingTop: 14,
-        paddingBottom: 16,
+    // subtitle: {
+    //     fontWeight: '700',
+    //     fontSize: 30,
+    //     color: 'rgb(186, 192, 196)',
+    // },
+    item: {
+        marginBottom: 20,
+        marginLeft: 0
     },
-    liContainer: {
-        flex: 2,
+    input: {
+        paddingVertical: 12
     },
-    liText: {
-        color: '#333',
-        fontSize: 16,
+    bmContainer: {
+        marginTop: 120,
+        // backgroundColor: '#eff35e',
     },
-    navbar: {
-        alignItems: 'center',
-        backgroundColor: '#fff',
-        borderBottomColor: '#eee',
-        borderColor: 'transparent',
-        borderWidth: 1,
-        justifyContent: 'space-between',
-        height: 44,
-        flexDirection: 'row',
-        // backgroundColor: '#ff0000',
-    },
-    navbarTitle: {
-        color: '#444',
-        fontSize: 16,
-        fontWeight: "700"
-    },
-    statusbar: {
-        backgroundColor: '#fff',
-        height: 22,
-    },
-    center: {
-        textAlign: 'center',
-    },
-    actionText: {
-        color: '#fff',
-        fontSize: 16,
-        textAlign: 'center',
+    buttonText: {
         fontWeight: '500',
+        color: '#FFF',
     },
-    button: {
-        paddingVertical: 16,
-        backgroundColor: '#DDD'
+    buttonTextTransparent: {
+        fontWeight: '500',
+        color: THEME_COLOR,
+    },
+    extra: {
+        marginTop: 25,
+        width: '100%',
+        height: 80,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 })
 

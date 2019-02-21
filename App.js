@@ -11,6 +11,7 @@ import Profile from './src/screens/Tabs/Profile';
 import Loading from './src/screens/Auth/Loading';
 import Login from './src/screens/Auth/Login';
 import Signup from './src/screens/Auth/Signup';
+import AddTaskModal from './src/screens/Modals/AddTaskModal';
 import { THEME_COLOR } from '@assets/colors';
 
 const AuthStack = createStackNavigator(
@@ -49,9 +50,30 @@ const TasksTab = createStackNavigator(
     },
     {
         headerMode: 'float',
-        headerTransitionPreset: 'uikit'
+        headerTransitionPreset: 'uikit',
+        // defaultNavigationOptions: {
+        //     headerStyle: {
+        //         backgroundColor: THEME_COLOR,
+        //     },
+        //     headerTintColor: '#fff',
+        // }
     }
 );
+
+const TasksTabRoot = createStackNavigator(
+    {
+        Main: {
+            screen: TasksTab,
+        },
+        AddTaskModal: {
+            screen: AddTaskModal,
+        },
+    },
+    {
+        mode: 'modal',
+        headerMode: 'none',
+    }
+)
 
 const ProfileTab = createStackNavigator(
     {
@@ -71,7 +93,7 @@ const ProfileTab = createStackNavigator(
 const AppTabs = createBottomTabNavigator(
     {
         TasksTab: {
-            screen: TasksTab,
+            screen: TasksTabRoot,
             navigationOptions: {
                 tabBarLabel: 'Tasks',
                 tabBarIcon: ({ tintColor, focused }) => (

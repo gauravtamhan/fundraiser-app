@@ -2,12 +2,12 @@ import * as firebase from 'firebase';
 
 // Initialize Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyDBDS9c5M2X74MW3rAfjOMYNlZvkClLjlY",
-    authDomain: "sample-app-d0c8e.firebaseapp.com",
-    databaseURL: "https://sample-app-d0c8e.firebaseio.com",
-    projectId: "sample-app-d0c8e",
-    storageBucket: "sample-app-d0c8e.appspot.com",
-    messagingSenderId: "328006132404"
+    apiKey: "AIzaSyDsQuovPwB19S70P6xEpq_M5aF61fkOpfI",
+    authDomain: "fundraiser-app-2cc96.firebaseapp.com",
+    databaseURL: "https://fundraiser-app-2cc96.firebaseio.com",
+    projectId: "fundraiser-app-2cc96",
+    storageBucket: "fundraiser-app-2cc96.appspot.com",
+    messagingSenderId: "816223918343"
 };
 
 firebase.initializeApp(firebaseConfig);

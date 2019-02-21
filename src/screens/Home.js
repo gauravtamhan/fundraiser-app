@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { ListView, View, AlertIOS, SafeAreaView } from 'react-native';
 import { auth, database, provider } from '../firebase';
-import ActionButton from '../components/ActionButton';
-import ListItem from '../components/ListItem';
-import StatusBar from '../components/StatusBar';
 import styles from '../assets/styles';
+
+/*=================================
+    THIS FILE IS NOT IN USE AND 
+    SHOULD BE DELETED EVENTUALLY. 
+    
+    IT IS ONLY HERE AS A REFERENCE 
+    FOR POSTING AND RETRIEVING DATA 
+    FROM FIREBASE.
+===================================*/
 
 export default class Home extends Component {
     constructor(props) {

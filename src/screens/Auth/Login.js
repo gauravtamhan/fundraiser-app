@@ -3,6 +3,7 @@ import { StyleSheet, SafeAreaView, View, ActivityIndicator, Alert } from 'react-
 import { auth, database, provider } from '../../firebase';
 import { Content, Text, H1, Form, Item, Label, Input, Button } from 'native-base'
 import { THEME_COLOR } from '@assets/colors';
+import styles from '@assets/styles';
 
 export default class Login extends Component {
     
@@ -52,11 +53,10 @@ export default class Login extends Component {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
                 <Content contentContainerStyle={{paddingHorizontal: 26}}>
-                    <View style={stylesSheet.formContainer}>
-                        <H1 style={stylesSheet.title}>Welcome,</H1>
-                        <H1 style={stylesSheet.subtitle}>Login to continue</H1>
+                    <View style={styles.formContainer}>
+                        <H1 style={styles.title}>Help Me Help You</H1>
 
-                        <View style={stylesSheet.extra}>
+                        <View style={styles.extra}>
                         {
                             this.state.loaderVisible ? (
                                 <ActivityIndicator size="large" color="#000" />
@@ -65,10 +65,10 @@ export default class Login extends Component {
                         </View>
 
                         <Form>
-                            <Item floatingLabel style={stylesSheet.item}>
+                            <Item floatingLabel style={styles.item}>
                                 <Label style={{ color: 'darkgray' }}>E-mail</Label>
                                 <Input 
-                                    style={stylesSheet.input}
+                                    style={styles.input}
                                     value={this.state.email}
                                     autoCapitalize={'none'}
                                     clearButtonMode={'while-editing'}
@@ -77,10 +77,10 @@ export default class Login extends Component {
                                     onChangeText={(email) => this.setState({ email })}
                                 />
                             </Item>
-                            <Item floatingLabel style={stylesSheet.item}>
+                            <Item floatingLabel style={styles.item}>
                                 <Label style={{ color: 'darkgray' }}>Password</Label>
                                 <Input
-                                    style={stylesSheet.input}
+                                    style={styles.input}
                                     value={this.state.password}
                                     autoCapitalize={'none'}
                                     clearButtonMode={'while-editing'}
@@ -89,14 +89,14 @@ export default class Login extends Component {
                                     onChangeText={(password) => this.setState({ password })}
                                 />
                             </Item>
-                            <View style={stylesSheet.bmContainer}>
+                            <View style={styles.bmContainer}>
                                 <Button block style={{ backgroundColor: THEME_COLOR }} onPress={this.onLogin.bind(this)}>
-                                    <Text style={stylesSheet.buttonText}>Login</Text>
+                                    <Text style={styles.buttonText}>Login</Text>
                                 </Button>
                                 <View style={{ marginTop: 40, alignItems: 'center'}}>
                                     <Text>Don't have an account?</Text>
                                     <Button style={{alignSelf: 'center'}} transparent onPress={() => { this.props.navigation.navigate('Signup') }}>
-                                        <Text style={stylesSheet.buttonTextTransparent}>Sign up</Text>
+                                        <Text style={styles.buttonTextTransparent}>Sign up</Text>
                                     </Button>
                                 </View>
                             </View>
@@ -108,47 +108,3 @@ export default class Login extends Component {
         );
     }
 }
-
-const stylesSheet = StyleSheet.create({
-    formContainer: {
-        height: 700,
-        paddingTop: 60,
-        // backgroundColor: '#eff35e',
-    },
-    title: {
-        fontWeight: '700',
-        fontSize: 30,
-        color: 'rgb(40, 40, 40)',
-    },
-    subtitle: {
-        fontWeight: '700',
-        fontSize: 30,
-        color: 'rgb(186, 192, 196)',
-    },
-    item: {
-        marginBottom: 20,
-        marginLeft: 0
-    },
-    input: {
-        paddingVertical: 12
-    },
-    bmContainer: {
-        marginTop: 120,
-        // backgroundColor: '#eff35e',
-    },
-    buttonText: {
-        fontWeight: '500',
-        color: '#FFF',
-    },
-    buttonTextTransparent: {
-        fontWeight: '500',
-        color: THEME_COLOR,
-    },
-    extra: {
-        marginTop: 25,
-        width: '100%',
-        height: 80,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});

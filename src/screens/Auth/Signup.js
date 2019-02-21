@@ -3,6 +3,7 @@ import { StyleSheet, SafeAreaView, View, ActivityIndicator, Alert } from 'react-
 import { auth, database, provider } from '../../firebase';
 import { Content, Text, H1, Form, Item, Label, Input, Button } from 'native-base'
 import { THEME_COLOR } from '@assets/colors';
+import styles from '@assets/styles';
 
 export default class Signup extends Component {
 
@@ -53,11 +54,10 @@ export default class Signup extends Component {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
                 <Content contentContainerStyle={{ paddingHorizontal: 26 }}>
-                    <View style={stylesSheet.formContainer}>
-                        <H1 style={stylesSheet.title}>Create an Account</H1>
-                        {/* <H1 style={stylesSheet.subtitle}>Login to continue</H1> */}
+                    <View style={styles.formContainer}>
+                        <H1 style={styles.title}>Create an Account</H1>
 
-                        <View style={stylesSheet.extra}>
+                        <View style={styles.extra}>
                             {
                                 this.state.loaderVisible ? (
                                     <ActivityIndicator size="large" color="#000" />
@@ -66,10 +66,10 @@ export default class Signup extends Component {
                         </View>
 
                         <Form>
-                            <Item floatingLabel style={stylesSheet.item}>
+                            <Item floatingLabel style={styles.item}>
                                 <Label style={{ color: 'darkgray' }}>Full Name</Label>
                                 <Input
-                                    style={stylesSheet.input}
+                                    style={styles.input}
                                     value={this.state.name}
                                     // autoCapitalize={'none'}
                                     clearButtonMode={'while-editing'}
@@ -77,10 +77,10 @@ export default class Signup extends Component {
                                     onChangeText={(name) => this.setState({ name })}
                                 />
                             </Item>
-                            <Item floatingLabel style={stylesSheet.item}>
+                            <Item floatingLabel style={styles.item}>
                                 <Label style={{ color: 'darkgray' }}>E-mail</Label>
                                 <Input
-                                    style={stylesSheet.input}
+                                    style={styles.input}
                                     value={this.state.email}
                                     autoCapitalize={'none'}
                                     clearButtonMode={'while-editing'}
@@ -89,10 +89,10 @@ export default class Signup extends Component {
                                     onChangeText={(email) => this.setState({ email })}
                                 />
                             </Item>
-                            <Item floatingLabel style={stylesSheet.item}>
+                            <Item floatingLabel style={styles.item}>
                                 <Label style={{ color: 'darkgray' }}>Password</Label>
                                 <Input
-                                    style={stylesSheet.input}
+                                    style={styles.input}
                                     value={this.state.password}
                                     autoCapitalize={'none'}
                                     clearButtonMode={'while-editing'}
@@ -101,9 +101,9 @@ export default class Signup extends Component {
                                     onChangeText={(password) => this.setState({ password })}
                                 />
                             </Item>
-                            <View style={stylesSheet.bmContainer}>
+                            <View style={styles.bmContainer}>
                                 <Button block style={{ backgroundColor: 'white', borderColor: THEME_COLOR, borderWidth: 1.6 }} onPress={this.onSubmit.bind(this)}>
-                                    <Text style={stylesSheet.buttonTextTransparent}>Create Account</Text>
+                                    <Text style={styles.buttonTextTransparent}>Create Account</Text>
                                 </Button>
                             </View>
                         </Form>
@@ -114,47 +114,3 @@ export default class Signup extends Component {
         );
     }
 }
-
-const stylesSheet = StyleSheet.create({
-    formContainer: {
-        height: 700,
-        paddingTop: 60,
-        // backgroundColor: '#eff35e',
-    },
-    title: {
-        fontWeight: '700',
-        fontSize: 30,
-        color: 'rgb(40, 40, 40)',
-    },
-    subtitle: {
-        fontWeight: '700',
-        fontSize: 30,
-        color: 'rgb(186, 192, 196)',
-    },
-    item: {
-        marginBottom: 20,
-        marginLeft: 0
-    },
-    input: {
-        paddingVertical: 12
-    },
-    bmContainer: {
-        marginTop: 120,
-        // backgroundColor: '#eff35e',
-    },
-    buttonText: {
-        fontWeight: '500',
-        color: '#FFF',
-    },
-    buttonTextTransparent: {
-        fontWeight: '500',
-        color: THEME_COLOR,
-    },
-    extra: {
-        marginTop: 25,
-        width: '100%',
-        height: 80,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
