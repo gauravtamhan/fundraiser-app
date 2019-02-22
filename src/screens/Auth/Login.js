@@ -52,23 +52,17 @@ export default class Login extends Component {
     render() {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-                <Content contentContainerStyle={{paddingHorizontal: 26}}>
+                <Content contentContainerStyle={styles.contentPadding}>
                     <View style={styles.formContainer}>
                         <H1 style={styles.title}>Help Me Help You</H1>
 
-                        <View style={styles.extra}>
-                        {
-                            this.state.loaderVisible ? (
-                                <ActivityIndicator size="large" color="#000" />
-                            ) : null
-                        }
-                        </View>
+                        <View style={styles.extra} />
 
                         <Form>
-                            <Item floatingLabel style={styles.item}>
-                                <Label style={{ color: 'darkgray' }}>E-mail</Label>
+                            <Item rounded style={styles.roundedItem}>
                                 <Input 
-                                    style={styles.input}
+                                    placeholder={'E-mail'}
+                                    placeholderTextColor={'#9b9b9f'}
                                     value={this.state.email}
                                     autoCapitalize={'none'}
                                     clearButtonMode={'while-editing'}
@@ -77,9 +71,11 @@ export default class Login extends Component {
                                     onChangeText={(email) => this.setState({ email })}
                                 />
                             </Item>
-                            <Item floatingLabel style={styles.item}>
-                                <Label style={{ color: 'darkgray' }}>Password</Label>
+                            <Item rounded style={styles.roundedItem}>
+                                {/* <Label style={{ color: 'darkgray' }}>Password</Label> */}
                                 <Input
+                                    placeholder={'Password'}
+                                    placeholderTextColor={'#9b9b9f'}
                                     style={styles.input}
                                     value={this.state.password}
                                     autoCapitalize={'none'}
@@ -89,6 +85,13 @@ export default class Login extends Component {
                                     onChangeText={(password) => this.setState({ password })}
                                 />
                             </Item>
+                            <View style={styles.extra}>
+                                {
+                                    this.state.loaderVisible ? (
+                                        <ActivityIndicator size="large" color="#000" />
+                                    ) : null
+                                }
+                            </View>
                             <View style={styles.bmContainer}>
                                 <Button block style={{ backgroundColor: THEME_COLOR }} onPress={this.onLogin.bind(this)}>
                                     <Text style={styles.buttonText}>Login</Text>

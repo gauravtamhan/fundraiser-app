@@ -4,9 +4,12 @@ import { THEME_COLOR } from '@assets/colors';
 var styles = StyleSheet.create({
 
     /*=================================================
-                Login/Signup - CSS Styles
+                Form - CSS Styles
     ==================================================*/
-
+    
+    contentPadding: {
+        paddingHorizontal: 26,
+    },
     formContainer: {
         height: 700,
         paddingTop: 60,
@@ -18,20 +21,26 @@ var styles = StyleSheet.create({
         color: 'rgb(40, 40, 40)',
         alignSelf: 'center',
     },
-    // subtitle: {
-    //     fontWeight: '700',
-    //     fontSize: 30,
-    //     color: 'rgb(186, 192, 196)',
-    // },
-    item: {
+    roundedItem: {
         marginBottom: 20,
-        marginLeft: 0
+        borderRadius: 5,
+        borderColor: 'transparent',
+        backgroundColor: '#f1f2f2',
     },
-    input: {
-        paddingVertical: 12
+    roundedTextArea: {
+        marginBottom: 20,
+        borderRadius: 5,
+        borderColor: 'transparent',
+        backgroundColor: '#f1f2f2',
+        fontSize: 17,
+    },
+    roundedBtn: {
+        alignSelf: 'center',
+        backgroundColor: THEME_COLOR,
+        paddingHorizontal: 18,
     },
     bmContainer: {
-        marginTop: 120,
+        marginTop: 85,
         // backgroundColor: '#eff35e',
     },
     buttonText: {

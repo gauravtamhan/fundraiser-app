@@ -53,34 +53,28 @@ export default class Signup extends Component {
     render() {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-                <Content contentContainerStyle={{ paddingHorizontal: 26 }}>
+                <Content contentContainerStyle={styles.contentPadding}>
                     <View style={styles.formContainer}>
                         <H1 style={styles.title}>Create an Account</H1>
 
-                        <View style={styles.extra}>
-                            {
-                                this.state.loaderVisible ? (
-                                    <ActivityIndicator size="large" color="#000" />
-                                ) : null
-                            }
-                        </View>
+                        <View style={styles.extra} />
 
                         <Form>
-                            <Item floatingLabel style={styles.item}>
-                                <Label style={{ color: 'darkgray' }}>Full Name</Label>
+                            <Item rounded style={styles.roundedItem}>
                                 <Input
-                                    style={styles.input}
+                                    placeholder={'Full Name'}
+                                    placeholderTextColor={'#9b9b9f'}
                                     value={this.state.name}
-                                    // autoCapitalize={'none'}
+                                    autoCapitalize={'words'}
                                     clearButtonMode={'while-editing'}
                                     autoCorrect={false}
                                     onChangeText={(name) => this.setState({ name })}
                                 />
                             </Item>
-                            <Item floatingLabel style={styles.item}>
-                                <Label style={{ color: 'darkgray' }}>E-mail</Label>
+                            <Item rounded style={styles.roundedItem}>
                                 <Input
-                                    style={styles.input}
+                                    placeholder={'E-mail'}
+                                    placeholderTextColor={'#9b9b9f'}
                                     value={this.state.email}
                                     autoCapitalize={'none'}
                                     clearButtonMode={'while-editing'}
@@ -89,10 +83,10 @@ export default class Signup extends Component {
                                     onChangeText={(email) => this.setState({ email })}
                                 />
                             </Item>
-                            <Item floatingLabel style={styles.item}>
-                                <Label style={{ color: 'darkgray' }}>Password</Label>
+                            <Item rounded style={styles.roundedItem}>
                                 <Input
-                                    style={styles.input}
+                                    placeholder={'Password'}
+                                    placeholderTextColor={'#9b9b9f'}
                                     value={this.state.password}
                                     autoCapitalize={'none'}
                                     clearButtonMode={'while-editing'}
@@ -101,9 +95,16 @@ export default class Signup extends Component {
                                     onChangeText={(password) => this.setState({ password })}
                                 />
                             </Item>
+                            <View style={styles.extra}>
+                                {
+                                    this.state.loaderVisible ? (
+                                        <ActivityIndicator size="large" color="#000" />
+                                    ) : null
+                                }
+                            </View>
                             <View style={styles.bmContainer}>
-                                <Button block style={{ backgroundColor: 'white', borderColor: THEME_COLOR, borderWidth: 1.6 }} onPress={this.onSubmit.bind(this)}>
-                                    <Text style={styles.buttonTextTransparent}>Create Account</Text>
+                                <Button block style={{ backgroundColor: THEME_COLOR }} onPress={this.onSubmit.bind(this)}>
+                                    <Text style={styles.buttonText}>Create Account</Text>
                                 </Button>
                             </View>
                         </Form>
