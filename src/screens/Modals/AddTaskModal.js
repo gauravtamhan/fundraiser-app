@@ -42,6 +42,8 @@ export default class AddTaskModal extends Component {
             title: title,
             description: description,
             amount: amount,
+            date: new Date().toJSON(),
+            isActive: false,
         }, (error) => {
             if (error) {
                 // Error saving data

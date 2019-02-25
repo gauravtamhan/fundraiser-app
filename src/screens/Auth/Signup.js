@@ -32,17 +32,20 @@ export default class Signup extends Component {
         this.setState({ loaderVisible: false });
     }
 
-    writeUserData(userId, name) {
-        database.ref('users/' + userId).set({
-            displayName: name
-        });
-    }
+    // writeUserData(userId, name) {
+    //     database.ref('users/' + userId).set({
+    //         displayName: name
+    //     });
+    // }
 
     async createAccount(email, password, name) {
         try {
             this.showLoader();
             await auth.createUserWithEmailAndPassword(email, password);
-            await this.writeUserData(auth.currentUser.uid, name)
+            // await this.writeUserData(auth.currentUser.uid, name)
+            await auth.currentUser.updateProfile({
+                displayName: name
+            })
         } catch (e) {
             this.hideLoader();
             Alert.alert('Could Not Create Account', e.toString().substring(6))

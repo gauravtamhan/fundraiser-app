@@ -1,10 +1,19 @@
 import { StyleSheet } from 'react-native';
-import { THEME_COLOR } from '@assets/colors';
+import { THEME_COLOR, BG_COLOR } from '@assets/colors';
 
 var styles = StyleSheet.create({
 
     /*=================================================
-                Form - CSS Styles
+                Headerbar Title Styles
+    ==================================================*/
+
+    headerTitleStyle: { 
+        // fontWeight: '800', 
+        color: 'rgb(40, 40, 40)',
+    },
+
+    /*=================================================
+                Login/Signup Form Styles
     ==================================================*/
     
     contentPadding: {
@@ -20,6 +29,17 @@ var styles = StyleSheet.create({
         fontSize: 30,
         color: 'rgb(40, 40, 40)',
         alignSelf: 'center',
+    },
+    bigText: {
+        fontWeight: '700',
+        fontSize: 24,
+        paddingBottom: 26,
+    },
+    smText: {
+        fontWeight: '500',
+        fontSize: 17,
+        textAlign: 'center',
+        lineHeight: 24,
     },
     roundedItem: {
         marginBottom: 20,
@@ -58,6 +78,67 @@ var styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
+    /*=================================================
+                Task Card Styles
+    ==================================================*/
+    
+    card: { 
+        backgroundColor: 'white',
+        flex: 1,
+        padding: 16,
+    },
+    cardHeader: {
+        flexDirection: 'row',
+    },
+    cardHeaderText: {
+        flex: 4,
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    cardHeaderDate: {
+        flex: 1,
+        textAlign: 'right',
+        fontSize: 14,
+        fontWeight: '500',
+        color: '#9B9FAA',
+    },
+    cardBody: { 
+        paddingVertical: 12, 
+        paddingRight: 10,
+    },
+    cardBodyText: {
+        fontSize: 16,
+        lineHeight: 20
+    },
+    cardFooter: { 
+        paddingTop: 10
+    },
+    cardAmount: { 
+        fontSize: 18,
+        color: 'rgb(74, 168, 21)',
+    },
+
+    /*=================================================
+                Task List Styles
+    ==================================================*/
+
+    taskListHeader: {
+        backgroundColor: BG_COLOR,
+        paddingHorizontal: 16,
+        paddingVertical: 14,
+    },
+    taskListHeaderText: {
+        fontSize: 13,
+        color: '#595959',
+        letterSpacing: 1.2,
+        fontWeight: '500',    
+    },
+    listSeparator: {
+        height: 0.5,
+        backgroundColor: 'rgb(194,193,196)',
+    },
+
 })
 
 export default styles;

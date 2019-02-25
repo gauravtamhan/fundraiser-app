@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Alert } from 'react-native';
-import { Button, Text } from 'native-base';
+import { View, Alert } from 'react-native';
+import { Button, Text, H1, Container, Content, List, ListItem, Left, Body, Icon, Right } from 'native-base';
 import { auth, database, provider } from '../../firebase';
 import { THEME_COLOR } from '@assets/colors';
+import styles from '../../assets/styles';
 
 export default class Profile extends Component {
 
@@ -22,7 +23,7 @@ export default class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {}
-
+        this.currentUser = auth.currentUser;
     }
 
     componentDidMount() {
@@ -60,9 +61,32 @@ export default class Profile extends Component {
 
     render() {
         return (
-            <ScrollView style={{ flex: 1 }}>
-                 <Text>Profile Screen!</Text>
-            </ScrollView>
+            <Container>
+                <Content style={{backgroundColor: 'rgb(250, 250, 250)'}}>
+                    <View style={{ paddingVertical: 60 }}>
+                        <H1 style={styles.title}>{'Hi, ' + this.currentUser.displayName}</H1>
+                    </View>
+                    <List>
+                        <ListItem itemHeader first>
+
+                        </ListItem>
+                        <ListItem first>
+                            <Text>Manage Contact Info</Text>
+                        </ListItem>
+                        <ListItem>
+                            <Text>View Task History</Text>
+                        </ListItem>
+                        <ListItem>
+                            <Text>View Lifetime Donations</Text>
+                        </ListItem>
+                        <ListItem last>
+                            <Text>Preferences</Text>
+                        </ListItem>
+                    </List>
+                </Content>
+            </Container>
+                
+
         );
     }
 }

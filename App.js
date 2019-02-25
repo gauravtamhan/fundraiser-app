@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from 'native-base';
 import { 
     createAppContainer, 
     createSwitchNavigator, 
@@ -13,6 +13,7 @@ import Login from './src/screens/Auth/Login';
 import Signup from './src/screens/Auth/Signup';
 import AddTaskModal from './src/screens/Modals/AddTaskModal';
 import { THEME_COLOR } from '@assets/colors';
+import styles from '@assets/styles';
 
 const AuthStack = createStackNavigator(
     { 
@@ -44,19 +45,16 @@ const TasksTab = createStackNavigator(
         Tasks: {
             screen: Tasks,
             navigationOptions: {
-                title: 'Tasks',
+                title: 'My Tasks',
             },
         }
     },
     {
         headerMode: 'float',
         headerTransitionPreset: 'uikit',
-        // defaultNavigationOptions: {
-        //     headerStyle: {
-        //         backgroundColor: THEME_COLOR,
-        //     },
-        //     headerTintColor: '#fff',
-        // }
+        defaultNavigationOptions: {
+            headerTitleStyle: styles.headerTitleStyle
+        }
     }
 );
 
@@ -71,7 +69,10 @@ const ProfileTab = createStackNavigator(
     },
     {
         headerMode: 'float',
-        headerTransitionPreset: 'uikit'
+        headerTransitionPreset: 'uikit',
+        defaultNavigationOptions: {
+            headerTitleStyle: styles.headerTitleStyle
+        }
     }
 );
 
@@ -80,13 +81,9 @@ const AppTabs = createBottomTabNavigator(
         TasksTab: {
             screen: TasksTab,
             navigationOptions: {
-                tabBarLabel: 'Tasks',
+                tabBarLabel: 'My Tasks',
                 tabBarIcon: ({ tintColor, focused }) => (
-                    <Ionicons
-                        name={focused ? 'ios-paper' : 'ios-paper'}
-                        size={26}
-                        style={{ color: tintColor }}
-                    />
+                    <Icon name="paper" style={{ color: tintColor, fontSize: 26 }} />
                 ),
             }
         },
@@ -95,11 +92,7 @@ const AppTabs = createBottomTabNavigator(
             navigationOptions: {
                 tabBarLabel: 'Profile',
                 tabBarIcon: ({ tintColor, focused }) => (
-                    <Ionicons
-                        name={focused ? 'ios-person' : 'ios-person'}
-                        size={26}
-                        style={{ color: tintColor }}
-                    />
+                    <Icon name="person" style={{ color: tintColor, fontSize: 26 }} />
                 ),
             }
         }
@@ -107,8 +100,10 @@ const AppTabs = createBottomTabNavigator(
     {
         animationEnabled: true,
         tabBarOptions: {
+            // showLabel: false,
             labelStyle: { fontWeight: '500' },
             activeTintColor: THEME_COLOR,
+            inactiveTintColor: 'rgb(175, 180, 192)'
         }
     }
 );
