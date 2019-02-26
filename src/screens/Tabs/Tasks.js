@@ -94,7 +94,9 @@ export default class Tasks extends Component {
 
     renderItem({ item, index }) {
         return (
-            <TouchableHighlight key={index} style={{ flex: 1 }} underlayColor={'rgb(180,180,180)'} onPress={() => { console.log('hi') }}>
+            <TouchableHighlight key={index} style={{ flex: 1 }} underlayColor={'rgb(180,180,180)'} onPress={() => {
+                this.props.navigation.navigate('TaskDetails', {item})
+            }}>
                 <View style={styles.card}>
                     <View style={styles.cardHeader}>
                         <Text style={styles.cardHeaderText}>{item.title}</Text>
@@ -117,7 +119,8 @@ export default class Tasks extends Component {
 
         return (
             <Container style={{ backgroundColor: BG_COLOR }}>
-                <SectionList 
+                <SectionList
+                    showsVerticalScrollIndicator={false}
                     sections={section_data}
                     ListHeaderComponent={() => <View style={{ height: 30 }} />}
                     renderSectionHeader={this.renderSectionHeader.bind(this)}
@@ -126,10 +129,11 @@ export default class Tasks extends Component {
                     ItemSeparatorComponent={({ highlighted }) => <View style={styles.listSeparator} />}
                     SectionSeparatorComponent={({ highlighted }) => <View style={styles.listSeparator} />}
                     keyExtractor={(item, index) => item.title + index}
+                    sc
                     ListEmptyComponent={
                         <View style={{ flex: 1, height: 220, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end'}}>
                             <Text style={styles.bigText}>No Tasks Posted</Text>
-                            <Text style={styles.smText}>To post a task, tap the create button in the top right.</Text>
+                            <Text style={[styles.smText, { textAlign: 'center' }]}>To post a task, tap the create button in the top right.</Text>
                         </View>
                     }
                 />

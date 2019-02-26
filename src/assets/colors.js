@@ -9,7 +9,7 @@ const c = {
     blue: '#488aff',
 }
 
-export const THEME_COLOR = c.blue;
+export const THEME_COLOR = c.green;
 
 export const BG_COLOR = 'rgb(252, 252, 252)';
 

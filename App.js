@@ -7,6 +7,7 @@ import {
     createBottomTabNavigator 
 } from 'react-navigation';
 import Tasks from './src/screens/Tabs/Tasks';
+import TaskDetails from './src/screens/Tabs/TaskDetails';
 import Profile from './src/screens/Tabs/Profile';
 import Loading from './src/screens/Auth/Loading';
 import Login from './src/screens/Auth/Login';
@@ -46,6 +47,13 @@ const TasksTab = createStackNavigator(
             screen: Tasks,
             navigationOptions: {
                 title: 'My Tasks',
+            },
+        },
+        TaskDetails: {
+            screen: TaskDetails,
+            navigationOptions: {
+                title: null,
+                headerTintColor: THEME_COLOR,
             },
         }
     },

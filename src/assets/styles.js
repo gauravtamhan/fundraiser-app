@@ -38,7 +38,6 @@ var styles = StyleSheet.create({
     smText: {
         fontWeight: '500',
         fontSize: 17,
-        textAlign: 'center',
         lineHeight: 24,
     },
     roundedItem: {
@@ -57,6 +56,10 @@ var styles = StyleSheet.create({
     roundedBtn: {
         alignSelf: 'center',
         backgroundColor: THEME_COLOR,
+        paddingHorizontal: 18,
+    },
+    roundedDeleteBtn: {
+        alignSelf: 'center',
         paddingHorizontal: 18,
     },
     bmContainer: {
