@@ -33,8 +33,9 @@ export default class TaskDetails extends Component {
 
     removeItem = (item) => {
         const taskRef = database.ref().child('tasks/' + this.currentUser.uid);
-        taskRef.child(item.key).remove();
-        this.props.navigation.goBack();
+        taskRef.child(item.key).remove(() => {
+            this.props.navigation.goBack();
+        });
     }
 
     render() {
