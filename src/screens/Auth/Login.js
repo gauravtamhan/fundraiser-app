@@ -37,10 +37,7 @@ export default class Login extends Component {
             await auth.signInWithEmailAndPassword(email, pass);
 
             console.log("Logged In!");
-
-            // Navigate to the Home page
-            this.props.navigation.navigate('Tasks')
-
+            
         } catch (e) {
             this.hideLoader();
             Alert.alert('Could Not Login', e.toString().substring(6))

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, SafeAreaView, View, ActivityIndicator, Alert } from 'react-native';
 import { auth, database, provider } from '../../firebase';
-import { Content, Text, H1, Form, Item, Label, Input, Button } from 'native-base'
+import { Content, Text, H1, Form, Item, Label, Input, Button, Segment } from 'native-base'
 import { THEME_COLOR } from '@assets/colors';
 import styles from '@assets/styles';
 
@@ -15,13 +15,14 @@ export default class Signup extends Component {
             password: '',
             name: '',
             loaderVisible: false,
+            isDonor: true,
         };
     }
 
     onSubmit() {
-        const { email, password, name } = this.state;
+        const { email, password, name, isDonor } = this.state;
 
-        this.createAccount(email, password, name);
+        this.createAccount(email, password, name, isDonor);
     }
 
     showLoader() {
@@ -32,13 +33,13 @@ export default class Signup extends Component {
         this.setState({ loaderVisible: false });
     }
 
-    // writeUserData(userId, name) {
-    //     database.ref('users/' + userId).set({
-    //         displayName: name
-    //     });
-    // }
+    writeUserData(userId, x) {
+        database.ref('users/' + userId).set({
+            isDonor: x
+        });
+    }
 
-    async createAccount(email, password, name) {
+    async createAccount(email, password, name, isDonor) {
         try {
             this.showLoader();
             await auth.createUserWithEmailAndPassword(email, password);
@@ -46,6 +47,7 @@ export default class Signup extends Component {
             await auth.currentUser.updateProfile({
                 displayName: name
             })
+            await this.writeUserData(auth.currentUser.uid, isDonor)
         } catch (e) {
             this.hideLoader();
             Alert.alert('Could Not Create Account', e.toString().substring(6))
@@ -54,6 +56,8 @@ export default class Signup extends Component {
     }
 
     render() {
+        const { isDonor } = this.state;
+
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
                 <Content contentContainerStyle={styles.contentPadding}>
@@ -98,6 +102,16 @@ export default class Signup extends Component {
                                     onChangeText={(password) => this.setState({ password })}
                                 />
                             </Item>
+                            <View>
+                                <Segment>
+                                    <Button first active={isDonor} onPress={() => { this.setState({ isDonor: true}) }}>
+                                        <Text>Donor</Text>
+                                    </Button>
+                                    <Button last active={!isDonor} onPress={() => { this.setState({ isDonor: false }) }}>
+                                        <Text>Fundraiser</Text>
+                                    </Button>
+                                </Segment>
+                            </View>
                             <View style={styles.extra}>
                                 {
                                     this.state.loaderVisible ? (

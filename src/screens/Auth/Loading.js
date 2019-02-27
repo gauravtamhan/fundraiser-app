@@ -6,7 +6,17 @@ import styles from '@assets/styles';
 export default class Loading extends React.Component {
     componentDidMount() {
         auth.onAuthStateChanged(user => {
-            this.props.navigation.navigate(user ? 'Tasks' : 'Login')
+            if (user) {
+                database.ref().child('users/' + user.uid + '/isDonor/').once('value', (snapshot) => {
+                    if (snapshot == true) { // user is a donor
+                        this.props.navigation.navigate('Tasks')
+                    } else { // user is a fundraiser
+                        this.props.navigation.navigate('AllTasks')
+                    }
+                })
+            } else {
+                this.props.navigation.navigate('Login')
+            }
         })
     }
 

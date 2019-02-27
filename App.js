@@ -8,6 +8,7 @@ import {
 } from 'react-navigation';
 import { AppLoading } from 'expo';
 import Tasks from './src/screens/Tabs/Tasks';
+import AllTasks from './src/screens/Tabs/AllTasks';
 import TaskDetails from './src/screens/Tabs/TaskDetails';
 import Profile from './src/screens/Tabs/Profile';
 import Loading from './src/screens/Auth/Loading';
@@ -67,6 +68,24 @@ const TasksTab = createStackNavigator(
     }
 );
 
+const AllTasksTab = createStackNavigator(
+    {
+        AllTasks: {
+            screen: AllTasks,
+            navigationOptions: {
+                title: 'All Tasks',
+            },
+        },
+    },
+    {
+        headerMode: 'float',
+        headerTransitionPreset: 'uikit',
+        defaultNavigationOptions: {
+            headerTitleStyle: styles.headerTitleStyle
+        }
+    }
+)
+
 const ProfileTab = createStackNavigator(
     {
         Profile: {
@@ -117,6 +136,38 @@ const AppTabs = createBottomTabNavigator(
     }
 );
 
+const FundraiserTabs = createBottomTabNavigator(
+    {
+        AllTasksTab: {
+            screen: AllTasksTab,
+            navigationOptions: {
+                tabBarLabel: 'All Tasks',
+                tabBarIcon: ({ tintColor, focused }) => (
+                    <Icon name="paper" style={{ color: tintColor, fontSize: 26 }} />
+                ),
+            }
+        },
+        ProfileTab: {
+            screen: ProfileTab,
+            navigationOptions: {
+                tabBarLabel: 'Profile',
+                tabBarIcon: ({ tintColor, focused }) => (
+                    <Icon name="person" style={{ color: tintColor, fontSize: 26 }} />
+                ),
+            }
+        }
+    },
+    {
+        animationEnabled: true,
+        tabBarOptions: {
+            // showLabel: false,
+            labelStyle: { fontWeight: '500' },
+            activeTintColor: THEME_COLOR,
+            inactiveTintColor: 'rgb(175, 180, 192)'
+        }
+    }
+)
+
 const RootStack = createStackNavigator(
     {
         Main: {
@@ -132,11 +183,24 @@ const RootStack = createStackNavigator(
     }
 );
 
+const FundraiserStack = createStackNavigator(
+    {
+        Main: {
+            screen: FundraiserTabs
+        }
+    },
+    {
+        mode: 'modal',
+        headerMode: 'none',
+    }
+)
+
 const Navigator = createAppContainer(createSwitchNavigator(
     {
         Loading,
         AuthStack,
         RootStack,
+        FundraiserStack,
     },
     {
         initialRouteName: 'Loading'
