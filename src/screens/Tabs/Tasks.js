@@ -143,7 +143,7 @@ export default class Tasks extends Component {
                             ListEmptyComponent={
                                 <View style={{ flex: 1, height: 220, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
                                     <Text style={styles.bigText}>No Tasks Posted</Text>
-                                    <Text style={[styles.smText, { textAlign: 'center' }]}>To post a task, tap the create button in the top right.</Text>
+                                    <Text style={[styles.smText, { textAlign: 'center' }]}>To post a task, tap the plus button in the top right.</Text>
                                 </View>
                             }
                         />
