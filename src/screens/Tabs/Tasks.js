@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, SectionList, TouchableHighlight, Text } from 'react-native';
+import { View, SectionList, TouchableHighlight, Text, ActivityIndicator } from 'react-native';
 import { Container, Content, Button, Icon, H3, H2, List, ListItem, Body, Card, CardItem, } from 'native-base';
 import { auth, database, provider } from '../../firebase';
 import { THEME_COLOR, BG_COLOR } from '@assets/colors';
@@ -14,7 +14,7 @@ export default class Tasks extends Component {
                     transparent
                     onPress={navigation.getParam('addTask')}
                 >
-                    <Icon name="create" style={{ color: THEME_COLOR, fontSize: 26 }} />
+                    <Icon name="add" style={{ color: THEME_COLOR, fontSize: 26 }} />
                 </Button>
             ),
         };
@@ -23,7 +23,8 @@ export default class Tasks extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            loaderVisible: true,
         };
         this.currentUser = auth.currentUser;
     }
@@ -42,17 +43,21 @@ export default class Tasks extends Component {
                         key: task.key,
                         title: task.val().title,
                         description: task.val().description,
-                        amount: task.val().amount,
+                        amount: (+task.val().amount).toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
                         date: new Date(task.val().date).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }),
                         isActive: task.val().isActive,
                     });
                 });
 
                 this.setState({
-                    data: tasks
+                    data: tasks,
+                    loaderVisible: false
                 })
             } else {
-                // do something
+                this.setState({
+                    data: [],
+                    loaderVisible: false
+                })
             }
         });
     }
@@ -94,7 +99,7 @@ export default class Tasks extends Component {
 
     renderItem({ item, index }) {
         return (
-            <TouchableHighlight key={index} style={{ flex: 1 }} underlayColor={'rgb(180,180,180)'} onPress={() => {
+            <TouchableHighlight key={index} style={{ flex: 1, backgroundColor: 'white' }} underlayColor={'#DDD'} onPress={() => {
                 this.props.navigation.navigate('TaskDetails', {item})
             }}>
                 <View style={styles.card}>
@@ -106,7 +111,7 @@ export default class Tasks extends Component {
                         <Text style={styles.cardBodyText}>{item.description}</Text>
                     </View>
                     <View style={styles.cardFooter}>
-                        <Text style={styles.cardAmount}>${item.amount}</Text>
+                        <Text style={styles.cardAmount}>{item.amount}</Text>
                     </View>
                 </View>
             </TouchableHighlight>
@@ -119,24 +124,32 @@ export default class Tasks extends Component {
 
         return (
             <Container style={{ backgroundColor: BG_COLOR }}>
-                <SectionList
-                    showsVerticalScrollIndicator={false}
-                    sections={section_data}
-                    ListHeaderComponent={() => <View style={{ height: 30 }} />}
-                    renderSectionHeader={this.renderSectionHeader.bind(this)}
-                    renderSectionFooter={() => <View style={{height: 30}} />}
-                    renderItem={this.renderItem.bind(this)}
-                    ItemSeparatorComponent={({ highlighted }) => <View style={styles.listSeparator} />}
-                    SectionSeparatorComponent={({ highlighted }) => <View style={styles.listSeparator} />}
-                    keyExtractor={(item, index) => item.title + index}
-                    sc
-                    ListEmptyComponent={
-                        <View style={{ flex: 1, height: 220, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end'}}>
-                            <Text style={styles.bigText}>No Tasks Posted</Text>
-                            <Text style={[styles.smText, { textAlign: 'center' }]}>To post a task, tap the create button in the top right.</Text>
+                {
+                    this.state.loaderVisible ? (
+                        <View style={styles.loaderContainer}>
+                            <ActivityIndicator size="large" />
                         </View>
-                    }
-                />
+                    ) : (
+                        <SectionList
+                            showsVerticalScrollIndicator={false}
+                            sections={section_data}
+                            ListHeaderComponent={() => <View style={{ height: 30 }} />}
+                            renderSectionHeader={this.renderSectionHeader.bind(this)}
+                            renderSectionFooter={() => <View style={{ height: 30 }} />}
+                            renderItem={this.renderItem.bind(this)}
+                            ItemSeparatorComponent={({ highlighted }) => <View style={styles.listSeparator} />}
+                            SectionSeparatorComponent={({ trailingItem, section }) => trailingItem ? null : <View style={styles.listSeparator} />}
+                            keyExtractor={(item, index) => item.title + index}
+                            ListEmptyComponent={
+                                <View style={{ flex: 1, height: 220, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
+                                    <Text style={styles.bigText}>No Tasks Posted</Text>
+                                    <Text style={[styles.smText, { textAlign: 'center' }]}>To post a task, tap the create button in the top right.</Text>
+                                </View>
+                            }
+                        />
+                        )
+                }
+                
             </Container>
         )
     }

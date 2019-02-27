@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, ActivityIndicator, StyleSheet } from 'react-native'
 import { auth, database, provider } from '../../firebase';
+import styles from '@assets/styles';
 
 export default class Loading extends React.Component {
     componentDidMount() {
@@ -11,17 +12,9 @@ export default class Loading extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={styles.loaderContainer}>
                 <ActivityIndicator size="large" />
             </View>
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-})

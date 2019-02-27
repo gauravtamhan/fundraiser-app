@@ -15,7 +15,7 @@ export default class TaskDetails extends Component {
 
     handleDelete = (item) => {
         Alert.alert(
-            'Delete Task?',
+            'Confirm Delete',
             `"${item.title}" will no longer be public and will be removed from your tasks.`,
             [
                 {
@@ -46,7 +46,7 @@ export default class TaskDetails extends Component {
             {
                 icon: 'card',
                 header: 'Donation',
-                body: 'Amount to pay is $' + item.amount, 
+                body: 'Amount to pay is ' + item.amount, 
             },
             {
                 icon: 'calendar', 

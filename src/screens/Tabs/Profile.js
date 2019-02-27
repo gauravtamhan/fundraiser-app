@@ -14,7 +14,7 @@ export default class Profile extends Component {
                     transparent
                     onPress={navigation.getParam('warnLogout')}
                 >
-                    <Text style={{ color: THEME_COLOR, fontWeight: '500' }}>Logout</Text>
+                    <Icon name="log-out" style={{ color: THEME_COLOR, fontSize: 26 }} />
                 </Button>
             ),
         };
@@ -32,7 +32,7 @@ export default class Profile extends Component {
 
     warnLogout = () => {
         Alert.alert(
-            'Are you sure you want to logout?',
+            'Confirm Logout',
             'You will be returned to the login screen.',
             [
                 {
@@ -66,20 +66,17 @@ export default class Profile extends Component {
                     <View style={{ paddingVertical: 60 }}>
                         <H1 style={styles.title}>{'Hi, ' + this.currentUser.displayName}</H1>
                     </View>
-                    <List>
-                        <ListItem itemHeader first>
-
-                        </ListItem>
-                        <ListItem first>
+                    <List style={{ backgroundColor: 'white', borderTopWidth: 0.5, borderColor: '#c9c9c9' }}>
+                        <ListItem onPress={() => { console.log('1')} }>
                             <Text>Manage Contact Info</Text>
                         </ListItem>
-                        <ListItem>
+                        <ListItem onPress={() => { console.log('2') }}>
                             <Text>View Task History</Text>
                         </ListItem>
-                        <ListItem>
+                        <ListItem onPress={() => { console.log('3') }}>
                             <Text>View Lifetime Donations</Text>
                         </ListItem>
-                        <ListItem last>
+                        <ListItem last onPress={() => { console.log('4') }}>
                             <Text>Preferences</Text>
                         </ListItem>
                     </List>

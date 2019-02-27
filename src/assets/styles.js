@@ -16,6 +16,11 @@ var styles = StyleSheet.create({
                 Login/Signup Form Styles
     ==================================================*/
     
+    loaderContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     contentPadding: {
         paddingHorizontal: 26,
     },
@@ -87,7 +92,7 @@ var styles = StyleSheet.create({
     ==================================================*/
     
     card: { 
-        backgroundColor: 'white',
+        backgroundColor: 'transparent',
         flex: 1,
         padding: 16,
     },
@@ -130,6 +135,8 @@ var styles = StyleSheet.create({
         backgroundColor: BG_COLOR,
         paddingHorizontal: 16,
         paddingVertical: 14,
+        borderBottomWidth: 0.5,
+        borderColor: '#c9c9c9',
     },
     taskListHeaderText: {
         fontSize: 13,
