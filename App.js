@@ -6,6 +6,7 @@ import {
     createStackNavigator, 
     createBottomTabNavigator 
 } from 'react-navigation';
+import { AppLoading } from 'expo';
 import Tasks from './src/screens/Tabs/Tasks';
 import TaskDetails from './src/screens/Tabs/TaskDetails';
 import Profile from './src/screens/Tabs/Profile';
@@ -144,7 +145,23 @@ const Navigator = createAppContainer(createSwitchNavigator(
 
 export default class App extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = { loading: true };
+    }
+
+    async componentWillMount() {
+        await Expo.Font.loadAsync({
+            Roboto: require("native-base/Fonts/Roboto.ttf"),
+            Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+        });
+        this.setState({ loading: false });
+    }
+
     render() {
+        if (this.state.loading) {
+            return <AppLoading />;
+        }
         return (
             <Navigator />
         )
