@@ -43,7 +43,6 @@ export default class Signup extends Component {
         try {
             this.showLoader();
             await auth.createUserWithEmailAndPassword(email, password);
-            // await this.writeUserData(auth.currentUser.uid, name)
             await auth.currentUser.updateProfile({
                 displayName: name
             })
@@ -64,9 +63,39 @@ export default class Signup extends Component {
                     <View style={styles.formContainer}>
                         <H1 style={styles.title}>Create an Account</H1>
 
-                        <View style={styles.extra} />
-
-                        <Form>
+                        <Form style={{marginTop: 50}}>
+                            <View style={{marginBottom: 30}}>
+                                <Segment style={{ backgroundColor: 'transparent' }}>
+                                    <Button
+                                        style={{
+                                            height: 40,
+                                            flex: 1,
+                                            justifyContent: 'center',
+                                            backgroundColor: isDonor ? THEME_COLOR : undefined,
+                                            borderColor: THEME_COLOR,
+                                        }}
+                                        first
+                                        active={isDonor}
+                                        onPress={() => { this.setState({ isDonor: true }) }}
+                                    >
+                                        <Text style={{ color: isDonor ? 'white' : THEME_COLOR }}>I'm a Donor</Text>
+                                    </Button>
+                                    <Button
+                                        style={{
+                                            height: 40,
+                                            flex: 1,
+                                            justifyContent: 'center',
+                                            backgroundColor: !isDonor ? THEME_COLOR : undefined,
+                                            borderColor: THEME_COLOR,
+                                        }}
+                                        last
+                                        active={!isDonor}
+                                        onPress={() => { this.setState({ isDonor: false }) }}
+                                    >
+                                        <Text style={{ color: !isDonor ? 'white' : THEME_COLOR }}>I'm a Fundraiser</Text>
+                                    </Button>
+                                </Segment>
+                            </View>
                             <Item rounded style={styles.roundedItem}>
                                 <Input
                                     placeholder={'Full Name'}
@@ -102,16 +131,6 @@ export default class Signup extends Component {
                                     onChangeText={(password) => this.setState({ password })}
                                 />
                             </Item>
-                            <View>
-                                <Segment>
-                                    <Button first active={isDonor} onPress={() => { this.setState({ isDonor: true}) }}>
-                                        <Text>Donor</Text>
-                                    </Button>
-                                    <Button last active={!isDonor} onPress={() => { this.setState({ isDonor: false }) }}>
-                                        <Text>Fundraiser</Text>
-                                    </Button>
-                                </Segment>
-                            </View>
                             <View style={styles.extra}>
                                 {
                                     this.state.loaderVisible ? (
