@@ -9,6 +9,7 @@ import {
 import { AppLoading } from 'expo';
 import Tasks from './src/screens/Tabs/Tasks';
 import AllTasks from './src/screens/Tabs/AllTasks';
+import PayPal from './src/screens/Tabs/PayPal';
 import TaskDetails from './src/screens/Tabs/TaskDetails';
 import Profile from './src/screens/Tabs/Profile';
 import Loading from './src/screens/Auth/Loading';
@@ -68,6 +69,24 @@ const TasksTab = createStackNavigator(
     }
 );
 
+const PayPalTab = createStackNavigator(
+    {
+        PayPal: {
+            screen: PayPal,
+            navigationOptions: {
+                title: 'PayPal',
+            },
+        },
+    },
+    {
+        headerMode: 'float',
+        headerTransitionPreset: 'uikit',
+        defaultNavigationOptions: {
+            headerTitleStyle: styles.headerTitleStyle
+        }
+    }
+);
+
 const AllTasksTab = createStackNavigator(
     {
         AllTasks: {
@@ -84,7 +103,7 @@ const AllTasksTab = createStackNavigator(
             headerTitleStyle: styles.headerTitleStyle
         }
     }
-)
+);
 
 const ProfileTab = createStackNavigator(
     {
@@ -112,6 +131,15 @@ const AppTabs = createBottomTabNavigator(
                 tabBarLabel: 'My Tasks',
                 tabBarIcon: ({ tintColor, focused }) => (
                     <Icon name="paper" style={{ color: tintColor, fontSize: 26 }} />
+                ),
+            }
+        },
+        PayPalTab: {
+            screen: PayPalTab,
+            navigationOptions: {
+                tabBarLabel: 'PayPal',
+                tabBarIcon: ({ tintColor, focused }) => (
+                    <Icon name="logo-usd" style={{ color: tintColor, fontSize: 26 }} />
                 ),
             }
         },

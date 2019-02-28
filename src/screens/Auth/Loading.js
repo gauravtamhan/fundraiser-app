@@ -7,10 +7,12 @@ export default class Loading extends React.Component {
     componentDidMount() {
         auth.onAuthStateChanged(user => {
             if (user) {
-                database.ref().child('users/' + user.uid + '/isDonor/').once('value', (snapshot) => {
-                    if (snapshot == true) { // user is a donor
+                database.ref().child('users/' + user.uid ).once('value', (snapshot) => {
+                    if (snapshot.val().isDonor) { 
+                        // user is a donor
                         this.props.navigation.navigate('Tasks')
-                    } else { // user is a fundraiser
+                    } else { 
+                        // user is a fundraiser
                         this.props.navigation.navigate('AllTasks')
                     }
                 })
