@@ -46,6 +46,10 @@ export default class Tasks extends Component {
                         amount: (+task.val().amount).toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
                         date: new Date(task.val().date).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }),
                         isActive: task.val().isActive,
+                        completionDate: new Date(task.val().completionDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                        address: task.val().address,
+                        city: task.val().city,
+                        state: task.val().state,
                     });
                 });
 

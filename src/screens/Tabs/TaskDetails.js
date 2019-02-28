@@ -51,12 +51,12 @@ export default class TaskDetails extends Component {
             {
                 icon: 'calendar', 
                 header: 'Date',
-                body: 'Task to be completed on ' + item.date,
+                body: 'Task to be completed on ' + item.completionDate,
             }, 
             {
                 icon: 'navigate',
                 header: 'Location',
-                body: '123 North Avenue NW \n' + 'Atlanta, GA 30332'
+                body: item.address + '\n' + item.city + ', ' + item.state,
             }
         ];
 
