@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, SectionList, TouchableHighlight, Text, ActivityIndicator } from 'react-native';
+import { View, SectionList, TouchableHighlight, Text, ActivityIndicator, StatusBar } from 'react-native';
 import { Container, Content, Button, Icon, H3, H2, List, ListItem, Body, Card, CardItem, } from 'native-base';
 import { auth, database, provider } from '../../firebase';
 import { THEME_COLOR, BG_COLOR } from '@assets/colors';
@@ -22,29 +22,33 @@ export default class AllTasks extends Component {
 
     listenForItems() {
         database.ref().child('tasks/').on('value', (snapshot) => {
-            if (snapshot.exists()) {
-                var tasks = [];
-                snapshot.forEach((task) => {
-                    tasks.push({
-                        key: task.key,
-                        title: task.val().title,
-                        description: task.val().description,
-                        amount: (+task.val().amount).toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
-                        date: new Date(task.val().date).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }),
-                        isActive: task.val().isActive,
-                    });
-                });
+            snapshot.forEach((snap) => {
+                // Gets tasks for n users who are children of tasks node
+                console.log('Hi', snap.val())
+            });
+            // if (snapshot.exists()) {
+            //     var tasks = [];
+            //     snapshot.forEach((task) => {
+            //         tasks.push({
+            //             key: task.key,
+            //             title: task.val().title,
+            //             description: task.val().description,
+            //             amount: (+task.val().amount).toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
+            //             date: new Date(task.val().date).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }),
+            //             isActive: task.val().isActive,
+            //         });
+            //     });
 
-                this.setState({
-                    data: tasks,
-                    loaderVisible: false
-                })
-            } else {
-                this.setState({
-                    data: [],
-                    loaderVisible: false
-                })
-            }
+            //     this.setState({
+            //         data: tasks,
+            //         loaderVisible: false
+            //     })
+            // } else {
+            //     this.setState({
+            //         data: [],
+            //         loaderVisible: false
+            //     })
+            // }
         });
     }
 
@@ -82,7 +86,8 @@ export default class AllTasks extends Component {
     renderItem({ item, index }) {
         return (
             <TouchableHighlight key={index} style={{ flex: 1, backgroundColor: 'white' }} underlayColor={'#DDD'} onPress={() => {
-                this.props.navigation.navigate('TaskDetails', { item })
+                // this.props.navigation.navigate('TaskDetails', { item })
+                console.log('good job')
             }}>
                 <View style={styles.card}>
                     <View style={styles.cardHeader}>

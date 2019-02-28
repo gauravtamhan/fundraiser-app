@@ -92,7 +92,7 @@ const AllTasksTab = createStackNavigator(
         AllTasks: {
             screen: AllTasks,
             navigationOptions: {
-                title: 'All Tasks',
+                title: 'Discover Tasks',
             },
         },
     },
@@ -101,6 +101,10 @@ const AllTasksTab = createStackNavigator(
         headerTransitionPreset: 'uikit',
         defaultNavigationOptions: {
             headerTitleStyle: styles.headerTitleStyle
+            // headerStyle: {
+            //     backgroundColor: THEME_COLOR,
+            // },
+            // headerTintColor: '#fff',
         }
     }
 );
@@ -169,9 +173,9 @@ const FundraiserTabs = createBottomTabNavigator(
         AllTasksTab: {
             screen: AllTasksTab,
             navigationOptions: {
-                tabBarLabel: 'All Tasks',
+                tabBarLabel: 'Discover Tasks',
                 tabBarIcon: ({ tintColor, focused }) => (
-                    <Icon name="paper" style={{ color: tintColor, fontSize: 26 }} />
+                    <Icon name="search" style={{ color: tintColor, fontSize: 26 }} />
                 ),
             }
         },
