@@ -21,34 +21,34 @@ export default class AllTasks extends Component {
     }
 
     listenForItems() {
-        database.ref().child('tasks/').on('value', (snapshot) => {
-            snapshot.forEach((snap) => {
-                // Gets tasks for n users who are children of tasks node
-                console.log('Hi', snap.val())
-            });
-            // if (snapshot.exists()) {
-            //     var tasks = [];
-            //     snapshot.forEach((task) => {
-            //         tasks.push({
-            //             key: task.key,
-            //             title: task.val().title,
-            //             description: task.val().description,
-            //             amount: (+task.val().amount).toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
-            //             date: new Date(task.val().date).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }),
-            //             isActive: task.val().isActive,
-            //         });
-            //     });
+        database.ref().child('tasks').on('value', (snapshot) => {
+            if (snapshot.exists()) {
+                var tasks = [];
+                snapshot.forEach((task) => {
+                    tasks.push({
+                        key: task.key,
+                        title: task.val().title,
+                        description: task.val().description,
+                        amount: (+task.val().amount).toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
+                        date: new Date(task.val().date).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }),
+                        isActive: task.val().isActive,
+                        completionDate: new Date(task.val().completionDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                        address: task.val().address,
+                        city: task.val().city,
+                        state: task.val().state,
+                    });
+                });
 
-            //     this.setState({
-            //         data: tasks,
-            //         loaderVisible: false
-            //     })
-            // } else {
-            //     this.setState({
-            //         data: [],
-            //         loaderVisible: false
-            //     })
-            // }
+                this.setState({
+                    data: tasks,
+                    loaderVisible: false
+                })
+            } else {
+                this.setState({
+                    data: [],
+                    loaderVisible: false
+                })
+            }
         });
     }
 

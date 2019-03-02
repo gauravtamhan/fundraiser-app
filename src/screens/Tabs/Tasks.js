@@ -35,7 +35,7 @@ export default class Tasks extends Component {
     }
 
     listenForItems() {
-        database.ref().child('tasks/' + this.currentUser.uid).on('value', (snapshot) => {
+        database.ref().child('tasks').orderByChild('userID').equalTo(this.currentUser.uid).on('value', (snapshot) => {
             if (snapshot.exists()) {
                 var tasks = [];
                 snapshot.forEach((task) => {
