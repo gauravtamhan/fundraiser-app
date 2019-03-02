@@ -38,7 +38,7 @@ var styles = StyleSheet.create({
     bigText: {
         fontWeight: '700',
         fontSize: 24,
-        paddingBottom: 26,
+        paddingBottom: 14,
     },
     smText: {
         fontWeight: '500',
@@ -50,6 +50,7 @@ var styles = StyleSheet.create({
         borderRadius: 5,
         borderColor: 'transparent',
         backgroundColor: '#f1f2f2',
+        // backgroundColor: 'rgb(244,244,250)',
     },
     roundedTextArea: {
         marginBottom: 20,
@@ -61,7 +62,13 @@ var styles = StyleSheet.create({
     roundedBtn: {
         alignSelf: 'center',
         backgroundColor: THEME_COLOR,
-        paddingHorizontal: 18,
+        paddingHorizontal: 24,
+        height: 55,
+        borderRadius: 50,
+        shadowOffset: { width: 0, height: 2, },
+        shadowColor: 'black',
+        shadowOpacity: 0.2,
+        justifyContent: 'center'
     },
     roundedDeleteBtn: {
         alignSelf: 'center',
@@ -72,7 +79,8 @@ var styles = StyleSheet.create({
         // backgroundColor: '#eff35e',
     },
     buttonText: {
-        fontWeight: '500',
+        fontWeight: '700',
+        fontSize: 19,
         color: '#FFF',
     },
     buttonTextTransparent: {
@@ -101,8 +109,9 @@ var styles = StyleSheet.create({
     },
     cardHeaderText: {
         flex: 4,
-        fontSize: 16,
-        fontWeight: '600',
+        fontSize: 18,
+        color: 'rgb(41, 41, 54)',
+        fontWeight: '700',
     },
     cardHeaderDate: {
         flex: 1,
@@ -113,10 +122,11 @@ var styles = StyleSheet.create({
     },
     cardBody: { 
         paddingVertical: 12, 
-        paddingRight: 10,
+        paddingRight: 35,
     },
     cardBodyText: {
-        fontSize: 16,
+        color: 'rgba(50, 50, 62, 0.8)',
+        fontSize: 15,
         lineHeight: 20
     },
     cardFooter: { 

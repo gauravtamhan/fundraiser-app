@@ -44,7 +44,7 @@ export default class PayPal extends Component {
                             </Item>
                             
                             <View style={styles.bmContainer}>
-                                <Button block style={{ backgroundColor: THEME_COLOR }} onPress={this.onSubmit.bind(this)}>
+                                <Button rounded style={[styles.roundedBtn, { width: 220 }]} onPress={this.onSubmit.bind(this)}>
                                     <Text style={styles.buttonText}>Submit</Text>
                                 </Button>
                             </View>

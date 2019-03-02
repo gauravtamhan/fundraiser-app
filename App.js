@@ -163,7 +163,8 @@ const AppTabs = createBottomTabNavigator(
             // showLabel: false,
             labelStyle: { fontWeight: '500' },
             activeTintColor: THEME_COLOR,
-            inactiveTintColor: 'rgb(175, 180, 192)'
+            // inactiveTintColor: 'rgb(175, 180, 192)'
+            inactiveTintColor: 'rgb(190, 190, 204)'
         }
     }
 );

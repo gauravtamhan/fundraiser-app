@@ -64,11 +64,11 @@ export default class Signup extends Component {
                         <H1 style={styles.title}>Create an Account</H1>
 
                         <Form style={{marginTop: 50}}>
-                            <View style={{marginBottom: 30}}>
+                            <View style={{marginBottom: 50}}>
                                 <Segment style={{ backgroundColor: 'transparent' }}>
                                     <Button
                                         style={{
-                                            height: 40,
+                                            height: 50,
                                             flex: 1,
                                             justifyContent: 'center',
                                             backgroundColor: isDonor ? THEME_COLOR : undefined,
@@ -78,11 +78,11 @@ export default class Signup extends Component {
                                         active={isDonor}
                                         onPress={() => { this.setState({ isDonor: true }) }}
                                     >
-                                        <Text style={{ color: isDonor ? 'white' : THEME_COLOR }}>I'm a Donor</Text>
+                                        <Text style={{ fontSize: 17, fontWeight: '600', color: isDonor ? 'white' : THEME_COLOR }}>I'm a Donor</Text>
                                     </Button>
                                     <Button
                                         style={{
-                                            height: 40,
+                                            height: 50,
                                             flex: 1,
                                             justifyContent: 'center',
                                             backgroundColor: !isDonor ? THEME_COLOR : undefined,
@@ -92,7 +92,7 @@ export default class Signup extends Component {
                                         active={!isDonor}
                                         onPress={() => { this.setState({ isDonor: false }) }}
                                     >
-                                        <Text style={{ color: !isDonor ? 'white' : THEME_COLOR }}>I'm a Fundraiser</Text>
+                                        <Text style={{ fontSize: 17, fontWeight: '600', color: !isDonor ? 'white' : THEME_COLOR }}>I'm a Fundraiser</Text>
                                     </Button>
                                 </Segment>
                             </View>
@@ -139,7 +139,7 @@ export default class Signup extends Component {
                                 }
                             </View>
                             <View style={styles.bmContainer}>
-                                <Button block style={{ backgroundColor: THEME_COLOR }} onPress={this.onSubmit.bind(this)}>
+                                <Button rounded style={styles.roundedBtn}  onPress={this.onSubmit.bind(this)}>
                                     <Text style={styles.buttonText}>Create Account</Text>
                                 </Button>
                             </View>
