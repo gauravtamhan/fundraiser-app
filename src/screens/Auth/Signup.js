@@ -139,7 +139,7 @@ export default class Signup extends Component {
                                 }
                             </View>
                             <View style={styles.bmContainer}>
-                                <Button rounded style={styles.roundedBtn}  onPress={this.onSubmit.bind(this)}>
+                                <Button rounded style={styles.roundedBtn} onPress={this.onSubmit.bind(this)}>
                                     <Text style={styles.buttonText}>Create Account</Text>
                                 </Button>
                             </View>

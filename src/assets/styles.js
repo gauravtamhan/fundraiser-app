@@ -70,6 +70,16 @@ var styles = StyleSheet.create({
         shadowOpacity: 0.2,
         justifyContent: 'center'
     },
+    roundedBtnSecondary: {
+        alignSelf: 'center',
+        backgroundColor: 'transparent',
+        paddingHorizontal: 24,
+        height: 55,
+        borderRadius: 50,
+        justifyContent: 'center',
+        borderWidth: 2,
+        borderColor: 'rgb(210, 210, 223)',
+    },
     roundedDeleteBtn: {
         alignSelf: 'center',
         paddingHorizontal: 18,
@@ -82,6 +92,11 @@ var styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 19,
         color: '#FFF',
+    },
+    buttonTextSecondary: {
+        fontWeight: '700',
+        fontSize: 19,
+        color: 'rgb(41, 41, 54)',
     },
     buttonTextTransparent: {
         fontWeight: '500',
