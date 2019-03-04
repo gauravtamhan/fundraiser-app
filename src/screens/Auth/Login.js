@@ -90,7 +90,7 @@ export default class Login extends Component {
                                 }
                             </View>
                             <View style={styles.bmContainer}>
-                                <Button block style={{ backgroundColor: THEME_COLOR }} onPress={this.onLogin.bind(this)}>
+                                <Button rounded style={[styles.roundedBtn, { width: 220 }]} onPress={this.onLogin.bind(this)}>
                                     <Text style={styles.buttonText}>Login</Text>
                                 </Button>
                                 <View style={{ marginTop: 40, alignItems: 'center'}}>

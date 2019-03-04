@@ -138,15 +138,15 @@ const AppTabs = createBottomTabNavigator(
                 ),
             }
         },
-        PayPalTab: {
-            screen: PayPalTab,
-            navigationOptions: {
-                tabBarLabel: 'PayPal',
-                tabBarIcon: ({ tintColor, focused }) => (
-                    <Icon name="logo-usd" style={{ color: tintColor, fontSize: 26 }} />
-                ),
-            }
-        },
+        // PayPalTab: {
+        //     screen: PayPalTab,
+        //     navigationOptions: {
+        //         tabBarLabel: 'PayPal',
+        //         tabBarIcon: ({ tintColor, focused }) => (
+        //             <Icon name="logo-usd" style={{ color: tintColor, fontSize: 26 }} />
+        //         ),
+        //     }
+        // },
         ProfileTab: {
             screen: ProfileTab,
             navigationOptions: {
@@ -163,7 +163,8 @@ const AppTabs = createBottomTabNavigator(
             // showLabel: false,
             labelStyle: { fontWeight: '500' },
             activeTintColor: THEME_COLOR,
-            inactiveTintColor: 'rgb(175, 180, 192)'
+            // inactiveTintColor: 'rgb(175, 180, 192)'
+            inactiveTintColor: 'rgb(190, 190, 204)'
         }
     }
 );

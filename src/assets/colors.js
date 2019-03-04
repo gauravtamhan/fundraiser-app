@@ -7,9 +7,10 @@ const c = {
     peach: 'rgb(253, 107, 90)',
     teal: 'rgb(39, 212, 178)',
     blue: '#488aff',
+    lyft: 'rgb(149, 62, 255)',
 }
 
-export const THEME_COLOR = c.green;
+export const THEME_COLOR = c.lyft;
 
 export const BG_COLOR = 'rgb(252, 252, 252)';
 

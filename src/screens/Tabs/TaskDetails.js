@@ -82,8 +82,8 @@ export default class TaskDetails extends Component {
                 </View>
                 <View style={styles.listSeparator} />
                 <View style={{ marginTop: 40 }}>
-                    <Button rounded danger style={styles.roundedDeleteBtn} onPress={() => { this.handleDelete(item) }}>
-                        <Text style={styles.buttonText}>Delete Task</Text>
+                    <Button rounded style={styles.roundedBtnSecondary} onPress={() => { this.handleDelete(item) }}>
+                        <Text style={styles.buttonTextSecondary}>Delete Task</Text>
                     </Button>
                 </View>
 

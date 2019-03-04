@@ -57,7 +57,8 @@ export default class AddTaskModal extends Component {
 
         this.showLoader();
 
-        database.ref('tasks/' + this.currentUser.uid).push({
+        database.ref('tasks').push({
+            userID: this.currentUser.uid,
             title: title,
             description: description,
             amount: amount,
