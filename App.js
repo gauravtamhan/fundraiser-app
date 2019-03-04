@@ -138,15 +138,15 @@ const AppTabs = createBottomTabNavigator(
                 ),
             }
         },
-        PayPalTab: {
-            screen: PayPalTab,
-            navigationOptions: {
-                tabBarLabel: 'PayPal',
-                tabBarIcon: ({ tintColor, focused }) => (
-                    <Icon name="logo-usd" style={{ color: tintColor, fontSize: 26 }} />
-                ),
-            }
-        },
+        // PayPalTab: {
+        //     screen: PayPalTab,
+        //     navigationOptions: {
+        //         tabBarLabel: 'PayPal',
+        //         tabBarIcon: ({ tintColor, focused }) => (
+        //             <Icon name="logo-usd" style={{ color: tintColor, fontSize: 26 }} />
+        //         ),
+        //     }
+        // },
         ProfileTab: {
             screen: ProfileTab,
             navigationOptions: {
