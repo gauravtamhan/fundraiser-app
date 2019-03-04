@@ -7,9 +7,20 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "consolidate": "^0.15.1",
+    "ejs": "^2.6.1",
+    "events": "^3.0.0",
     "expo": "^32.0.0",
+    "express": "^4.16.4",
+    "file-system": "^2.2.2",
     "firebase": "^5.8.3",
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
     "native-base": "^2.11.0",
+    "paypal-rest-sdk": "^1.8.1",
+    "query-string": "^6.2.0",
+    "querystring": "^0.2.0",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-navigation": "^3.3.0"
