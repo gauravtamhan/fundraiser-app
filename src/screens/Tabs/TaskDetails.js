@@ -32,7 +32,7 @@ export default class TaskDetails extends Component {
     }
 
     removeItem = (item) => {
-        const taskRef = database.ref().child('tasks/' + this.currentUser.uid);
+        const taskRef = database.ref().child('tasks');
         taskRef.child(item.key).remove(() => {
             this.props.navigation.goBack();
         });
@@ -41,7 +41,6 @@ export default class TaskDetails extends Component {
     render() {
         const { navigation } = this.props;
         const item = navigation.getParam('item');
-
         const rows = [
             {
                 icon: 'card',

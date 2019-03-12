@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, View, ActivityIndicator, Alert } from 'react-native';
+import { StyleSheet, SafeAreaView, View, ActivityIndicator, Alert, Image } from 'react-native';
 import { auth, database, provider } from '../../firebase';
 import { Content, Text, H1, Form, Item, Label, Input, Button } from 'native-base'
 import { THEME_COLOR } from '@assets/colors';
@@ -51,9 +51,19 @@ export default class Login extends Component {
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
                 <Content contentContainerStyle={styles.contentPadding}>
                     <View style={styles.formContainer}>
-                        <H1 style={styles.title}>Help Me Help You</H1>
+                        {/* <H1 style={styles.title}>Help Me Help You</H1> */}
+                        <Image 
+                            source={require('@assets/img/logo.png')}
+                            resizeMethod='scale'
+                            style={{
+                                width: 300, 
+                                height: 138, 
+                                resizeMode: "contain", 
+                                alignSelf: 'center' 
+                            }}
+                        />
 
-                        <View style={styles.extra} />
+                        <View style={[styles.extra, { marginTop: 0 }]} />
 
                         <Form>
                             <Item rounded style={styles.roundedItem}>
