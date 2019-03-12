@@ -39,6 +39,7 @@ var styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 24,
         paddingBottom: 14,
+        color: 'rgb(41, 41, 54)',
     },
     smText: {
         fontWeight: '500',
