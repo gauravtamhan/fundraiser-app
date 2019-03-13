@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, SectionList, TouchableHighlight, Text, ActivityIndicator, StatusBar } from 'react-native';
+import { View, SectionList, TouchableHighlight, Text, ActivityIndicator, StatusBar, FlatList } from 'react-native';
 import { Container, Content, Button, Icon, H3, H2, List, ListItem, Body, Card, CardItem, } from 'native-base';
+import TaskCard from '@components/TaskCard';
 import { auth, database, provider } from '../../firebase';
 import { THEME_COLOR, BG_COLOR } from '@assets/colors';
 import styles from '@assets/styles';
@@ -29,13 +30,14 @@ export default class AllTasks extends Component {
                         key: task.key,
                         title: task.val().title,
                         description: task.val().description,
-                        amount: (+task.val().amount).toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
-                        date: new Date(task.val().date).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }),
+                        amount: (+task.val().amount),
+                        date: new Date(task.val().date), //.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }),
                         isActive: task.val().isActive,
-                        completionDate: new Date(task.val().completionDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                        completionDate: new Date(task.val().completionDate),
                         address: task.val().address,
                         city: task.val().city,
                         state: task.val().state,
+                        category: task.val().category,
                     });
                 });
 
@@ -52,62 +54,14 @@ export default class AllTasks extends Component {
         });
     }
 
-    groupBy(objectArray, property) {
-        return objectArray.reduce(function (acc, obj) {
-            var key = obj[property];
-            if (!acc[key]) {
-                acc[key] = [];
-            }
-            acc[key].push(obj);
-            return acc;
-        }, {});
-    }
-
-    createSections(x) {
-        let obj = this.groupBy(x, 'isActive')
-
-        const resultArray = []
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                resultArray.push({ title: (key == 'true' ? 'Active Tasks' : 'Inactive Tasks'), data: obj[key] })
-            }
-        }
-        return resultArray;
-    }
-
-    renderSectionHeader({ section: { title } }) {
-        return (
-            <View style={styles.taskListHeader}>
-                <Text style={styles.taskListHeaderText}>{title.toUpperCase()}</Text>
-            </View>
-        )
-    }
-
     renderItem({ item, index }) {
         return (
-            <TouchableHighlight key={index} style={{ flex: 1, backgroundColor: 'white' }} underlayColor={'#DDD'} onPress={() => {
-                // this.props.navigation.navigate('TaskDetails', { item })
-                console.log('good job')
-            }}>
-                <View style={styles.card}>
-                    <View style={styles.cardHeader}>
-                        <Text style={styles.cardHeaderText}>{item.title}</Text>
-                        <Text style={styles.cardHeaderDate}>{item.date}</Text>
-                    </View>
-                    <View style={styles.cardBody}>
-                        <Text style={styles.cardBodyText}>{item.description}</Text>
-                    </View>
-                    <View style={styles.cardFooter}>
-                        <Text style={styles.cardAmount}>{item.amount}</Text>
-                    </View>
-                </View>
-            </TouchableHighlight>
+            <TaskCard key={index} data={item} onPress={() => { this.props.navigation.navigate('RequestTaskModal', { item }) }} />
         )
     }
 
     render() {
         const { data } = this.state;
-        const section_data = this.createSections(data);
 
         return (
             <Container style={{ backgroundColor: BG_COLOR }}>
@@ -117,20 +71,19 @@ export default class AllTasks extends Component {
                             <ActivityIndicator size="large" />
                         </View>
                     ) : (
-                            <SectionList
+                            <FlatList 
+                                data={data}
                                 showsVerticalScrollIndicator={false}
-                                sections={section_data}
-                                ListHeaderComponent={() => <View style={{ height: 30 }} />}
-                                renderSectionHeader={this.renderSectionHeader.bind(this)}
-                                renderSectionFooter={() => <View style={{ height: 30 }} />}
+                                keyExtractor={(item, index) => item.title + index}
                                 renderItem={this.renderItem.bind(this)}
                                 ItemSeparatorComponent={({ highlighted }) => <View style={styles.listSeparator} />}
-                                SectionSeparatorComponent={({ trailingItem, section }) => trailingItem ? null : <View style={styles.listSeparator} />}
-                                keyExtractor={(item, index) => item.title + index}
+                                // ListHeaderComponent={
+                                //     <View style={[styles.listSeparator, { marginTop: 80 }]} />
+                                // }
                                 ListEmptyComponent={
                                     <View style={{ flex: 1, height: 220, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
-                                        <Text style={styles.bigText}>No Tasks Posted</Text>
-                                        <Text style={[styles.smText, { textAlign: 'center' }]}>To post a task, tap the plus button in the top right.</Text>
+                                        <Text style={styles.bigText}>No Tasks Available</Text>
+                                        <Text style={[styles.smText, { textAlign: 'center' }]}>As tasks get posted, they will appear here.</Text>
                                     </View>
                                 }
                             />

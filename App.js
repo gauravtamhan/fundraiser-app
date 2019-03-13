@@ -16,6 +16,7 @@ import Loading from './src/screens/Auth/Loading';
 import Login from './src/screens/Auth/Login';
 import Signup from './src/screens/Auth/Signup';
 import AddTaskModal from './src/screens/Modals/AddTaskModal';
+import RequestTaskModal from './src/screens/Modals/RequestTaskModal';
 import { THEME_COLOR } from '@assets/colors';
 import styles from '@assets/styles';
 
@@ -220,7 +221,10 @@ const FundraiserStack = createStackNavigator(
     {
         Main: {
             screen: FundraiserTabs
-        }
+        },
+        RequestTaskModal: {
+            screen: RequestTaskModal,
+        },
     },
     {
         mode: 'modal',
