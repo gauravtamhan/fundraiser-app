@@ -31,6 +31,16 @@ export default class AddTaskModal extends Component {
         database.ref('requests').push({
             tasksID: item.key,
             requesterID: this.currentUser.uid,
+        }, (error) => {
+            if (error) {
+                // Error saving data
+                this.hideLoader();
+                this.raiseAlert('Could Not Make Request', error.toString().substring(6))
+            } else {
+                // Data save successful
+                this.hideLoader();
+                this.closeModal();
+            }
         })
         this.props.navigation.goBack()
     }
