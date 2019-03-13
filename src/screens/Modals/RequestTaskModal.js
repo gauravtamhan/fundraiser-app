@@ -23,6 +23,18 @@ export default class AddTaskModal extends Component {
         this.props.navigation.goBack()
     }
 
+    requestModal() {
+        console.log("hi");
+        const { navigation } = this.props;
+        const item = navigation.getParam('item');
+        console.log(item.key);
+        database.ref('requests').push({
+            tasksID: item.key,
+            requesterID: this.currentUser.uid,
+        })
+        this.props.navigation.goBack()
+    }
+
     render() {
         const { navigation } = this.props;
         const item = navigation.getParam('item');
@@ -51,7 +63,7 @@ export default class AddTaskModal extends Component {
                     <Button rounded style={styles.roundedBtnSecondary} onPress={this.closeModal.bind(this)}>
                         <Text style={styles.buttonTextSecondary}>Cancel</Text>
                     </Button>
-                    <Button rounded style={[styles.roundedBtn, {marginLeft: 25}]} onPress={() => { console.log('hi') }}>
+                    <Button rounded style={[styles.roundedBtn, {marginLeft: 25}]} onPress={this.requestModal.bind(this)}>
                         <Text style={styles.buttonText}>Request</Text>
                     </Button>
                 </View>
