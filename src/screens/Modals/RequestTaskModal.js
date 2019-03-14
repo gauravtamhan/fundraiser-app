@@ -49,7 +49,7 @@ export default class AddTaskModal extends Component {
                 </View>
                 <View style={{ flex: 3, flexDirection: 'row', justifyContent: 'center' }}>
                     <Button rounded style={styles.roundedBtnSecondary} onPress={this.closeModal.bind(this)}>
-                        <Text style={styles.buttonTextSecondary}>Cancel</Text>
+                        <Text style={styles.buttonTextSecondary}>Dismiss</Text>
                     </Button>
                     <Button rounded style={[styles.roundedBtn, {marginLeft: 25}]} onPress={() => { console.log('hi') }}>
                         <Text style={styles.buttonText}>Request</Text>

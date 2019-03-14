@@ -1,6 +1,9 @@
 import { StyleSheet } from 'react-native';
 import { THEME_COLOR, BG_COLOR } from '@assets/colors';
 
+// const borderColor = '#dfe1e5'
+const borderColor = '#ccc'
+
 var styles = StyleSheet.create({
 
     /*=================================================
@@ -155,6 +158,59 @@ var styles = StyleSheet.create({
         height: 0.5,
         backgroundColor: 'rgb(194,193,196)',
     },
+
+    /*=================================================
+                Request Card Styles
+    ==================================================*/
+
+    requestCard: {
+        backgroundColor: "#fff",
+        borderWidth: 0.5,
+        borderColor: borderColor,
+        borderRadius: 4,
+        elevation: 3,
+        marginVertical: 5,
+        marginHorizontal: 10,
+        shadowColor: "#000",
+        // shadowOffset: { height: 2, width: 0 },
+        // shadowOpacity: 0.1,
+        // shadowRadius: 1.5,
+
+        shadowOffset: { height: 1, width: 0 },
+        shadowRadius: 1,
+        shadowOpacity: 0.12,
+
+        flex: 1,
+    },
+    requestCardBody: {
+        paddingHorizontal: 16,
+        paddingVertical: 18,
+    },
+    requestCardHeaderRow: { 
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+    },
+    requestCardFooterRow: {
+        height: 48,
+        flexDirection: 'row',
+        borderTopWidth: 0.5,
+        borderColor: borderColor,
+    },
+    requestCardFooterBtn: { 
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    requestCardBtnSeparator: { 
+        width: 0.5,
+        backgroundColor: borderColor,
+    },
+    cardRating: {
+        fontSize: 13,
+        color: 'rgba(89, 89, 89, 0.5)',
+    }
 
 })
 

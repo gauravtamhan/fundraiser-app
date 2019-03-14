@@ -168,6 +168,7 @@ export default class AddTaskModal extends Component {
                                     <Icon name='card' style={{ color: '#9b9b9f' }} />
                                     <Input
                                         placeholder={'Amount'}
+                                        maxLength={6}
                                         placeholderTextColor={'#9b9b9f'}
                                         value={this.state.amount}
                                         keyboardType={'number-pad'}

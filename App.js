@@ -51,6 +51,7 @@ const TasksTab = createStackNavigator(
             screen: Tasks,
             navigationOptions: {
                 title: 'My Tasks',
+                headerBackTitle: 'Back'
             },
         },
         TaskDetails: {
