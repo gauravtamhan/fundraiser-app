@@ -12,5 +12,7 @@ const c = {
 
 export const THEME_COLOR = c.lyft;
 
-export const BG_COLOR = 'rgb(252, 252, 252)';
+// export const BG_COLOR = 'rgb(252, 252, 252)';
+
+export const BG_COLOR = '#fff';
 

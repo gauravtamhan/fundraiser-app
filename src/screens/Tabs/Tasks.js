@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, SectionList, TouchableHighlight, Text, ActivityIndicator } from 'react-native';
 import { Container, Content, Button, Icon, H3, H2, List, ListItem, Body, Card, CardItem, } from 'native-base';
+import TaskCard from '@components/TaskCard';
 import { auth, database, provider } from '../../firebase';
 import { THEME_COLOR, BG_COLOR } from '@assets/colors';
 import styles from '@assets/styles';
@@ -43,13 +44,14 @@ export default class Tasks extends Component {
                         key: task.key,
                         title: task.val().title,
                         description: task.val().description,
-                        amount: (+task.val().amount).toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
-                        date: new Date(task.val().date).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }),
+                        amount: (+task.val().amount),
+                        date: new Date(task.val().date),
                         isActive: task.val().isActive,
-                        completionDate: new Date(task.val().completionDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                        completionDate: new Date(task.val().completionDate),
                         address: task.val().address,
                         city: task.val().city,
                         state: task.val().state,
+                        category: task.val().category,
                     });
                 });
 
@@ -103,22 +105,7 @@ export default class Tasks extends Component {
 
     renderItem({ item, index }) {
         return (
-            <TouchableHighlight key={index} style={{ flex: 1, backgroundColor: 'white' }} underlayColor={'#DDD'} onPress={() => {
-                this.props.navigation.navigate('TaskDetails', {item})
-            }}>
-                <View style={styles.card}>
-                    <View style={styles.cardHeader}>
-                        <Text style={styles.cardHeaderText}>{item.title}</Text>
-                        <Text style={styles.cardHeaderDate}>{item.date}</Text>
-                    </View>
-                    <View style={styles.cardBody}>
-                        <Text style={styles.cardBodyText}>{item.description}</Text>
-                    </View>
-                    <View style={styles.cardFooter}>
-                        <Text style={styles.cardAmount}>{item.amount}</Text>
-                    </View>
-                </View>
-            </TouchableHighlight>
+            <TaskCard key={index} data={item} onPress={() => { this.props.navigation.navigate('TaskDetails', { item }) }}/>
         )
     }
 

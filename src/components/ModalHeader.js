@@ -11,15 +11,22 @@ export default class ModalHeader extends Component {
     }
 
     render() {
-        const { title, onPress } = this.props;
+        const { title, onPress, noBtn } = this.props;
 
         return (
             <SafeAreaView>
                 <View>
-                    <Button transparent onPress={() => onPress()}>
-                        {/* <Text style={{ fontWeight: '500', color: THEME_COLOR }}>Close</Text> */}
-                        <Icon name="close-circle-outline" style={{ color: THEME_COLOR, fontSize: 26 }} />
-                    </Button>
+                    {
+                        noBtn ? (
+                            <View style={{ height: 80 }}/>
+                        ) : (
+                            <Button transparent onPress={() => onPress()}>
+                                {/* <Text style={{ fontWeight: '500', color: THEME_COLOR }}>Close</Text> */}
+                                <Icon name="close-circle-outline" style={{ color: THEME_COLOR, fontSize: 26 }} />
+                            </Button>
+                        )
+                    }
+                    
                     <H1 style={[styles.title, { paddingVertical: 10 }]}>{title}</H1>
                 </View>
             </SafeAreaView>

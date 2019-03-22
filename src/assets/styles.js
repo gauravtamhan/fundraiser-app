@@ -39,6 +39,7 @@ var styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 24,
         paddingBottom: 14,
+        color: 'rgb(41, 41, 54)',
     },
     smText: {
         fontWeight: '500',
@@ -117,39 +118,20 @@ var styles = StyleSheet.create({
     card: { 
         backgroundColor: 'transparent',
         flex: 1,
+        flexDirection: 'row',
         padding: 16,
     },
-    cardHeader: {
-        flexDirection: 'row',
-    },
     cardHeaderText: {
-        flex: 4,
-        fontSize: 18,
+        fontSize: 17,
         color: 'rgb(41, 41, 54)',
-        fontWeight: '700',
-    },
-    cardHeaderDate: {
-        flex: 1,
-        textAlign: 'right',
-        fontSize: 14,
-        fontWeight: '500',
-        color: '#9B9FAA',
-    },
-    cardBody: { 
-        paddingVertical: 12, 
-        paddingRight: 35,
+        fontWeight: '600',
+        marginBottom: 6,
     },
     cardBodyText: {
-        color: 'rgba(50, 50, 62, 0.8)',
-        fontSize: 15,
-        lineHeight: 20
-    },
-    cardFooter: { 
-        paddingTop: 10
-    },
-    cardAmount: { 
-        fontSize: 18,
-        color: 'rgb(74, 168, 21)',
+        color: 'rgb(32, 33, 36)',
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: '400',
     },
 
     /*=================================================

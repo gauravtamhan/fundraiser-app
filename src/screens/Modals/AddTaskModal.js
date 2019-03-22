@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator, Alert, Platform } from 'react-native';
+import { View, ActivityIndicator, Alert, Platform, TouchableOpacity } from 'react-native';
 import { 
     Container, Content, Button, Item, Icon, Input, 
-    Text, Form, Textarea, DatePicker, Picker 
+    Text, Form, Textarea, Picker 
 } from 'native-base'
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import { THEME_COLOR } from '@assets/colors';
 import states from '@assets/states';
+import categories from '@assets/categories';
 import styles from '@assets/styles';
 import { auth, database, provider } from '../../firebase';
 import ModalHeader from '@components/ModalHeader';
@@ -21,8 +23,10 @@ export default class AddTaskModal extends Component {
             address: '',
             city: '', 
             selectedState: undefined,
+            selectedCategory: undefined,
             loaderVisible: false,
             completionDate: undefined,
+            datePickerVisible: false,
         };
         this.currentUser = auth.currentUser;
         this.setDate = this.setDate.bind(this);
@@ -38,8 +42,17 @@ export default class AddTaskModal extends Component {
         this.setState({ loaderVisible: false });
     }
 
+    showDatePicker = () => {
+        this.setState({ datePickerVisible: true })
+    }
+
+    hideDatePicker = () => {
+        this.setState({ datePickerVisible: false })
+    }
+
     setDate(newDate) {
         this.setState({ completionDate: newDate });
+        this.hideDatePicker()
     }
 
     raiseAlert(title, msg) {
@@ -52,8 +65,12 @@ export default class AddTaskModal extends Component {
         });
     }
 
+    handleSelectedCategory(value) {
+        this.setState({ selectedCategory: value })
+    }
+
     handlePost() {
-        const { title, description, amount, completionDate, address, city, selectedState  } = this.state;
+        const { title, description, amount, completionDate, address, city, selectedState, selectedCategory  } = this.state;
 
         this.showLoader();
 
@@ -68,6 +85,7 @@ export default class AddTaskModal extends Component {
             address: address,
             city: city,
             state: selectedState,
+            category: selectedCategory,
         }, (error) => {
             if (error) {
                 // Error saving data
@@ -114,32 +132,45 @@ export default class AddTaskModal extends Component {
                                     value={this.state.description}
                                     onChangeText={(description) => this.setState({ description })}
                                 />
-                                
-
-                                <Item rounded style={[styles.roundedItem, { height: 50, marginTop: 40 }]}>
-                                    <Icon name='calendar' style={{ color: '#9b9b9f' }} />
-                                    <DatePicker
-                                        defaultDate={new Date()}
-                                        minimumDate={new Date()}
-                                        locale={"en_US"}
-                                        formatChosenDate={date => (new Date(date)).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                                        timeZoneOffsetInMinutes={undefined}
-                                        modalTransparent={false}
-                                        animationType={Platform.OS === 'ios' ? 'slide' : 'fade'}
-                                        androidMode={"default"}
-                                        placeHolderText="Completion Date"
-                                        textStyle={{ fontSize: 17 }}
-                                        placeHolderTextStyle={{ color: "#9b9b9f", fontSize: 17 }}
-                                        onDateChange={this.setDate}
-                                    />
+                                <Item rounded style={styles.roundedItem}>
+                                    <Picker
+                                        note
+                                        mode="dropdown"
+                                        style={{ width: 300 }}
+                                        headerBackButtonText={'Close'}
+                                        textStyle={{ fontSize: 17, color: '#000', paddingLeft: 8 }}
+                                        placeholder={'Category'}
+                                        placeholderStyle={{ fontSize: 17, color: '#9b9b9f', paddingLeft: 8 }}
+                                        headerBackButtonTextStyle={{ color: THEME_COLOR }}
+                                        selectedValue={this.state.selectedCategory}
+                                        onValueChange={this.handleSelectedCategory.bind(this)}
+                                    >
+                                        {categories.map((x, i) =>
+                                            <Picker.Item key={i} label={x.name} value={x.name} />
+                                        )}
+                                    </Picker>
                                 </Item>
+
+                                <TouchableOpacity 
+                                    rounded 
+                                    style={[styles.roundedItem, { height: 50, marginTop: 40, flexDirection: 'row', alignItems: 'center', }]} 
+                                    onPress={this.showDatePicker}>
+                                    <Icon name='calendar' style={{ color: '#9b9b9f', fontSize: 24, paddingLeft: 10, paddingRight: 16 }} />
+                                    <Text>
+                                        {this.state.completionDate ? (
+                                        <Text style={{ fontSize: 17 }}>{this.state.completionDate.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', year: 'numeric', month: 'long', day: 'numeric' })}</Text>
+                                        ) : (
+                                            <Text style={{ color: "#9b9b9f", fontSize: 17 }}>Completion Date/Time</Text>
+                                        )}
+                                    </Text>
+                                </TouchableOpacity>
                                 <Item rounded style={styles.roundedItem}>
                                     <Icon name='card' style={{ color: '#9b9b9f' }} />
                                     <Input
                                         placeholder={'Amount'}
                                         placeholderTextColor={'#9b9b9f'}
                                         value={this.state.amount}
-                                        keyboardType={'decimal-pad'}
+                                        keyboardType={'number-pad'}
                                         clearButtonMode={'while-editing'}
                                         autoCorrect
                                         onChangeText={(amount) => this.setState({ amount })}
@@ -200,6 +231,15 @@ export default class AddTaskModal extends Component {
 
                         </View>
                     </Content>
+
+                    <DateTimePicker
+                        isVisible={this.state.datePickerVisible}
+                        minimumDate={new Date()}
+                        mode="datetime"
+                        onConfirm={this.setDate}
+                        onCancel={this.hideDatePicker}
+                    />
+
             </Container>
         )
     }
