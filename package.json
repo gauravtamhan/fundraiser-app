@@ -12,6 +12,7 @@
     "ejs": "^2.6.1",
     "events": "^3.0.0",
     "expo": "^32.0.0",
+    "expokit": "^32.0.7",
     "express": "^4.16.4",
     "file-system": "^2.2.2",
     "firebase": "^5.8.3",
