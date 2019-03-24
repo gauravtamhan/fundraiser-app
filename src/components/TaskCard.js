@@ -18,7 +18,10 @@ export default class TaskCard extends Component {
                 <View style={styles.card}>
                     <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between',  }}>
                         <View style={{ borderWidth: 2, width: 70, height: 70, justifyContent: 'center', alignItems: 'center', borderColor: THEME_COLOR, borderRadius: 1000 }}>
-                            <Text style={{
+                            <Text 
+                                adjustsFontSizeToFit
+                                numberOfLines={1}
+                                style={{
                                 fontSize: 20,
                                 color: 'rgb(41, 41, 54)',
                                 fontWeight: '700',

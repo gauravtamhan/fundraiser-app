@@ -1,11 +1,25 @@
 import React, { Component } from 'react';
-import { View, Alert } from 'react-native';
-import { Button, Text, H1, Container, Content, List, ListItem, Left, Body, Icon, Right } from 'native-base';
+import { View, Alert, FlatList, TouchableOpacity } from 'react-native';
+import { Button, Text, Content, Icon } from 'native-base';
+import TaskCard from '@components/TaskCard';
 import { auth, database, provider } from '../../firebase';
 import { THEME_COLOR } from '@assets/colors';
-import styles from '../../assets/styles';
+import styles from '@assets/styles';
 
 export default class TaskDetails extends Component {
+
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerRight: (
+                <Button
+                    transparent
+                    onPress={navigation.getParam('handleDelete')}
+                >
+                    <Icon name="trash" style={{ color: THEME_COLOR, fontSize: 26 }} />
+                </Button>
+            ),
+        };
+    };
 
     constructor(props) {
         super(props);
@@ -13,7 +27,14 @@ export default class TaskDetails extends Component {
         this.currentUser = auth.currentUser;
     }
 
-    handleDelete = (item) => {
+    componentDidMount() {
+        this.props.navigation.setParams({ handleDelete: this.handleDelete });
+    }
+
+    handleDelete = () => {
+        const { navigation } = this.props;
+        const item = navigation.getParam('item');
+
         Alert.alert(
             'Confirm Delete',
             `"${item.title}" will no longer be public and will be removed from your tasks.`,
@@ -38,53 +59,100 @@ export default class TaskDetails extends Component {
         });
     }
 
-    render() {
-        const { navigation } = this.props;
-        const item = navigation.getParam('item');
-        const rows = [
-            {
-                icon: 'card',
-                header: 'Donation',
-                body: 'Amount to pay is ' + item.amount, 
-            },
-            {
-                icon: 'calendar', 
-                header: 'Date',
-                body: 'Task to be completed on ' + item.completionDate,
-            }, 
-            {
-                icon: 'navigate',
-                header: 'Location',
-                body: item.address + '\n' + item.city + ', ' + item.state,
-            }
-        ];
+    renderListHeader(item) {
+        console.log(item)
+        return (
+            <View style={{ marginTop: 40, paddingHorizontal: 16 }}>
+                <Text style={styles.bigText}>Requests ()</Text>
+            </View>
+        )
+    }
 
-        const renderRows = rows.map((x, i) => 
-            <View key={i} style={{ flexDirection: 'row', flex: 1, paddingBottom: 30 }}>
-                <Icon name={x.icon} style={{ color: '#484848', fontSize: 22 }} />
-                <View style={{ paddingLeft: 20 }}>
-                    <Text style={[styles.smText, { fontWeight: '600', lineHeight: 24 }]}>{x.header}</Text>
-                    <Text style={[styles.cardBodyText, { lineHeight: 24 }]}>{x.body}</Text>
+    renderItem({ item, index }) {
+        return (
+            <View key={index} style={styles.requestCard}>
+                <View style={styles.requestCardBody}>
+                    <View style={styles.requestCardHeaderRow}>
+                        <Text style={styles.cardHeaderText}>{item.name}</Text>
+                        <Text style={styles.cardRating}>{item.rating} Stars</Text>
+                    </View>
+
+                    <Text style={[styles.cardBodyText, { marginTop: 4, fontSize: 15, }]}>{item.bio}</Text>
+                </View>
+                <View style={styles.requestCardFooterRow}>
+                    <TouchableOpacity style={styles.requestCardFooterBtn} onPress={() => { console.log('declined') }}>
+                        <Text style={[styles.taskListHeaderText, { color: THEME_COLOR }]}>DECLINE</Text>
+                    </TouchableOpacity>
+                    
+                    <View style={styles.requestCardBtnSeparator} />
+                    
+                    <TouchableOpacity style={styles.requestCardFooterBtn} onPress={() => { console.log('accepted') }}>
+                        <Text style={[styles.taskListHeaderText, { color: THEME_COLOR }]}>ACCEPT</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         )
+    }
+
+    render() {
+        const { navigation } = this.props;
+        const item = navigation.getParam('item');
+
+        const fakeData = [
+            {
+                name: 'Jose Smith',
+                bio: 'I am an honest working, young boy scout who is just trying to make it in this world. With the money, I will fund my college education.',
+                rating: 4.9
+            },
+            {
+                name: 'Bob Nellis',
+                bio: 'This is a post right here',
+                rating: 4.1
+            },
+            {
+                name: 'Sarah Williams',
+                bio: 'Gimme that task boy. This is some dummy text, see how it goes? Yeah its great!',
+                rating: 4.1
+            },
+        ]
 
         return (
-            <Content contentContainerStyle={{padding: 20}}>
-                <View style={{paddingTop: 26, paddingBottom: 40}}>
-                    <Text style={styles.bigText}>{item.title}</Text>
-                    <Text style={styles.cardBodyText}>{item.description}</Text>
+            <Content showsVerticalScrollIndicator={false}>
+                <View style={{
+                    paddingHorizontal: 16,
+                    paddingVertical: 20,
+                }}>
+                    <Text style={styles.taskListHeaderText}>POSTED ON {item.date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</Text>
                 </View>
-                <View style={styles.listSeparator} />
-                <View style={{paddingVertical: 30}}>
-                    {renderRows}
+                <View style={{
+                    height: 200,
+                    borderTopWidth: 0.5,
+                    borderBottomWidth: 0.5,
+                    borderColor: 'rgb(194,193,196)',
+                }}>
+                    <TaskCard data={item} />
                 </View>
-                <View style={styles.listSeparator} />
-                <View style={{ marginTop: 40 }}>
-                    <Button rounded style={styles.roundedBtnSecondary} onPress={() => { this.handleDelete(item) }}>
-                        <Text style={styles.buttonTextSecondary}>Delete Task</Text>
-                    </Button>
-                </View>
+
+                <FlatList
+                    data={fakeData}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={(item, index) => item.name + index}
+                    renderItem={this.renderItem.bind(this)}
+                    ListHeaderComponent={
+                        <View style={{ marginTop: 40, paddingHorizontal: 16 }}>
+                            <Text style={styles.bigText}>Requests {fakeData.length > 0 ? '(' + fakeData.length + ')' : ''}</Text>
+                        </View>
+                    }
+                    ListEmptyComponent={
+                        <View style={{ flex: 1, height: 80, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
+                            <Text style={[styles.smText, { textAlign: 'center', opacity: 0.6 }]}>No Active Requests.</Text>
+                        </View>
+                    }
+                    ListFooterComponent={
+                        <View style={{ height: 20 }} />
+                    }
+                />
+
 
             </Content>
         );
