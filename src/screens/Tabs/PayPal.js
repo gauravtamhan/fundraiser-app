@@ -5,19 +5,46 @@ import { THEME_COLOR } from '@assets/colors';
 import { auth, database, provider } from '../../firebase';
 import styles from '@assets/styles';
 
+import { DangerZone } from 'expo';
+const { Stripe } = DangerZone;
+
 export default class PayPal extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            data: '',
-        };
+        this.state = {data: '', token: ''};
     }
 
-    onSubmit() {
-        const { data } = this.state;
+    async componentWillMount() {
+        await Stripe.setOptionsAsync({
+            publishableKey: 'pk_test_vMkp9tb9CAfaBwDMQBkwYVqC', // Your key
+            //androidPayMode: 'test', // [optional] used to set wallet environment (AndroidPay)
+            //merchantId: 'your_merchant_id', // [optional] used for payments with ApplePay
+          });
+    }
 
-        console.log('Data is:', data);
+    async onSubmit() {
+
+        const params = {
+            // mandatory
+            number: '4242424242424242',
+            expMonth: 11,
+            expYear: 22,
+            cvc: '223',
+            // optional
+            name: 'Test User',
+            currency: 'usd',
+            addressLine1: '123 Test Street',
+            addressLine2: 'Apt. 5',
+            addressCity: 'Test City',
+            addressState: 'Test State',
+            addressCountry: 'Test Country',
+            addressZip: '55555',
+          };
+          
+          let token = await Stripe.createTokenWithCardAsync(params);
+          let tokendata = await JSON.stringify(token);
+          this.setState({token:tokendata})
     }
 
     // Example of a working input and submit button provided below. 
@@ -50,6 +77,7 @@ export default class PayPal extends Component {
                             </View>
 
                         </Form>
+                        <Text>{this.state.token}</Text>
 
                     </View>
                 </Content>
