@@ -23,26 +23,19 @@ export default class AddTaskModal extends Component {
         this.props.navigation.goBack()
     }
 
-    requestModal() {
-        console.log("hi");
+    handleRequest() {
         const { navigation } = this.props;
         const item = navigation.getParam('item');
-        console.log(item.key);
-        database.ref('requests').push({
-            tasksID: item.key,
+
+        database.ref(`requests/${item.key}`).push({
             requesterID: this.currentUser.uid,
-        }, (error) => {
-            if (error) {
-                // Error saving data
-                this.hideLoader();
-                this.raiseAlert('Could Not Make Request', error.toString().substring(6))
-            } else {
-                // Data save successful
-                this.hideLoader();
-                this.closeModal();
-            }
         })
-        this.props.navigation.goBack()
+
+        database.ref(`tasks/${item.key}`).update({
+            status: 1,
+        })
+        
+        this.closeModal()
     }
 
     render() {
@@ -57,7 +50,7 @@ export default class AddTaskModal extends Component {
 
                 </View>
                 <View style={{ 
-                    height: 200, 
+                    height: 230, 
                     borderWidth: 1,
                     borderColor: 'rgba(228, 228, 235, 0.2)',
                     // borderColor: 'transparent',
@@ -67,13 +60,13 @@ export default class AddTaskModal extends Component {
                     shadowOpacity: 0.15,
                     shadowRadius: 40,
                 }}>
-                    <TaskCard data={item} />
+                    <TaskCard fundraiser data={item} />
                 </View>
                 <View style={{ flex: 3, flexDirection: 'row', justifyContent: 'center' }}>
                     <Button rounded style={styles.roundedBtnSecondary} onPress={this.closeModal.bind(this)}>
                         <Text style={styles.buttonTextSecondary}>Dismiss</Text>
                     </Button>
-                    <Button rounded style={[styles.roundedBtn, {marginLeft: 25}]} onPress={this.requestModal.bind(this)}>
+                    <Button rounded style={[styles.roundedBtn, {marginLeft: 25}]} onPress={this.handleRequest.bind(this)}>
                         <Text style={styles.buttonText}>Request</Text>
                     </Button>
                 </View>

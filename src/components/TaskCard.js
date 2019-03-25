@@ -11,7 +11,7 @@ export default class TaskCard extends Component {
     }
 
     render() {
-        const { data, onPress } = this.props;
+        const { data, onPress, fundraiser } = this.props;
 
         return (
             <TouchableHighlight style={{ flex: 1, backgroundColor: 'white' }} underlayColor={'#DDD'} onPress={onPress}>
@@ -36,6 +36,12 @@ export default class TaskCard extends Component {
                         <View>
                             <Text style={styles.cardHeaderText}>{data.title}</Text>
                             <Text style={styles.cardBodyText}>{data.description}</Text>
+                            <View style={{ height: 30, justifyContent: 'flex-end'}}>
+                                {
+                                    data.status == 1 &&
+                                    <Text style={{ color: THEME_COLOR, letterSpacing: 1.02 }}>{fundraiser ? 'REQUESTED' : '1 REQUEST'}</Text>
+                                }
+                            </View>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginTop: 20}}>
                             <Text style={[styles.cardBodyText, { fontWeight: '500', color: 'rgb(89, 89, 89)', fontSize: 14 }]}>{data.category ? data.category : 'None'}  •</Text>
