@@ -104,16 +104,6 @@ export default class TaskDetails extends Component {
                 bio: 'I am an honest working, young boy scout who is just trying to make it in this world. With the money, I will fund my college education.',
                 rating: 4.9
             },
-            {
-                name: 'Bob Nellis',
-                bio: 'This is a post right here',
-                rating: 4.1
-            },
-            {
-                name: 'Sarah Williams',
-                bio: 'Gimme that task boy. This is some dummy text, see how it goes? Yeah its great!',
-                rating: 4.1
-            },
         ]
 
         return (
@@ -122,10 +112,10 @@ export default class TaskDetails extends Component {
                     paddingHorizontal: 16,
                     paddingVertical: 20,
                 }}>
-                    <Text style={styles.taskListHeaderText}>POSTED ON {item.date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</Text>
+                    <Text style={styles.taskListHeaderText}>POSTED ON {item.timestamp.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</Text>
                 </View>
                 <View style={{
-                    height: 200,
+                    height: 230,
                     borderTopWidth: 0.5,
                     borderBottomWidth: 0.5,
                     borderColor: 'rgb(194,193,196)',

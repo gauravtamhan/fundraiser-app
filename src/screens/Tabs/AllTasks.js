@@ -31,7 +31,8 @@ export default class AllTasks extends Component {
                         title: task.val().title,
                         description: task.val().description,
                         amount: (+task.val().amount),
-                        date: new Date(task.val().date), //.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }),
+                        timestamp: new Date(task.val().timestamp), //.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }),
+                        status: task.val().status,
                         isActive: task.val().isActive,
                         completionDate: new Date(task.val().completionDate),
                         address: task.val().address,
@@ -56,7 +57,7 @@ export default class AllTasks extends Component {
 
     renderItem({ item, index }) {
         return (
-            <TaskCard key={index} data={item} onPress={() => { this.props.navigation.navigate('RequestTaskModal', { item }) }} />
+            <TaskCard fundraiser key={index} data={item} onPress={() => { this.props.navigation.navigate('RequestTaskModal', { item }) }} />
         )
     }
 
