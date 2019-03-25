@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, Modal, WebView} from 'react-native';
+import {View, Text, TouchableOpacity, Modal, WebView, SafeAreaView} from 'react-native';
 import { THEME_COLOR } from '@assets/colors';
 import { auth, database, provider } from '../../firebase';
 import styles from '@assets/styles';
@@ -26,16 +26,19 @@ export default class PayPal extends Component {
         return(
         <View style={{ marginTop: 100 }}>
             <Modal
+                animationType="slide"
                 visible={this.state.showModal}
                 onRequestClose={() => this.setState({ showModal: false })}>
-                <WebView
-                    source={{ uri: "http://ec2-52-15-55-149.us-east-2.compute.amazonaws.com:3000" }}
-                    onNavigationStateChange={data =>
-                        this.handleResponse(data)
-                    }
-                    injectedJavaScript={
-                    'document.f1.submit()'}
-                />
+                <SafeAreaView style={{flex: 1}}>
+                    <WebView
+                        source={{ uri: "http://ec2-52-15-55-149.us-east-2.compute.amazonaws.com:3000" }}
+                        onNavigationStateChange={data =>
+                            this.handleResponse(data)
+                        }
+                        injectedJavaScript={
+                        'document.f1.submit()'}
+                    />
+                </SafeAreaView>
             </Modal>
             <TouchableOpacity
                 style={{ width: 300, height: 100 }}

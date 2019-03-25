@@ -81,6 +81,9 @@ export default class AllTasks extends Component {
                                 // ListHeaderComponent={
                                 //     <View style={[styles.listSeparator, { marginTop: 80 }]} />
                                 // }
+                                ListFooterComponent={
+                                    <View style={styles.listSeparator} />
+                                }
                                 ListEmptyComponent={
                                     <View style={{ flex: 1, height: 220, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
                                         <Text style={styles.bigText}>No Tasks Available</Text>
