@@ -22,17 +22,20 @@ export default class PayPal extends Component {
 
     render() { 
         var price = "20.00";
+        var fundraiseremail = "jcclark43-buyer2@gmail.com";
         return(
         <View style={{ marginTop: 100 }}>
             <Modal
                 visible={this.state.showModal}
                 onRequestClose={() => this.setState({ showModal: false })}>
                 <WebView
-                    source={{ uri: "http://ec2-18-191-173-246.us-east-2.compute.amazonaws.com:3000" }}
+                    source={{ uri: "http://ec2-52-15-55-149.us-east-2.compute.amazonaws.com:3000" }}
                     onNavigationStateChange={data =>
                         this.handleResponse(data)
                     }
-                    injectedJavaScript={`document.f1.submit()`}/>
+                    injectedJavaScript={
+                    'document.f1.submit()'}
+                />
             </Modal>
             <TouchableOpacity
                 style={{ width: 300, height: 100 }}
