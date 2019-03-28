@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Alert, FlatList, TouchableOpacity } from 'react-native';
+import { View, Alert, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Button, Text, Content, Icon } from 'native-base';
 import TaskCard from '@components/TaskCard';
 import { auth, database, provider } from '../../firebase';
@@ -23,12 +23,44 @@ export default class TaskDetails extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            requests: [],
+            loaderVisible: true,
+        }
         this.currentUser = auth.currentUser;
     }
 
     componentDidMount() {
         this.props.navigation.setParams({ handleDelete: this.handleDelete });
+        this.loadRequests();
+    }
+
+    loadRequests() {
+        const { navigation } = this.props;
+        const item = navigation.getParam('item');
+
+        database.ref(`requests/${item.key}`).on('value', (snapshot) => {
+            if (snapshot.exists()) {
+                var requests = [];
+                snapshot.forEach((req) => {
+                    database.ref(`users/${req.val().requesterID}`).on('value', (user) => {
+                        requests.push({
+                            name: user.val().name,
+                            bio: user.val().bio,
+                        })
+
+                        this.setState({
+                            requests: requests,
+                            loaderVisible: false
+                        })
+                    })
+                });
+            } else {
+                this.setState({
+                    loaderVisible: false
+                })
+            }
+        })
     }
 
     handleDelete = () => {
@@ -60,7 +92,6 @@ export default class TaskDetails extends Component {
     }
 
     renderListHeader(item) {
-        console.log(item)
         return (
             <View style={{ marginTop: 40, paddingHorizontal: 16 }}>
                 <Text style={styles.bigText}>Requests ()</Text>
@@ -74,7 +105,7 @@ export default class TaskDetails extends Component {
                 <View style={styles.requestCardBody}>
                     <View style={styles.requestCardHeaderRow}>
                         <Text style={styles.cardHeaderText}>{item.name}</Text>
-                        <Text style={styles.cardRating}>{item.rating} Stars</Text>
+                        {/* <Text style={styles.cardRating}>{item.rating} Stars</Text> */}
                     </View>
 
                     <Text style={[styles.cardBodyText, { marginTop: 4, fontSize: 15, }]}>{item.bio}</Text>
@@ -98,13 +129,7 @@ export default class TaskDetails extends Component {
         const { navigation } = this.props;
         const item = navigation.getParam('item');
 
-        const fakeData = [
-            {
-                name: 'Jose Smith',
-                bio: 'I am an honest working, young boy scout who is just trying to make it in this world. With the money, I will fund my college education.',
-                rating: 4.9
-            },
-        ]
+        const { requests } = this.state;
 
         return (
             <Content showsVerticalScrollIndicator={false}>
@@ -123,26 +148,33 @@ export default class TaskDetails extends Component {
                     <TaskCard data={item} />
                 </View>
 
-                <FlatList
-                    data={fakeData}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={(item, index) => item.name + index}
-                    renderItem={this.renderItem.bind(this)}
-                    ListHeaderComponent={
-                        <View style={{ marginTop: 40, paddingHorizontal: 16 }}>
-                            <Text style={styles.bigText}>Requests {fakeData.length > 0 ? '(' + fakeData.length + ')' : ''}</Text>
+                {
+                    this.state.loaderVisible ? (
+                        <View style={[styles.loaderContainer, { marginTop: 80 }]}>
+                            <ActivityIndicator size="large" />
                         </View>
-                    }
-                    ListEmptyComponent={
-                        <View style={{ flex: 1, height: 80, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
-                            <Text style={[styles.smText, { textAlign: 'center', opacity: 0.6 }]}>No Active Requests.</Text>
-                        </View>
-                    }
-                    ListFooterComponent={
-                        <View style={{ height: 20 }} />
-                    }
-                />
-
+                    ) : (
+                        <FlatList
+                            data={requests}
+                            showsVerticalScrollIndicator={false}
+                            keyExtractor={(item, index) => item.name + index}
+                            renderItem={this.renderItem.bind(this)}
+                            ListHeaderComponent={
+                                <View style={{ marginTop: 40, paddingHorizontal: 16 }}>
+                                    <Text style={styles.bigText}>Requests {requests.length > 0 ? '(' + requests.length + ')' : ''}</Text>
+                                </View>
+                            }
+                            ListEmptyComponent={
+                                <View style={{ flex: 1, height: 80, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
+                                    <Text style={[styles.smText, { textAlign: 'center', opacity: 0.6 }]}>No Active Requests.</Text>
+                                </View>
+                            }
+                            ListFooterComponent={
+                                <View style={{ height: 20 }} />
+                            }
+                        />
+                    )
+                }
 
             </Content>
         );

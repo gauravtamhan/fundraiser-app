@@ -29,11 +29,9 @@ export default class AddTaskModal extends Component {
         const { navigation } = this.props;
         const item = navigation.getParam('item');
 
-        database.ref().child(`requests/${item.key}`).once('value', (snapshot) => {
-            if (snapshot.exists()) {
-                this.setState({ btnDisabled: true })
-            }
-        });
+        if (item.isRequested) {
+            this.setState({ btnDisabled: true })
+        }
     }
 
     closeModal() {
@@ -51,6 +49,8 @@ export default class AddTaskModal extends Component {
         database.ref(`tasks/${item.key}`).update({
             status: 1,
         })
+
+        database.ref(`users/${this.currentUser.uid}/requestedTasks`).push(item.key)
         
         this.closeModal()
     }

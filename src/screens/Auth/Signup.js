@@ -33,9 +33,11 @@ export default class Signup extends Component {
         this.setState({ loaderVisible: false });
     }
 
-    writeUserData(userId, x) {
+    writeUserData(userId, isDonor, name, bio) {
         database.ref('users/' + userId).set({
-            isDonor: x
+            isDonor: isDonor,
+            name: name,
+            bio: bio,
         });
     }
 
@@ -46,7 +48,8 @@ export default class Signup extends Component {
             await auth.currentUser.updateProfile({
                 displayName: name
             })
-            await this.writeUserData(auth.currentUser.uid, isDonor)
+            const bio = 'A new organization looking to assist members within the community.'
+            await this.writeUserData(auth.currentUser.uid, isDonor, name, bio)
         } catch (e) {
             this.hideLoader();
             Alert.alert('Could Not Create Account', e.toString().substring(6))
