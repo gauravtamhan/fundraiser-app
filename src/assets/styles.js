@@ -74,6 +74,9 @@ var styles = StyleSheet.create({
         shadowOpacity: 0.2,
         justifyContent: 'center'
     },
+    roundedBtnDisabled: {
+        backgroundColor: 'rgba(0,0,0,.12)'
+    },
     roundedBtnSecondary: {
         alignSelf: 'center',
         backgroundColor: 'transparent',
@@ -96,6 +99,11 @@ var styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 19,
         color: '#FFF',
+    },
+    buttonTextDisabled: {
+        fontWeight: '700',
+        fontSize: 19,
+        color: 'rgba(0,0,0,.35)',
     },
     buttonTextSecondary: {
         fontWeight: '700',

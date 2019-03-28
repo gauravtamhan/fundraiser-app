@@ -15,8 +15,25 @@ export default class AddTaskModal extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            btnDisabled: false,
+        };
         this.currentUser = auth.currentUser;
+    }
+
+    componentDidMount() {
+        this.checkIfRequested();
+    }
+
+    checkIfRequested() {
+        const { navigation } = this.props;
+        const item = navigation.getParam('item');
+
+        database.ref().child(`requests/${item.key}`).once('value', (snapshot) => {
+            if (snapshot.exists()) {
+                this.setState({ btnDisabled: true })
+            }
+        });
     }
 
     closeModal() {
@@ -42,6 +59,8 @@ export default class AddTaskModal extends Component {
         const { navigation } = this.props;
         const item = navigation.getParam('item');
 
+        const { btnDisabled } = this.state;
+
         return (
             <Container style={{ flex: 1 }}>
                 <ModalHeader noBtn title="Request to Complete" onPress={this.closeModal.bind(this)} />
@@ -50,10 +69,11 @@ export default class AddTaskModal extends Component {
 
                 </View>
                 <View style={{ 
-                    height: 230, 
+                    flex: 0,
+                    flexGrow: 2,
+                    // height: 230, 
                     borderWidth: 1,
                     borderColor: 'rgba(228, 228, 235, 0.2)',
-                    // borderColor: 'transparent',
                     marginHorizontal: 6,
                     shadowColor: '#6C6C6C',
                     shadowOffset: { width: 0, height: 3 },
@@ -66,8 +86,14 @@ export default class AddTaskModal extends Component {
                     <Button rounded style={styles.roundedBtnSecondary} onPress={this.closeModal.bind(this)}>
                         <Text style={styles.buttonTextSecondary}>Dismiss</Text>
                     </Button>
-                    <Button rounded style={[styles.roundedBtn, {marginLeft: 25}]} onPress={this.handleRequest.bind(this)}>
-                        <Text style={styles.buttonText}>Request</Text>
+                    <Button rounded disabled={btnDisabled} style={[styles.roundedBtn, btnDisabled && styles.roundedBtnDisabled,  {marginLeft: 25}]} onPress={this.handleRequest.bind(this)}>
+                        {
+                            btnDisabled ? (
+                                <Text style={styles.buttonTextDisabled}>Requested</Text>        
+                            ) : (
+                                <Text style={styles.buttonText}>Request</Text>
+                            )
+                        }
                     </Button>
                 </View>
                 
