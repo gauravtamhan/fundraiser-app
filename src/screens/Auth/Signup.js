@@ -62,11 +62,13 @@ export default class Signup extends Component {
 
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-                <Content contentContainerStyle={styles.contentPadding}>
-                    <View style={styles.formContainer}>
+                <Content contentContainerStyle={[styles.contentPadding, { flex: 1 }]}>
+                    <View style={{ flex: 1, justifyContent: 'center' }}>
                         <H1 style={styles.title}>Create an Account</H1>
+                    </View>
 
-                        <Form style={{marginTop: 50}}>
+                    <View style={{ flex: 4, justifyContent: 'space-between' }}>
+                        <Form style={{marginTop: 20}}>
                             <View style={{marginBottom: 50}}>
                                 <Segment style={{ backgroundColor: 'transparent' }}>
                                     <Button
@@ -134,21 +136,19 @@ export default class Signup extends Component {
                                     onChangeText={(password) => this.setState({ password })}
                                 />
                             </Item>
-                            <View style={styles.extra}>
-                                {
-                                    this.state.loaderVisible ? (
-                                        <ActivityIndicator size="large" color="#000" />
-                                    ) : null
-                                }
-                            </View>
-                            <View style={styles.bmContainer}>
-                                <Button rounded style={styles.roundedBtn} onPress={this.onSubmit.bind(this)}>
-                                    <Text style={styles.buttonText}>Create Account</Text>
-                                </Button>
-                            </View>
                         </Form>
-
+                        {
+                            this.state.loaderVisible ? (
+                                <ActivityIndicator size="large" color="#000" />
+                            ) : null
+                        }
                     </View>
+                    <View style={{ flex: 2, justifyContent: 'center'}}>
+                        <Button rounded style={styles.roundedBtn} onPress={this.onSubmit.bind(this)}>
+                            <Text style={styles.buttonText}>Create Account</Text>
+                        </Button>
+                    </View>
+                    
                 </Content>
             </SafeAreaView>
         );

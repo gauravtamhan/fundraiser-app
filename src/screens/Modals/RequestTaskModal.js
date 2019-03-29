@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator, Alert, Platform, TouchableOpacity } from 'react-native';
+import { View, ActivityIndicator, Alert, Platform, TouchableOpacity, Dimensions } from 'react-native';
 import {
     Container, Content, Button, Item, Icon, Input,
     Text, Form, Textarea, Picker
@@ -7,7 +7,7 @@ import {
 import TaskCard from '@components/TaskCard';
 import { THEME_COLOR } from '@assets/colors';
 import styles from '@assets/styles';
-import { auth, database, provider } from '../../firebase';
+import { auth, database, provider } from '@src/firebase';
 import ModalHeader from '@components/ModalHeader';
 
 
@@ -70,7 +70,7 @@ export default class AddTaskModal extends Component {
                 </View>
                 <View style={{ 
                     flex: 0,
-                    flexGrow: 2,
+                    flexGrow: Dimensions.get("window").height >= 812 ? 2 : 3,
                     // height: 230, 
                     borderWidth: 1,
                     borderColor: 'rgba(228, 228, 235, 0.2)',

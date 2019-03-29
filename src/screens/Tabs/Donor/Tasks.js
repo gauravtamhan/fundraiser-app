@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, SectionList, TouchableHighlight, Text, ActivityIndicator } from 'react-native';
 import { Container, Content, Button, Icon, H3, H2, List, ListItem, Body, Card, CardItem, } from 'native-base';
 import TaskCard from '@components/TaskCard';
-import { auth, database, provider } from '../../firebase';
+import { auth, database, provider } from '@src/firebase';
 import { THEME_COLOR, BG_COLOR } from '@assets/colors';
 import styles from '@assets/styles';
 
