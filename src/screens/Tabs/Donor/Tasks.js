@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, SectionList, TouchableHighlight, Text, ActivityIndicator } from 'react-native';
+import { View, SectionList, FlatList, TouchableHighlight, Text, ActivityIndicator } from 'react-native';
 import { Container, Content, Button, Icon, H3, H2, List, ListItem, Body, Card, CardItem, } from 'native-base';
 import TaskCard from '@components/TaskCard';
 import { auth, database, provider } from '@src/firebase';
@@ -26,6 +26,7 @@ export default class Tasks extends Component {
         this.state = {
             data: [],
             loaderVisible: true,
+            refreshing: false,
         };
         this.currentUser = auth.currentUser;
     }
@@ -58,12 +59,14 @@ export default class Tasks extends Component {
 
                 this.setState({
                     data: tasks,
-                    loaderVisible: false
+                    loaderVisible: false,
+                    refreshing: false,
                 })
             } else {
                 this.setState({
                     data: [],
-                    loaderVisible: false
+                    loaderVisible: false,
+                    refreshing: false,
                 })
             }
         });
@@ -73,35 +76,43 @@ export default class Tasks extends Component {
         this.props.navigation.navigate('AddTaskModal')
     };
 
-    groupBy(objectArray, property) {
-        return objectArray.reduce(function (acc, obj) {
-            var key = obj[property];
-            if (!acc[key]) {
-                acc[key] = [];
-            }
-            acc[key].push(obj);
-            return acc;
-        }, {});
-    }
+    // groupBy(objectArray, property) {
+    //     return objectArray.reduce(function (acc, obj) {
+    //         var key = obj[property];
+    //         if (!acc[key]) {
+    //             acc[key] = [];
+    //         }
+    //         acc[key].push(obj);
+    //         return acc;
+    //     }, {});
+    // }
 
-    createSections(x) {
-        let obj = this.groupBy(x, 'isActive')
+    // createSections(x) {
+    //     let obj = this.groupBy(x, 'status')
 
-        const resultArray = []
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                resultArray.push({ title: (key == 'true' ? 'Active Tasks' : 'Inactive Tasks'), data: obj[key] })
-            }
-        }
-        return resultArray;
-    }
+    //     const resultArray = []
+    //     for (const key in obj) {
+    //         if (obj.hasOwnProperty(key)) {
+    //             resultArray.push({ title: (key == 0 ? 'Unclaimed Tasks' : 'Pending Tasks'), data: obj[key] })
+    //         }
+    //     }
+    //     return resultArray;
+    // }
 
-    renderSectionHeader({ section: { title }}) {
-        return (
-            <View style={styles.taskListHeader}>
-                <Text style={styles.taskListHeaderText}>{title.toUpperCase()}</Text>
-            </View>
-        )
+    // renderSectionHeader({ section: { title }}) {
+    //     return (
+    //         <View style={styles.taskListHeader}>
+    //             <Text style={styles.taskListHeaderText}>{title.toUpperCase()}</Text>
+    //         </View>
+    //     )
+    // }
+
+    handleRefresh = () => {
+        this.setState({
+            refreshing: true
+        }, () => {
+            this.listenForItems();
+        })
     }
 
     renderItem({ item, index }) {
@@ -112,7 +123,7 @@ export default class Tasks extends Component {
 
     render() {
         const { data } = this.state;
-        const section_data = this.createSections(data);
+        // const section_data = this.createSections(data);
 
         return (
             <Container style={{ backgroundColor: BG_COLOR }}>
@@ -122,23 +133,41 @@ export default class Tasks extends Component {
                             <ActivityIndicator size="large" />
                         </View>
                     ) : (
-                        <SectionList
-                            showsVerticalScrollIndicator={false}
-                            sections={section_data}
-                            ListHeaderComponent={() => <View style={{ height: 30 }} />}
-                            renderSectionHeader={this.renderSectionHeader.bind(this)}
-                            renderSectionFooter={() => <View style={{ height: 30 }} />}
-                            renderItem={this.renderItem.bind(this)}
-                            ItemSeparatorComponent={({ highlighted }) => <View style={styles.listSeparator} />}
-                            SectionSeparatorComponent={({ trailingItem, section }) => trailingItem ? null : <View style={styles.listSeparator} />}
-                            keyExtractor={(item, index) => item.title + index}
-                            ListEmptyComponent={
-                                <View style={{ flex: 1, height: 220, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
-                                    <Text style={styles.bigText}>No Tasks Posted</Text>
-                                    <Text style={[styles.smText, { textAlign: 'center' }]}>To post a task, tap the plus button in the top right.</Text>
-                                </View>
-                            }
-                        />
+                        // <SectionList
+                        //     showsVerticalScrollIndicator={false}
+                        //     sections={section_data}
+                        //     ListHeaderComponent={() => <View style={{ height: 30 }} />}
+                        //     renderSectionHeader={this.renderSectionHeader.bind(this)}
+                        //     renderSectionFooter={() => <View style={{ height: 30 }} />}
+                        //     renderItem={this.renderItem.bind(this)}
+                        //     ItemSeparatorComponent={({ highlighted }) => <View style={styles.listSeparator} />}
+                        //     SectionSeparatorComponent={({ trailingItem, section }) => trailingItem ? null : <View style={styles.listSeparator} />}
+                        //     keyExtractor={(item, index) => item.title + index}
+                        //     ListEmptyComponent={
+                        //         <View style={{ flex: 1, height: 220, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
+                        //             <Text style={styles.bigText}>No Tasks Posted</Text>
+                        //             <Text style={[styles.smText, { textAlign: 'center' }]}>To post a task, tap the plus button in the top right.</Text>
+                        //         </View>
+                        //     }
+                        // />
+                            <FlatList
+                                data={data}
+                                showsVerticalScrollIndicator={false}
+                                keyExtractor={(item, index) => item.title + index}
+                                renderItem={this.renderItem.bind(this)}
+                                ItemSeparatorComponent={({ highlighted }) => <View style={styles.listSeparator} />}
+                                ListFooterComponent={
+                                    <View style={data.length > 0 && styles.listSeparator} />
+                                }
+                                ListEmptyComponent={
+                                    <View style={{ flex: 1, height: 220, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
+                                        <Text style={styles.bigText}>No Tasks Posted</Text>
+                                        <Text style={[styles.smText, { textAlign: 'center' }]}>To post a task, tap the plus button in the top right.</Text>
+                                    </View>
+                                }
+                                refreshing={this.state.refreshing}
+                                onRefresh={this.handleRefresh}
+                            />
                         )
                 }
                 

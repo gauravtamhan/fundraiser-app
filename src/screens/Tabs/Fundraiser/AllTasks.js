@@ -105,9 +105,6 @@ export default class AllTasks extends Component {
                                 keyExtractor={(item, index) => item.title + index}
                                 renderItem={this.renderItem.bind(this)}
                                 ItemSeparatorComponent={({ highlighted }) => <View style={styles.listSeparator} />}
-                                // ListHeaderComponent={
-                                //     <View style={[styles.listSeparator, { marginTop: 80 }]} />
-                                // }
                                 ListFooterComponent={
                                     <View style={data.length > 0 && styles.listSeparator } />
                                 }

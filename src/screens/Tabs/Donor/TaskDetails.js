@@ -161,7 +161,9 @@ export default class TaskDetails extends Component {
                             renderItem={this.renderItem.bind(this)}
                             ListHeaderComponent={
                                 <View style={{ marginTop: 40, paddingHorizontal: 16 }}>
-                                    <Text style={styles.bigText}>Requests {requests.length > 0 ? '(' + requests.length + ')' : ''}</Text>
+                                    {   
+                                        requests.length > 0 && <Text style={styles.bigText}>Requests {requests.length > 0 ? '(' + requests.length + ')' : ''}</Text>
+                                    }
                                 </View>
                             }
                             ListEmptyComponent={
