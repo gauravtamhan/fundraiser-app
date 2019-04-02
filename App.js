@@ -7,11 +7,13 @@ import {
     createBottomTabNavigator 
 } from 'react-navigation';
 import { AppLoading } from 'expo';
-import Tasks from './src/screens/Tabs/Tasks';
-import AllTasks from './src/screens/Tabs/AllTasks';
-import PayPal from './src/screens/Tabs/PayPal';
-import TaskDetails from './src/screens/Tabs/TaskDetails';
-import Profile from './src/screens/Tabs/Profile';
+import Tasks from './src/screens/Tabs/Donor/Tasks';
+import AllTasks from './src/screens/Tabs/Fundraiser/AllTasks';
+import PayPal from './src/screens/Tabs/Donor/PayPal';
+import TaskDetails from './src/screens/Tabs/Donor/TaskDetails';
+import Profile from './src/screens/Tabs/Donor/Profile';
+import OrgProfile from './src/screens/Tabs/Fundraiser/OrgProfile';
+import EditBio from './src/screens/Tabs/Fundraiser/EditBio';
 import Loading from './src/screens/Auth/Loading';
 import Login from './src/screens/Auth/Login';
 import Signup from './src/screens/Auth/Signup';
@@ -129,6 +131,32 @@ const ProfileTab = createStackNavigator(
     }
 );
 
+const OrgProfileTab = createStackNavigator(
+    {
+        OrgProfile: {
+            screen: OrgProfile,
+            navigationOptions: {
+                title: 'Profile',
+                headerBackTitle: 'Back',
+            },
+        },
+        EditBio: {
+            screen: EditBio,
+            navigationOptions: {
+                title: 'Edit Bio',
+                headerTintColor: THEME_COLOR,
+            },
+        }
+    },
+    {
+        headerMode: 'float',
+        headerTransitionPreset: 'uikit',
+        defaultNavigationOptions: {
+            headerTitleStyle: styles.headerTitleStyle
+        }
+    }
+);
+
 const AppTabs = createBottomTabNavigator(
     {
         TasksTab: {
@@ -182,8 +210,8 @@ const FundraiserTabs = createBottomTabNavigator(
                 ),
             }
         },
-        ProfileTab: {
-            screen: ProfileTab,
+        OrgProfileTab: {
+            screen: OrgProfileTab,
             navigationOptions: {
                 tabBarLabel: 'Profile',
                 tabBarIcon: ({ tintColor, focused }) => (

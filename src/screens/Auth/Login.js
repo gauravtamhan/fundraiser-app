@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, View, ActivityIndicator, Alert, Image } from 'react-native';
+import { StyleSheet, SafeAreaView, View, ActivityIndicator, Alert, Image, Dimensions } from 'react-native';
 import { auth, database, provider } from '../../firebase';
 import { Content, Text, H1, Form, Item, Label, Input, Button } from 'native-base'
 import { THEME_COLOR } from '@assets/colors';
@@ -49,22 +49,21 @@ export default class Login extends Component {
     render() {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-                <Content contentContainerStyle={styles.contentPadding}>
-                    <View style={styles.formContainer}>
-                        {/* <H1 style={styles.title}>Help Me Help You</H1> */}
+                <Content contentContainerStyle={[styles.contentPadding, {flex: 1}]}>
+                    <View style={{ flex: 2, justifyContent: 'center'}}>
                         <Image 
                             source={require('@assets/img/logo.png')}
-                            resizeMethod='scale'
+                            resizeMethod='scale' // 300 x 138
                             style={{
-                                width: 300, 
-                                height: 138, 
+                                width: Dimensions.get("window").height >= 812 ? 300 : 250, 
+                                height: Dimensions.get("window").height >= 812 ? 138 : 115, 
                                 resizeMode: "contain", 
                                 alignSelf: 'center' 
                             }}
                         />
+                    </View>
 
-                        <View style={[styles.extra, { marginTop: 0 }]} />
-
+                    <View style={{flex: 2, justifyContent: 'space-between'}}>
                         <Form>
                             <Item rounded style={styles.roundedItem}>
                                 <Input 
@@ -79,7 +78,6 @@ export default class Login extends Component {
                                 />
                             </Item>
                             <Item rounded style={styles.roundedItem}>
-                                {/* <Label style={{ color: 'darkgray' }}>Password</Label> */}
                                 <Input
                                     placeholder={'Password'}
                                     placeholderTextColor={'#9b9b9f'}
@@ -92,27 +90,29 @@ export default class Login extends Component {
                                     onChangeText={(password) => this.setState({ password })}
                                 />
                             </Item>
-                            <View style={styles.extra}>
-                                {
-                                    this.state.loaderVisible ? (
-                                        <ActivityIndicator size="large" color="#000" />
-                                    ) : null
-                                }
-                            </View>
-                            <View style={styles.bmContainer}>
-                                <Button rounded style={[styles.roundedBtn, { width: 220 }]} onPress={this.onLogin.bind(this)}>
-                                    <Text style={styles.buttonText}>Login</Text>
-                                </Button>
-                                <View style={{ marginTop: 40, alignItems: 'center'}}>
-                                    <Text>Don't have an account?</Text>
-                                    <Button style={{alignSelf: 'center'}} transparent onPress={() => { this.props.navigation.navigate('Signup') }}>
-                                        <Text style={styles.buttonTextTransparent}>Sign up</Text>
-                                    </Button>
-                                </View>
-                            </View>
                         </Form>
-
+                        {
+                            this.state.loaderVisible ? (
+                                <ActivityIndicator size="large" color="#000" />
+                            ) : null
+                        }
                     </View>
+
+                    <View style={{ flex: 2, justifyContent: 'center' }}>
+                        <View>
+                            <Button rounded style={[styles.roundedBtn, { width: 220 }]} onPress={this.onLogin.bind(this)}>
+                                <Text style={styles.buttonText}>Login</Text>
+                            </Button>
+                            <View style={{ marginTop: 40, alignItems: 'center'}}>
+                                <Text>Don't have an account?</Text>
+                                <Button style={{alignSelf: 'center'}} transparent onPress={() => { this.props.navigation.navigate('Signup') }}>
+                                    <Text style={styles.buttonTextTransparent}>Sign up</Text>
+                                </Button>
+                            </View>
+                        </View>
+                    </View>
+                        
+                    
                 </Content>
             </SafeAreaView>
         );

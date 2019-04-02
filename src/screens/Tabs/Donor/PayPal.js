@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, TouchableOpacity, Modal, WebView, SafeAreaView} from 'react-native';
 import { THEME_COLOR } from '@assets/colors';
-import { auth, database, provider } from '../../firebase';
+import { auth, database, provider } from '@src/firebase';
 import styles from '@assets/styles';
 
 

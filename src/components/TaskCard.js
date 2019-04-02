@@ -38,9 +38,16 @@ export default class TaskCard extends Component {
                             <Text style={styles.cardBodyText}>{data.description}</Text>
                             <View style={{ height: 30, justifyContent: 'flex-end'}}>
                                 {
-                                    data.status == 1 &&
-                                    <Text style={{ color: THEME_COLOR, letterSpacing: 1.02 }}>{fundraiser ? 'REQUESTED' : '1 REQUEST'}</Text>
+                                    !fundraiser && data.status == 1 && (
+                                        <Text style={{ color: THEME_COLOR, letterSpacing: 1.02 }}>NEW REQUEST(S)</Text>
+                                    )
                                 }
+                                {
+                                    fundraiser && data.isRequested && (
+                                        <Text style={{ color: THEME_COLOR, letterSpacing: 1.02 }}>REQUESTED</Text>
+                                    )
+                                }
+
                             </View>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginTop: 20}}>

@@ -33,9 +33,11 @@ export default class Signup extends Component {
         this.setState({ loaderVisible: false });
     }
 
-    writeUserData(userId, x) {
+    writeUserData(userId, isDonor, name, bio) {
         database.ref('users/' + userId).set({
-            isDonor: x
+            isDonor: isDonor,
+            name: name,
+            bio: bio,
         });
     }
 
@@ -46,7 +48,8 @@ export default class Signup extends Component {
             await auth.currentUser.updateProfile({
                 displayName: name
             })
-            await this.writeUserData(auth.currentUser.uid, isDonor)
+            const bio = 'A new organization looking to assist members within the community.'
+            await this.writeUserData(auth.currentUser.uid, isDonor, name, bio)
         } catch (e) {
             this.hideLoader();
             Alert.alert('Could Not Create Account', e.toString().substring(6))
@@ -59,11 +62,13 @@ export default class Signup extends Component {
 
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-                <Content contentContainerStyle={styles.contentPadding}>
-                    <View style={styles.formContainer}>
+                <Content contentContainerStyle={[styles.contentPadding, { flex: 1 }]}>
+                    <View style={{ flex: 1, justifyContent: 'center' }}>
                         <H1 style={styles.title}>Create an Account</H1>
+                    </View>
 
-                        <Form style={{marginTop: 50}}>
+                    <View style={{ flex: 4, justifyContent: 'space-between' }}>
+                        <Form style={{marginTop: 20}}>
                             <View style={{marginBottom: 50}}>
                                 <Segment style={{ backgroundColor: 'transparent' }}>
                                     <Button
@@ -131,21 +136,19 @@ export default class Signup extends Component {
                                     onChangeText={(password) => this.setState({ password })}
                                 />
                             </Item>
-                            <View style={styles.extra}>
-                                {
-                                    this.state.loaderVisible ? (
-                                        <ActivityIndicator size="large" color="#000" />
-                                    ) : null
-                                }
-                            </View>
-                            <View style={styles.bmContainer}>
-                                <Button rounded style={styles.roundedBtn} onPress={this.onSubmit.bind(this)}>
-                                    <Text style={styles.buttonText}>Create Account</Text>
-                                </Button>
-                            </View>
                         </Form>
-
+                        {
+                            this.state.loaderVisible ? (
+                                <ActivityIndicator size="large" color="#000" />
+                            ) : null
+                        }
                     </View>
+                    <View style={{ flex: 2, justifyContent: 'center'}}>
+                        <Button rounded style={styles.roundedBtn} onPress={this.onSubmit.bind(this)}>
+                            <Text style={styles.buttonText}>Create Account</Text>
+                        </Button>
+                    </View>
+                    
                 </Content>
             </SafeAreaView>
         );

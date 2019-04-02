@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator, Alert, Platform, TouchableOpacity } from 'react-native';
+import { View, ActivityIndicator, Alert, Platform, TouchableOpacity, Dimensions } from 'react-native';
 import {
     Container, Content, Button, Item, Icon, Input,
     Text, Form, Textarea, Picker
@@ -7,7 +7,7 @@ import {
 import TaskCard from '@components/TaskCard';
 import { THEME_COLOR } from '@assets/colors';
 import styles from '@assets/styles';
-import { auth, database, provider } from '../../firebase';
+import { auth, database, provider } from '@src/firebase';
 import ModalHeader from '@components/ModalHeader';
 
 
@@ -15,8 +15,23 @@ export default class AddTaskModal extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            btnDisabled: false,
+        };
         this.currentUser = auth.currentUser;
+    }
+
+    componentDidMount() {
+        this.checkIfRequested();
+    }
+
+    checkIfRequested() {
+        const { navigation } = this.props;
+        const item = navigation.getParam('item');
+
+        if (item.isRequested) {
+            this.setState({ btnDisabled: true })
+        }
     }
 
     closeModal() {
@@ -34,6 +49,8 @@ export default class AddTaskModal extends Component {
         database.ref(`tasks/${item.key}`).update({
             status: 1,
         })
+
+        database.ref(`users/${this.currentUser.uid}/requestedTasks`).push(item.key)
         
         this.closeModal()
     }
@@ -41,6 +58,8 @@ export default class AddTaskModal extends Component {
     render() {
         const { navigation } = this.props;
         const item = navigation.getParam('item');
+
+        const { btnDisabled } = this.state;
 
         return (
             <Container style={{ flex: 1 }}>
@@ -50,10 +69,11 @@ export default class AddTaskModal extends Component {
 
                 </View>
                 <View style={{ 
-                    height: 230, 
+                    flex: 0,
+                    flexGrow: Dimensions.get("window").height >= 812 ? 2 : 3,
+                    // height: 230, 
                     borderWidth: 1,
                     borderColor: 'rgba(228, 228, 235, 0.2)',
-                    // borderColor: 'transparent',
                     marginHorizontal: 6,
                     shadowColor: '#6C6C6C',
                     shadowOffset: { width: 0, height: 3 },
@@ -66,8 +86,14 @@ export default class AddTaskModal extends Component {
                     <Button rounded style={styles.roundedBtnSecondary} onPress={this.closeModal.bind(this)}>
                         <Text style={styles.buttonTextSecondary}>Dismiss</Text>
                     </Button>
-                    <Button rounded style={[styles.roundedBtn, {marginLeft: 25}]} onPress={this.handleRequest.bind(this)}>
-                        <Text style={styles.buttonText}>Request</Text>
+                    <Button rounded disabled={btnDisabled} style={[styles.roundedBtn, btnDisabled && styles.roundedBtnDisabled,  {marginLeft: 25}]} onPress={this.handleRequest.bind(this)}>
+                        {
+                            btnDisabled ? (
+                                <Text style={styles.buttonTextDisabled}>Requested</Text>        
+                            ) : (
+                                <Text style={styles.buttonText}>Request</Text>
+                            )
+                        }
                     </Button>
                 </View>
                 
