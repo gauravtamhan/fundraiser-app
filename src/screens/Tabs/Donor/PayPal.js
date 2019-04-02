@@ -3,13 +3,19 @@ import {View, Text, TouchableOpacity, Modal, WebView, SafeAreaView} from 'react-
 import { THEME_COLOR } from '@assets/colors';
 import { auth, database, provider } from '@src/firebase';
 import styles from '@assets/styles';
+import {Form, Input, Item, Button} from 'native-base';
 
 
 export default class PayPal extends Component {
-    state = {
-        showModal: false,
-        status: "Pending"
-    };
+
+    constructor(props) {
+        super(props)
+        this.state ={
+            showModal: false,
+            status: "Pending",
+            price: undefined
+        }
+    }
     handleResponse = data => {
         if (data.title === "success") {
             this.setState({ showModal: false, status: "Complete" });
@@ -21,9 +27,27 @@ export default class PayPal extends Component {
     };
 
     render() { 
-        var price = "12.00";
+        const { price } = this.state;
+
         var fundraiseremail = "jcclark43-buyer2@gmail.com";
         return(
+        <View>    
+        <Form>
+            <Item rounded style={styles.roundedItem}>
+                                    <Input
+                                        placeholder={'Price'}
+                                        placeholderTextColor={'#9b9b9f'}
+                                        value={price}
+                                        autoCapitalize={'sentences'}
+                                        clearButtonMode={'while-editing'}
+                                        autoCorrect
+                                        onChangeText={(price) => this.setState({ price })}
+                                    />
+            </Item>
+            <Button rounded style={styles.roundedBtn} onPress={() => this.setState({ showModal: true })}>
+                                        <Text style={styles.buttonText}>Submit</Text>
+                                    </Button>
+        </Form>
         <View style={{ marginTop: 100 }}>
             <Modal
                 animationType="slide"
@@ -51,6 +75,7 @@ export default class PayPal extends Component {
                 <Text>Pay with Paypal</Text>
             </TouchableOpacity>
             <Text>Payment Status: {this.state.status}</Text>
+        </View>
         </View>)
     }
 }
