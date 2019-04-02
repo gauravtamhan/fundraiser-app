@@ -21,7 +21,7 @@ export default class PayPal extends Component {
     };
 
     render() { 
-        var price = "20.00";
+        var price = "12.00";
         var fundraiseremail = "jcclark43-buyer2@gmail.com";
         return(
         <View style={{ marginTop: 100 }}>
@@ -36,7 +36,11 @@ export default class PayPal extends Component {
                             this.handleResponse(data)
                         }
                         injectedJavaScript={
-                        'document.f1.submit()'}
+                        'document.getElementById("price").value="' + price + '";'
+                        +
+                        'document.getElementById("fundraiseremail").value="' + fundraiseremail + '";'
+                        +
+                        'document.f1.submit();'}
                     />
                 </SafeAreaView>
             </Modal>
