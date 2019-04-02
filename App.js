@@ -10,6 +10,7 @@ import { AppLoading } from 'expo';
 import Tasks from './src/screens/Tabs/Donor/Tasks';
 import AllTasks from './src/screens/Tabs/Fundraiser/AllTasks';
 import PayPal from './src/screens/Tabs/Donor/PayPal';
+import Orgs from './src/screens/Tabs/Donor/Orgs';
 import TaskDetails from './src/screens/Tabs/Donor/TaskDetails';
 import Profile from './src/screens/Tabs/Donor/Profile';
 import OrgProfile from './src/screens/Tabs/Fundraiser/OrgProfile';
@@ -79,6 +80,24 @@ const PayPalTab = createStackNavigator(
             screen: PayPal,
             navigationOptions: {
                 title: 'PayPal',
+            },
+        },
+    },
+    {
+        headerMode: 'float',
+        headerTransitionPreset: 'uikit',
+        defaultNavigationOptions: {
+            headerTitleStyle: styles.headerTitleStyle
+        }
+    }
+);
+
+const OrgTab = createStackNavigator(
+    {
+        Orgs: {
+            screen: Orgs,
+            navigationOptions: {
+                title: 'Organizations',
             },
         },
     },
@@ -174,6 +193,15 @@ const AppTabs = createBottomTabNavigator(
                 tabBarLabel: 'PayPal',
                 tabBarIcon: ({ tintColor, focused }) => (
                     <Icon name="logo-usd" style={{ color: tintColor, fontSize: 26 }} />
+                ),
+            }
+        },
+        OrgTab: {
+            screen: OrgTab,
+            navigationOptions: {
+                tabBarLabel: 'Organizations',
+                tabBarIcon: ({ tintColor, focused }) => (
+                    <Icon name="business" style={{ color: tintColor, fontSize: 26 }} />
                 ),
             }
         },
