@@ -13,7 +13,8 @@ export default class PayPal extends Component {
         this.state ={
             showModal: false,
             status: "Pending",
-            price: undefined
+            price: undefined,
+            fundraiseremail: undefined
         }
     }
     handleResponse = data => {
@@ -28,8 +29,9 @@ export default class PayPal extends Component {
 
     render() { 
         const { price } = this.state;
+        const { fundraiseremail } = this.state;
 
-        var fundraiseremail = "jcclark43-buyer2@gmail.com";
+        //var fundraiseremail = "jcclark43-buyer2@gmail.com";
         return(
         <View>    
         <Form>
@@ -42,6 +44,17 @@ export default class PayPal extends Component {
                                         clearButtonMode={'while-editing'}
                                         autoCorrect
                                         onChangeText={(price) => this.setState({ price })}
+                                    />
+            </Item>
+            <Item rounded style={styles.roundedItem}>
+                                    <Input
+                                        placeholder={'FundraiserEmail'}
+                                        placeholderTextColor={'#9b9b9f'}
+                                        value={fundraiseremail}
+                                        autoCapitalize={'sentences'}
+                                        clearButtonMode={'while-editing'}
+                                        autoCorrect
+                                        onChangeText={(fundraiseremail) => this.setState({ fundraiseremail })}
                                     />
             </Item>
             <Button rounded style={styles.roundedBtn} onPress={() => this.setState({ showModal: true })}>
