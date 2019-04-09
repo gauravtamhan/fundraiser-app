@@ -9,6 +9,8 @@ import {
 import { AppLoading } from 'expo';
 import Tasks from './src/screens/Tabs/Donor/Tasks';
 import AllTasks from './src/screens/Tabs/Fundraiser/AllTasks';
+import ManageTasks from './src/screens/Tabs/Fundraiser/ManageTasks';
+import ManageDetails from './src/screens/Tabs/Fundraiser/ManageDetails';
 import PayPal from './src/screens/Tabs/Donor/PayPal';
 import Orgs from './src/screens/Tabs/Donor/Orgs';
 import TaskDetails from './src/screens/Tabs/Donor/TaskDetails';
@@ -124,10 +126,32 @@ const AllTasksTab = createStackNavigator(
         headerTransitionPreset: 'uikit',
         defaultNavigationOptions: {
             headerTitleStyle: styles.headerTitleStyle
-            // headerStyle: {
-            //     backgroundColor: THEME_COLOR,
-            // },
-            // headerTintColor: '#fff',
+        }
+    }
+);
+
+const ManageTasksTab = createStackNavigator(
+    {
+        ManageTasks: {
+            screen: ManageTasks,
+            navigationOptions: {
+                title: 'Manage Tasks',
+                headerBackTitle: 'Back',
+            },
+        },
+        ManageDetails: {
+            screen: ManageDetails,
+            navigationOptions: {
+                title: null,
+                headerTintColor: THEME_COLOR,
+            },
+        }
+    },
+    {
+        headerMode: 'float',
+        headerTransitionPreset: 'uikit',
+        defaultNavigationOptions: {
+            headerTitleStyle: styles.headerTitleStyle
         }
     }
 );
@@ -232,9 +256,18 @@ const FundraiserTabs = createBottomTabNavigator(
         AllTasksTab: {
             screen: AllTasksTab,
             navigationOptions: {
-                tabBarLabel: 'Discover Tasks',
+                tabBarLabel: 'Discover',
                 tabBarIcon: ({ tintColor, focused }) => (
                     <Icon name="search" style={{ color: tintColor, fontSize: 26 }} />
+                ),
+            }
+        },
+        ManageTasksTab: {
+            screen: ManageTasksTab,
+            navigationOptions: {
+                tabBarLabel: 'Manage',
+                tabBarIcon: ({ tintColor, focused }) => (
+                    <Icon name="bookmarks" style={{ color: tintColor, fontSize: 26 }} />
                 ),
             }
         },

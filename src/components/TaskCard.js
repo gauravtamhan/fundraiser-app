@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableHighlight, Text } from 'react-native';
+import { View, TouchableHighlight, Text, Alert } from 'react-native';
 import styles from '@assets/styles';
 import { THEME_COLOR } from '@assets/colors';
 
@@ -10,11 +10,26 @@ export default class TaskCard extends Component {
         this.state = {}
     }
 
+    deniedPopup() {
+        Alert.alert(
+            'Request Was Denied',
+            'Your request to complete this task was denied. Try requesting a different task.',
+        );
+    }
+
     render() {
-        const { data, onPress, fundraiser } = this.props;
+        const { data, onPress, fundraiser, currentUserID } = this.props;
 
         return (
-            <TouchableHighlight style={{ flex: 1, backgroundColor: 'white' }} underlayColor={'#DDD'} onPress={onPress}>
+            <TouchableHighlight style={{ flex: 1, backgroundColor: 'white' }} 
+                underlayColor={'#DDD'} 
+                onPress={() => {
+                    if (fundraiser && data.status == 2 && data.assigneeID !== currentUserID) {
+                        return this.deniedPopup();
+                    } else {
+                        return onPress();
+                    }
+                }}>
                 <View style={styles.card}>
                     <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between',  }}>
                         <View style={{ borderWidth: 2, width: 70, height: 70, justifyContent: 'center', alignItems: 'center', borderColor: THEME_COLOR, borderRadius: 1000 }}>
@@ -43,8 +58,23 @@ export default class TaskCard extends Component {
                                     )
                                 }
                                 {
-                                    fundraiser && data.isRequested && (
+                                    !fundraiser && data.status == 2 && (
+                                        <Text style={{ color: THEME_COLOR, letterSpacing: 1.02 }}>ACCEPTED</Text>
+                                    )
+                                }
+                                {
+                                    fundraiser && data.isRequested && data.status == 1 && (
                                         <Text style={{ color: THEME_COLOR, letterSpacing: 1.02 }}>REQUESTED</Text>
+                                    )
+                                }
+                                {
+                                    fundraiser && data.status == 2 && data.assigneeID == currentUserID && (
+                                        <Text style={{ color: THEME_COLOR, letterSpacing: 1.02 }}>ASSIGNED</Text>
+                                    )
+                                }
+                                {
+                                    fundraiser && data.status == 2 && data.assigneeID !== currentUserID && (
+                                        <Text style={{ color: THEME_COLOR, letterSpacing: 1.02 }}>DENIED</Text>
                                     )
                                 }
 

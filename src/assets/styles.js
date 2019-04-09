@@ -218,6 +218,30 @@ var styles = StyleSheet.create({
     cardRating: {
         fontSize: 13,
         color: 'rgba(89, 89, 89, 0.5)',
+    },
+
+    /*=================================================
+                Manage Task Details Styles
+    ==================================================*/
+
+    topText: {
+        color: 'rgb(32, 33, 36)',
+        fontSize: 14,
+        fontWeight: '600',
+        paddingBottom: 8,
+    },
+    section: {
+        paddingHorizontal: 16,
+        paddingVertical: 35,
+        borderBottomWidth: 0.5,
+        borderColor: 'rgb(194,193,196)',
+    },
+    attribute: {
+        fontSize: 13,
+        color: THEME_COLOR,
+        letterSpacing: 1.2,
+        fontWeight: '500',
+        paddingBottom: 4,
     }
 
 })

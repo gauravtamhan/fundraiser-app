@@ -80,7 +80,7 @@ export default class AddTaskModal extends Component {
                     shadowOpacity: 0.15,
                     shadowRadius: 40,
                 }}>
-                    <TaskCard fundraiser data={item} />
+                    <TaskCard fundraiser data={item} currentUserID={this.currentUser.uid} />
                 </View>
                 <View style={{ flex: 3, flexDirection: 'row', justifyContent: 'center' }}>
                     <Button rounded style={styles.roundedBtnSecondary} onPress={this.closeModal.bind(this)}>

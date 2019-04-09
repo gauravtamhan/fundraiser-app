@@ -6,7 +6,7 @@ import { auth, database, provider } from '@src/firebase';
 import { THEME_COLOR, BG_COLOR } from '@assets/colors';
 import styles from '@assets/styles';
 
-export default class AllTasks extends Component {
+export default class ManageTasks extends Component {
 
     constructor(props) {
         super(props);
@@ -55,14 +55,14 @@ export default class AllTasks extends Component {
 
                     this.setState({
                         data: tasks.filter((t) => {
-                            return t.assigneeID !== this.currentUser.uid;
+                            return t.assigneeID == this.currentUser.uid;
                         }),
                         loaderVisible: false,
                         refreshing: false,
                     })
 
                 })
-                
+
             } else {
                 this.setState({
                     data: [],
@@ -83,12 +83,12 @@ export default class AllTasks extends Component {
 
     renderItem({ item, index }) {
         return (
-            <TaskCard 
+            <TaskCard
                 fundraiser={true}
                 currentUserID={this.currentUser.uid}
-                key={index} 
-                data={item} 
-                onPress={() => { this.props.navigation.navigate('RequestTaskModal', { item }) }} 
+                key={index}
+                data={item}
+                onPress={() => { this.props.navigation.navigate('ManageDetails', { item }) }}
             />
         )
     }
@@ -104,19 +104,19 @@ export default class AllTasks extends Component {
                             <ActivityIndicator size="large" />
                         </View>
                     ) : (
-                            <FlatList 
+                            <FlatList
                                 data={data}
                                 showsVerticalScrollIndicator={false}
                                 keyExtractor={(item, index) => item.title + index}
                                 renderItem={this.renderItem.bind(this)}
                                 ItemSeparatorComponent={({ highlighted }) => <View style={styles.listSeparator} />}
                                 ListFooterComponent={
-                                    <View style={data.length > 0 && styles.listSeparator } />
+                                    <View style={data.length > 0 && styles.listSeparator} />
                                 }
                                 ListEmptyComponent={
                                     <View style={{ flex: 1, height: 220, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
-                                        <Text style={styles.bigText}>No Tasks Available</Text>
-                                        <Text style={[styles.smText, { textAlign: 'center' }]}>As tasks get posted, they will appear here.</Text>
+                                        <Text style={styles.bigText}>No Assigned Tasks</Text>
+                                        <Text style={[styles.smText, { textAlign: 'center' }]}>When assigned a task, it will appear here.</Text>
                                     </View>
                                 }
                                 refreshing={this.state.refreshing}
