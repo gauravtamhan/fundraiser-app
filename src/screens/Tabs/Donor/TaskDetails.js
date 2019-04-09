@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Alert, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { Button, Text, Content, Icon } from 'native-base';
+import { View, Alert, FlatList, TouchableOpacity, ActivityIndicator, Modal, WebView, SafeAreaView} from 'react-native';
+import { Form, Input, Item, Button, Content, Icon, Text } from 'native-base';
 import TaskCard from '@components/TaskCard';
 import { auth, database, provider } from '@src/firebase';
 import { THEME_COLOR } from '@assets/colors';
@@ -26,6 +26,10 @@ export default class TaskDetails extends Component {
         this.state = {
             requests: [],
             loaderVisible: true,
+            showModal: false,
+            status: "Pending",
+            price: "25",
+            fundraiseremail: "jcclark43-buyer2@gmail.com"
         }
         this.currentUser = auth.currentUser;
     }
@@ -34,6 +38,16 @@ export default class TaskDetails extends Component {
         this.props.navigation.setParams({ handleDelete: this.handleDelete });
         this.loadRequests();
     }
+
+    handleResponse = data => {
+        if (data.title === "success") {
+            this.setState({ showModal: false, status: "Complete" });
+        } else if (data.title === "cancel") {
+            this.setState({ showModal: false, status: "Cancelled" });
+        } else {
+            return;
+        }
+    };
 
     loadRequests() {
         const { navigation } = this.props;
@@ -117,7 +131,7 @@ export default class TaskDetails extends Component {
                     
                     <View style={styles.requestCardBtnSeparator} />
                     
-                    <TouchableOpacity style={styles.requestCardFooterBtn} onPress={() => { console.log('accepted') }}>
+                    <TouchableOpacity style={styles.requestCardFooterBtn} onPress={() => this.setState({ showModal: true })}>
                         <Text style={[styles.taskListHeaderText, { color: THEME_COLOR }]}>ACCEPT</Text>
                     </TouchableOpacity>
                 </View>
@@ -128,8 +142,27 @@ export default class TaskDetails extends Component {
     render() {
         const { navigation } = this.props;
         const item = navigation.getParam('item');
-
+        console.log(item.key)
         const { requests } = this.state;
+        const { price } = this.state;
+        const { fundraiseremail } = this.state;
+
+         database.ref(`tasks/${item.key}`).on('value', (snapshot) => {
+            if (snapshot.exists()) {
+                console.log(snapshot.val().amount);
+                this.state.price = snapshot.val().amount;
+                console.log(this.state.price);
+                //this.setState({
+                    //price: snapshot.val().amount
+                //})
+            } else {
+                this.setState({
+                    loaderVisible: false
+                })
+            }
+        }) 
+        
+        console.log(requests);
 
         return (
             <Content showsVerticalScrollIndicator={false}>
@@ -177,8 +210,38 @@ export default class TaskDetails extends Component {
                         />
                     )
                 }
-
+                <View>
+                <View style={{ marginTop: 100 }}>
+                    <Modal
+                        animationType="slide"
+                        visible={this.state.showModal}
+                        onRequestClose={() => this.setState({ showModal: false })}>
+                        <SafeAreaView style={{flex: 1}}>
+                            <WebView
+                                source={{ uri: "http://ec2-52-15-55-149.us-east-2.compute.amazonaws.com:3000" }}
+                                onNavigationStateChange={data =>
+                                    this.handleResponse(data)
+                                }
+                                injectedJavaScript={
+                                'document.getElementById("price").value="' + price + '";'
+                                +
+                                'document.getElementById("fundraiseremail").value="' + fundraiseremail + '";'
+                                +
+                                'document.f1.submit();'}
+                            />
+                        </SafeAreaView>
+                    </Modal>
+                    <TouchableOpacity
+                        style={{ width: 300, height: 100 }}
+                        onPress={() => this.setState({ showModal: true })}
+                    >
+                        <Text>Pay with Paypal</Text>
+                    </TouchableOpacity>
+                    <Text>Payment Status: {this.state.status}</Text>
+                </View>
+                </View>
             </Content>
+            
         );
     }
 }
