@@ -33,11 +33,12 @@ export default class Signup extends Component {
         this.setState({ loaderVisible: false });
     }
 
-    writeUserData(userId, isDonor, name, bio) {
+    writeUserData(userId, isDonor, name, bio, email) {
         database.ref('users/' + userId).set({
             isDonor: isDonor,
             name: name,
             bio: bio,
+            email: email,
         });
     }
 
@@ -49,7 +50,7 @@ export default class Signup extends Component {
                 displayName: name
             })
             const bio = 'A new organization looking to assist members within the community.'
-            await this.writeUserData(auth.currentUser.uid, isDonor, name, bio)
+            await this.writeUserData(auth.currentUser.uid, isDonor, name, bio, email)
         } catch (e) {
             this.hideLoader();
             Alert.alert('Could Not Create Account', e.toString().substring(6))

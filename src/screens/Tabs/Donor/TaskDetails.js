@@ -128,27 +128,21 @@ export default class TaskDetails extends Component {
         this.getAssignedUser();
     }
 
+    onComplete = () => {
+        const task = this.props.navigation.getParam('item');
+
+        this.props.navigation.navigate('Payment', { 
+            user: this.state.user,
+            amount: task.amount,
+            key: task.key,
+         })
+    }
+
     removeItem = (item) => {
         const taskRef = database.ref().child('tasks');
         taskRef.child(item.key).remove(() => {
             this.props.navigation.goBack();
         });
-    }
-
-    renderSelectedOrg() {
-        const { user } = this.state;
-
-        return (
-            <View style={styles.requestCard}>
-                <View style={styles.requestCardBody}>
-                    <View style={styles.requestCardHeaderRow}>
-                        <Text style={styles.cardHeaderText}>{user.name}</Text>
-                    </View>
-
-                    <Text style={[styles.cardBodyText, { marginTop: 4, fontSize: 15, }]}>{user.bio}</Text>
-                </View>
-            </View>
-        )
     }
 
     renderListHeader(item) {
@@ -187,30 +181,74 @@ export default class TaskDetails extends Component {
 
     render() {
         const { navigation } = this.props;
-        const item = navigation.getParam('item');
+        const task = navigation.getParam('item');
 
         const { requests, user } = this.state;
 
+        const fullAddress = `${task.address} ${task.city}, ${task.state}`;
+
+        let list = [
+            {
+                title: 'LOCATION',
+                icon: 'pin',
+                body: fullAddress
+            },
+            {
+                title: 'SCHEDULED TIME',
+                icon: 'time',
+                body: `${task.completionDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}  –  ${task.completionDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`
+            },
+            {
+                title: 'EARNINGS',
+                icon: 'card',
+                body: task.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' }).slice(0, -3)
+            },
+        ];
+
+        if (this.state.taskStatus == 2 && user !== undefined ) {
+            list.push({
+                title: 'ASSIGNED TO',
+                icon: 'person',
+                body: user.name,
+            })
+        }
+
+        const taskAttributes = list.map((item, index) =>
+            <View key={index} style={{ flex: 1, flexDirection: 'row', marginVertical: 15 }}>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Icon name={item.icon} style={{ color: '#9B9FAA', fontSize: 26 }} />
+                </View>
+                <View style={{ flex: 4 }}>
+                    <Text style={styles.attribute}>{item.title}</Text>
+                    <Text style={[styles.cardBodyText, { fontWeight: '500' }]}>{item.body}</Text>
+                </View>
+            </View>
+        );
+
         return (
             <Content showsVerticalScrollIndicator={false}>
-                <View style={{
+                {/* <View style={{
                     paddingHorizontal: 16,
                     paddingVertical: 20,
                 }}>
-                    <Text style={styles.taskListHeaderText}>POSTED ON {item.timestamp.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</Text>
+                    <Text style={styles.taskListHeaderText}>POSTED ON {task.timestamp.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</Text>
+                </View> */}
+
+                <View style={styles.section}>
+                    <Text style={[styles.topText, { marginTop: -8 }]}>{task.category}</Text>
+                    <Text style={[styles.bigText, { paddingBottom: 12 }]}>{task.title}</Text>
+                    <Text style={styles.cardBodyText}>{task.description}</Text>
                 </View>
-                <View style={{
-                    height: 230,
-                    borderTopWidth: 0.5,
-                    borderBottomWidth: 0.5,
-                    borderColor: 'rgb(194,193,196)',
-                }}>
-                    <TaskCard data={item} />
+                <View style={[styles.section, { paddingVertical: 20, paddingHorizontal: 0 }]}>
+                    {taskAttributes}
                 </View>
+
                 {
                     this.state.taskStatus == 2 && user !== undefined  ? (
-                        <View>
-                            { this.renderSelectedOrg() }
+                        <View style={{paddingVertical: 40}}>
+                            <Button rounded style={styles.roundedBtn} onPress={this.onComplete}>
+                                <Text style={styles.buttonText}>Complete Task</Text>
+                            </Button>
                         </View>
                     ) : (
                             this.state.loaderVisible ? (

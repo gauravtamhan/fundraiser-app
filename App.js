@@ -11,9 +11,10 @@ import Tasks from './src/screens/Tabs/Donor/Tasks';
 import AllTasks from './src/screens/Tabs/Fundraiser/AllTasks';
 import ManageTasks from './src/screens/Tabs/Fundraiser/ManageTasks';
 import ManageDetails from './src/screens/Tabs/Fundraiser/ManageDetails';
-import PayPal from './src/screens/Tabs/Donor/PayPal';
+// import PayPal from './src/screens/Tabs/Donor/PayPal';
 import Orgs from './src/screens/Tabs/Donor/Orgs';
 import TaskDetails from './src/screens/Tabs/Donor/TaskDetails';
+import Payment from './src/screens/Tabs/Donor/Payment';
 import Profile from './src/screens/Tabs/Donor/Profile';
 import OrgProfile from './src/screens/Tabs/Fundraiser/OrgProfile';
 import EditBio from './src/screens/Tabs/Fundraiser/EditBio';
@@ -63,6 +64,14 @@ const TasksTab = createStackNavigator(
             screen: TaskDetails,
             navigationOptions: {
                 title: null,
+                headerBackTitle: 'Back',
+                headerTintColor: THEME_COLOR,
+            },
+        },
+        Payment: {
+            screen: Payment,
+            navigationOptions: {
+                title: null,
                 headerTintColor: THEME_COLOR,
             },
         }
@@ -76,23 +85,23 @@ const TasksTab = createStackNavigator(
     }
 );
 
-const PayPalTab = createStackNavigator(
-    {
-        PayPal: {
-            screen: PayPal,
-            navigationOptions: {
-                title: 'PayPal',
-            },
-        },
-    },
-    {
-        headerMode: 'float',
-        headerTransitionPreset: 'uikit',
-        defaultNavigationOptions: {
-            headerTitleStyle: styles.headerTitleStyle
-        }
-    }
-);
+// const PayPalTab = createStackNavigator(
+//     {
+//         PayPal: {
+//             screen: PayPal,
+//             navigationOptions: {
+//                 title: 'PayPal',
+//             },
+//         },
+//     },
+//     {
+//         headerMode: 'float',
+//         headerTransitionPreset: 'uikit',
+//         defaultNavigationOptions: {
+//             headerTitleStyle: styles.headerTitleStyle
+//         }
+//     }
+// );
 
 const OrgTab = createStackNavigator(
     {
@@ -211,15 +220,15 @@ const AppTabs = createBottomTabNavigator(
                 ),
             }
         },
-        PayPalTab: {
-            screen: PayPalTab,
-            navigationOptions: {
-                tabBarLabel: 'PayPal',
-                tabBarIcon: ({ tintColor, focused }) => (
-                    <Icon name="logo-usd" style={{ color: tintColor, fontSize: 26 }} />
-                ),
-            }
-        },
+        // PayPalTab: {
+        //     screen: PayPalTab,
+        //     navigationOptions: {
+        //         tabBarLabel: 'PayPal',
+        //         tabBarIcon: ({ tintColor, focused }) => (
+        //             <Icon name="logo-usd" style={{ color: tintColor, fontSize: 26 }} />
+        //         ),
+        //     }
+        // },
         OrgTab: {
             screen: OrgTab,
             navigationOptions: {

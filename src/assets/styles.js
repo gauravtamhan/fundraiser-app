@@ -242,8 +242,25 @@ var styles = StyleSheet.create({
         letterSpacing: 1.2,
         fontWeight: '500',
         paddingBottom: 4,
-    }
+    },
 
+    /*=================================================
+                Payment Screen Styles
+    ==================================================*/
+
+    value: {
+        color: 'rgb(32, 33, 36)',
+        fontSize: 18,
+        fontWeight: '600',
+    },
+    paymentRow: { 
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: 16,
+        borderBottomWidth: 0.5,
+        borderColor: 'rgb(194,193,196)',
+    }
 })
 
 export default styles;
