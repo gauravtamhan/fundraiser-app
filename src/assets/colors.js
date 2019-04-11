@@ -11,6 +11,7 @@ const c = {
 }
 
 export const THEME_COLOR = c.lyft;
+export const SUCCESS = c.green;
 
 // export const BG_COLOR = 'rgb(252, 252, 252)';
 

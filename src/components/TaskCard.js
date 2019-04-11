@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, TouchableHighlight, Text, Alert } from 'react-native';
 import styles from '@assets/styles';
-import { THEME_COLOR } from '@assets/colors';
+import { THEME_COLOR, SUCCESS } from '@assets/colors';
 
 export default class TaskCard extends Component {
 
@@ -52,6 +52,11 @@ export default class TaskCard extends Component {
                             <Text style={styles.cardHeaderText}>{data.title}</Text>
                             <Text style={styles.cardBodyText}>{data.description}</Text>
                             <View style={{ height: 30, justifyContent: 'flex-end'}}>
+                                {
+                                    data.status == 3 && (
+                                        <Text style={{ color: SUCCESS, letterSpacing: 1.02 }}>COMPLETED</Text>
+                                    )
+                                }
                                 {
                                     !fundraiser && data.status == 1 && (
                                         <Text style={{ color: THEME_COLOR, letterSpacing: 1.02 }}>NEW REQUEST(S)</Text>

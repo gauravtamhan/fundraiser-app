@@ -33,6 +33,7 @@ export default class Payment extends Component {
         if (data.title === "success") {
             this.setState({ showModal: false, status: "Complete" });
             this.markTaskAsComplete();
+            this.props.navigation.goBack();
         } else if (data.title === "cancel") {
             this.setState({ showModal: false, status: "Cancelled" });
         } else {

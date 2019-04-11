@@ -242,42 +242,53 @@ export default class TaskDetails extends Component {
                 <View style={[styles.section, { paddingVertical: 20, paddingHorizontal: 0 }]}>
                     {taskAttributes}
                 </View>
-
                 {
-                    this.state.taskStatus == 2 && user !== undefined  ? (
-                        <View style={{paddingVertical: 40}}>
+                    this.state.taskStatus == 3 && (
+                        <View style={{ paddingVertical: 40 }}>
+                            <Button rounded disabled style={[styles.roundedBtn, styles.roundedBtnDisabled]} onPress={null}>
+                                <Text style={styles.buttonTextDisabled}>Completed</Text>
+                            </Button>
+                        </View>
+                    )
+                }
+                {
+                    this.state.taskStatus == 2 && user !== undefined && (
+                        <View style={{ paddingVertical: 40 }}>
                             <Button rounded style={styles.roundedBtn} onPress={this.onComplete}>
                                 <Text style={styles.buttonText}>Complete Task</Text>
                             </Button>
                         </View>
-                    ) : (
-                            this.state.loaderVisible ? (
-                                <View style={[styles.loaderContainer, { marginTop: 80 }]}>
-                                    <ActivityIndicator size="large" />
-                                </View>
-                            ) : (
-                                    <FlatList
-                                        data={requests}
-                                        showsVerticalScrollIndicator={false}
-                                        keyExtractor={(item, index) => item.name + index}
-                                        renderItem={this.renderItem.bind(this)}
-                                        ListHeaderComponent={
-                                            <View style={{ marginTop: 40, paddingHorizontal: 16 }}>
-                                                {
-                                                    requests.length > 0 && <Text style={styles.bigText}>Requests {requests.length > 0 ? '(' + requests.length + ')' : ''}</Text>
-                                                }
-                                            </View>
+                    )
+                }
+                {
+                    this.state.taskStatus == 1 && (
+                        this.state.loaderVisible ? (
+                            <View style={[styles.loaderContainer, { marginTop: 80 }]}>
+                                <ActivityIndicator size="large" />
+                            </View>
+                        ) : (
+                            <FlatList
+                                data={requests}
+                                showsVerticalScrollIndicator={false}
+                                keyExtractor={(item, index) => item.name + index}
+                                renderItem={this.renderItem.bind(this)}
+                                ListHeaderComponent={
+                                    <View style={{ marginTop: 40, paddingHorizontal: 16 }}>
+                                        {
+                                            requests.length > 0 && <Text style={styles.bigText}>Requests {requests.length > 0 ? '(' + requests.length + ')' : ''}</Text>
                                         }
-                                        ListEmptyComponent={
-                                            <View style={{ flex: 1, height: 80, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
-                                                <Text style={[styles.smText, { textAlign: 'center', opacity: 0.6 }]}>No Active Requests.</Text>
-                                            </View>
-                                        }
-                                        ListFooterComponent={
-                                            <View style={{ height: 20 }} />
-                                        }
-                                    />
-                                )
+                                    </View>
+                                }
+                                ListEmptyComponent={
+                                    <View style={{ flex: 1, height: 80, paddingHorizontal: 60, alignItems: 'center', justifyContent: 'flex-end' }}>
+                                        <Text style={[styles.smText, { textAlign: 'center', opacity: 0.6 }]}>No Active Requests.</Text>
+                                    </View>
+                                }
+                                ListFooterComponent={
+                                    <View style={{ height: 20 }} />
+                                }
+                            />
+                        )
                     )
                 }
 
