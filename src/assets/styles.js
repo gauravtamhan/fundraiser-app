@@ -166,6 +166,11 @@ var styles = StyleSheet.create({
         height: 0.5,
         backgroundColor: 'rgb(194,193,196)',
     },
+    listSeparatorSpace: {
+        marginTop: -1,
+        height: 0.5,
+        backgroundColor: 'rgb(194,193,196)',
+    },
 
     /*=================================================
                 Request Card Styles

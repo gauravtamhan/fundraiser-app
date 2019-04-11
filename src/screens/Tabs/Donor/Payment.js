@@ -20,9 +20,19 @@ export default class Payment extends Component {
         this.setState({ showModal: true })
     }
 
+    markTaskAsComplete() {
+        const { navigation } = this.props;
+        const taskKey = navigation.getParam('key');
+
+        database.ref(`tasks/${taskKey}`).update({
+            status: 3,
+        })
+    }
+
     handleResponse = data => {
         if (data.title === "success") {
             this.setState({ showModal: false, status: "Complete" });
+            this.markTaskAsComplete();
         } else if (data.title === "cancel") {
             this.setState({ showModal: false, status: "Cancelled" });
         } else {
