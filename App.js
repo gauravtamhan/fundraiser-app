@@ -11,8 +11,8 @@ import Tasks from './src/screens/Tabs/Donor/Tasks';
 import AllTasks from './src/screens/Tabs/Fundraiser/AllTasks';
 import ManageTasks from './src/screens/Tabs/Fundraiser/ManageTasks';
 import ManageDetails from './src/screens/Tabs/Fundraiser/ManageDetails';
-// import PayPal from './src/screens/Tabs/Donor/PayPal';
 import Orgs from './src/screens/Tabs/Donor/Orgs';
+import OrgDetails from './src/screens/Tabs/Donor/OrgDetails';
 import TaskDetails from './src/screens/Tabs/Donor/TaskDetails';
 import Payment from './src/screens/Tabs/Donor/Payment';
 import Profile from './src/screens/Tabs/Donor/Profile';
@@ -85,30 +85,20 @@ const TasksTab = createStackNavigator(
     }
 );
 
-// const PayPalTab = createStackNavigator(
-//     {
-//         PayPal: {
-//             screen: PayPal,
-//             navigationOptions: {
-//                 title: 'PayPal',
-//             },
-//         },
-//     },
-//     {
-//         headerMode: 'float',
-//         headerTransitionPreset: 'uikit',
-//         defaultNavigationOptions: {
-//             headerTitleStyle: styles.headerTitleStyle
-//         }
-//     }
-// );
-
 const OrgTab = createStackNavigator(
     {
         Orgs: {
             screen: Orgs,
             navigationOptions: {
                 title: 'Organizations',
+                headerBackTitle: 'Back',
+            },
+        },
+        OrgDetails: {
+            screen: OrgDetails,
+            navigationOptions: {
+                title: null,
+                headerTintColor: THEME_COLOR,
             },
         },
     },
@@ -220,15 +210,6 @@ const AppTabs = createBottomTabNavigator(
                 ),
             }
         },
-        // PayPalTab: {
-        //     screen: PayPalTab,
-        //     navigationOptions: {
-        //         tabBarLabel: 'PayPal',
-        //         tabBarIcon: ({ tintColor, focused }) => (
-        //             <Icon name="logo-usd" style={{ color: tintColor, fontSize: 26 }} />
-        //         ),
-        //     }
-        // },
         OrgTab: {
             screen: OrgTab,
             navigationOptions: {

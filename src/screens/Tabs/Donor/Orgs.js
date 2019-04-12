@@ -61,7 +61,7 @@ export default class Orgs extends Component {
 
     renderItem({ item, index }) {
         return (
-            <OrgCard key={index} data={item} index={index} onPress={() => { console.log('hi') }} />
+            <OrgCard key={index} data={item} index={index} onPress={() => { this.props.navigation.navigate('OrgDetails', { item })}} />
         )
     }
 
