@@ -53,22 +53,24 @@ export default class OrgDetails extends Component {
                             <Text style={[styles.taskListHeaderText, { textAlign: 'center', lineHeight: 19 }]}>{org.bio}</Text>
                         </View>
                     </View>
-                    <Form>
-                        <Item rounded style={styles.roundedItem}>
-                            <Input
-                                placeholder={'Amount to be Donated'}
-                                placeholderTextColor={'#9b9b9f'}
-                                value={price}
-                                autoCapitalize={'sentences'}
-                                clearButtonMode={'while-editing'}
-                                autoCorrect
-                                onChangeText={(price) => this.setState({ price })}
-                            />
-                        </Item>
-                        <Button rounded style={styles.roundedBtn} onPress={() => this.setState({ showModal: true })}>
-                                <Text style={styles.buttonText}>Donate</Text>
-                        </Button>
-                    </Form>
+                    <View style={styles.contentPadding}>
+                        <Form>
+                            <Item rounded style={styles.roundedItem}>
+                                <Input
+                                    placeholder={'Amount to be Donated'}
+                                    placeholderTextColor={'#9b9b9f'}
+                                    value={price}
+                                    autoCapitalize={'sentences'}
+                                    clearButtonMode={'while-editing'}
+                                    autoCorrect
+                                    onChangeText={(price) => this.setState({ price })}
+                                />
+                            </Item>
+                            <Button rounded style={styles.roundedBtn} onPress={() => this.setState({ showModal: true })}>
+                                    <Text style={styles.buttonText}>Donate</Text>
+                            </Button>
+                        </Form>
+                    </View>
                 <Modal
                     animationType="slide"
                     visible={showModal}
@@ -88,16 +90,19 @@ export default class OrgDetails extends Component {
                         />
                     </SafeAreaView>
                 </Modal>
-                <View>
+                <View style={{ paddingTop: 50, paddingBottom: 10, paddingHorizontal: 14 }}>
+                    <Text style={[styles.taskListHeaderText, { textAlign: 'center', lineHeight: 19 }]}>{"Progress to Goal"}</Text>
+                </View>
+                <View style={{ justifyContent: 'center', alignItems: 'center', paddingTop: 5 }}>
                     <ProgressCircle
                     percent={30}
                     radius={50}
                     borderWidth={8}
-                    color="#3399FF"
-                    shadowColor="#999"
+                    color="rgb(149, 62, 255)"
+                    shadowColor="#9b9b9f"
                     bgColor="#fff"
                     >
-                    <Text style={{ fontSize: 18 }}>{'30%'}</Text>
+                    <Text style={styles.taskListHeaderText}>{'30%'}</Text>
                     </ProgressCircle>
                 </View>
                 </Content>
