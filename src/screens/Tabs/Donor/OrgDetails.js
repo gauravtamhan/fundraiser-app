@@ -15,19 +15,34 @@ export default class OrgDetails extends Component {
             showModal: false,
             status: "Pending",
             fundraiseremail: "jcclark43-buyer2@gmail.com",
-            price: undefined
+            price: undefined,
+            amount: 0,
+            progress: 0,
+            loaderVisible: true
         }
         this.currentUser = auth.currentUser;
     }
 
     componentDidMount() {
+        this.loadRequests();
+    }
 
+    updateGoalAmount() {
+        const { navigation } = this.props;
+        const org = navigation.getParam('item');
+        this.state.amount = parseFloat(parseFloat(this.state.amount) + parseFloat(this.state.price));
+        console.log(this.state.amount)
+        console.log(typeof(this.state.amount));
+        database.ref(`goals/${org.key}`).update({
+            amountEarned: parseFloat(this.state.amount)
+        })
     }
 
     handleResponse = data => {
         if (data.title === "success") {
             this.setState({ showModal: false, status: "Complete" });
-            this.props.navigation.goBack();
+            this.updateGoalAmount();
+            //this.props.navigation.goBack();
         } else if (data.title === "cancel") {
             this.setState({ showModal: false, status: "Cancelled" });
         } else {
@@ -35,17 +50,43 @@ export default class OrgDetails extends Component {
         }
     };
 
+    loadRequests() {
+        const { navigation } = this.props;
+        const org = navigation.getParam('item');
+        database.ref(`goals/${org.key}`).on('value', (snapshot) => {
+            var goal = snapshot.val().goal;
+            var amount = snapshot.val().amountEarned;
+            //console.log(amount);
+            this.state.amount = amount;
+            this.state.progress = amount*1.0/goal*100;
+            console.log(this.state.progress);
+            this.setState({
+                loaderVisible: false
+            })
+        });
+
+        
+        console.log(this.state.progress);
+    }
+
     render() {
         const { navigation } = this.props;
         const org = navigation.getParam('item');
         const { price, fundraiseremail } = this.state;
         const { status, showModal } = this.state;
+        
+        console.log(this.state.progress)
 
         console.log(org);
-
+        // return (condition) ? (thing1) : (thing2)
         return (
               
             <Container>
+                { this.state.loaderVisible ? (
+                        <View style={styles.loaderContainer}>
+                            <ActivityIndicator size="large" />
+                        </View>
+                    ) : (
                 <Content style={{ backgroundColor: 'rgb(250, 250, 250)' }}>
                     <View style={{ paddingTop: 50, backgroundColor: 'transparent' }}>
                         <H1 style={styles.title}>{org.name}</H1>
@@ -95,17 +136,18 @@ export default class OrgDetails extends Component {
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center', paddingTop: 5 }}>
                     <ProgressCircle
-                    percent={30}
+                    percent={this.state.progress}
                     radius={50}
                     borderWidth={8}
                     color="rgb(149, 62, 255)"
                     shadowColor="#9b9b9f"
                     bgColor="#fff"
                     >
-                    <Text style={styles.taskListHeaderText}>{'30%'}</Text>
+                    <Text style={styles.taskListHeaderText}>{`${Math.round(this.state.progress * 100) / 100}%`}</Text>
                     </ProgressCircle>
                 </View>
-                </Content>
+                    </Content> )
+                }
             </Container>
            
         );
