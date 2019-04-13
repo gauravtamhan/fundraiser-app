@@ -84,7 +84,7 @@ export default class Signup extends Component {
                                         active={isDonor}
                                         onPress={() => { this.setState({ isDonor: true }) }}
                                     >
-                                        <Text style={{ fontSize: 17, fontWeight: '600', color: isDonor ? 'white' : THEME_COLOR }}>I'm a Donor</Text>
+                                        <Text style={{ fontSize: 17, fontWeight: '600', color: isDonor ? 'white' : THEME_COLOR }}>Donor</Text>
                                     </Button>
                                     <Button
                                         style={{
@@ -98,7 +98,7 @@ export default class Signup extends Component {
                                         active={!isDonor}
                                         onPress={() => { this.setState({ isDonor: false }) }}
                                     >
-                                        <Text style={{ fontSize: 17, fontWeight: '600', color: !isDonor ? 'white' : THEME_COLOR }}>I'm a Fundraiser</Text>
+                                        <Text style={{ fontSize: 17, fontWeight: '600', color: !isDonor ? 'white' : THEME_COLOR }}>Organization</Text>
                                     </Button>
                                 </Segment>
                             </View>
