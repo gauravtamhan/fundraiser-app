@@ -86,13 +86,13 @@ export default class OrgProfile extends Component {
                         <ListItem onPress={() => { this.props.navigation.navigate('EditBio') }}>
                             <Text>Edit Organization Bio</Text>
                         </ListItem>
-                        <ListItem onPress={() => { console.log('2') }}>
+                        <ListItem onPress={() => { console.log('1') }}>
                             <Text>View Task History</Text>
                         </ListItem>
-                        <ListItem onPress={() => { console.log('3') }}>
-                            <Text>View Lifetime Donations</Text>
+                        <ListItem onPress={() => { console.log('2') }}>
+                            <Text>Edit Goal Amount</Text>
                         </ListItem>
-                        <ListItem last onPress={() => { console.log('4') }}>
+                        <ListItem last onPress={() => { console.log('3') }}>
                             <Text>Preferences</Text>
                         </ListItem>
                     </List>
