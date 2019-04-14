@@ -34,6 +34,7 @@ export default class Signup extends Component {
     }
 
     writeUserData(userId, isDonor, name, bio, email) {
+        // Will add notification token to here
         database.ref('users/' + userId).set({
             isDonor: isDonor,
             name: name,
