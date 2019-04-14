@@ -40,7 +40,7 @@ export default class TaskCard extends Component {
                                 fontSize: 20,
                                 color: 'rgb(41, 41, 54)',
                                 fontWeight: '700',
-                            }}>{data.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' }).slice(0, -3)}</Text>
+                                }}>{`$${data.amount}`}</Text>
                         </View>
                         <View style={{ marginTop: 40 }}>
                             <Text style={{ color: 'rgba(89, 89, 89, 0.6)', fontSize: 13, fontWeight: '600', letterSpacing: 0.62 }}>{data.completionDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) }</Text>

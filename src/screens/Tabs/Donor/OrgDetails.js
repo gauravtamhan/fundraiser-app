@@ -26,8 +26,7 @@ export default class OrgDetails extends Component {
     }
 
     updateGoalAmount() {
-        const { navigation } = this.props;
-        const org = navigation.getParam('item');
+        const org = this.props.navigation.getParam('item');
 
         this.setState((prevState, props) => ({
             amount: parseFloat(prevState.amount) + parseFloat(prevState.price)
@@ -68,14 +67,14 @@ export default class OrgDetails extends Component {
 
     render() {
         const org = this.props.navigation.getParam('item');
-        const { price, showModal, progress } = this.state;
+        const { price, showModal, progress, loaderVisible } = this.state;
 
         const fundraiseremail = "jcclark43-buyer2@gmail.com";
 
         return (
             <Container>
                 { 
-                    this.state.loaderVisible ? (
+                    loaderVisible ? (
                         <View style={styles.loaderContainer}>
                             <ActivityIndicator size="large" />
                         </View>
@@ -116,7 +115,7 @@ export default class OrgDetails extends Component {
                                             this.handleResponse(data)
                                         }
                                         injectedJavaScript={
-                                            'document.getElementById("price").value="' + price + '";'
+                                            `document.getElementById("price").value="${ price === undefined ? '0' : price }"`
                                             +
                                             'document.getElementById("fundraiseremail").value="' + fundraiseremail + '";'
                                             +

@@ -54,7 +54,7 @@ export default class ManageDetails extends Component {
             {
                 title: 'EARNINGS',
                 icon: 'card',
-                body: task.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' }).slice(0, -3)
+                body: `$${task.amount}`
             },
             {
                 title: 'CONTACT',
