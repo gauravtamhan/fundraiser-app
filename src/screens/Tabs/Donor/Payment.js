@@ -58,7 +58,7 @@ export default class Payment extends Component {
                     <View style={{paddingHorizontal: 22}}>
                         <View style={styles.paymentRow}>
                             <Text style={styles.taskListHeaderText}>DONATION AMOUNT</Text>
-                            <Text style={styles.value}>{amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' }).slice(0, -3)}</Text>
+                            <Text style={styles.value}>{`$${amount}`}</Text>
                         </View>
                         <View style={styles.paymentRow}>
                             <Text style={styles.taskListHeaderText}>RECIPIENT</Text>
