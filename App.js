@@ -18,6 +18,7 @@ import Payment from './src/screens/Tabs/Donor/Payment';
 import Profile from './src/screens/Tabs/Donor/Profile';
 import OrgProfile from './src/screens/Tabs/Fundraiser/OrgProfile';
 import EditBio from './src/screens/Tabs/Fundraiser/EditBio';
+import EditGoal from './src/screens/Tabs/Fundraiser/EditGoal';
 import Loading from './src/screens/Auth/Loading';
 import Login from './src/screens/Auth/Login';
 import Signup from './src/screens/Auth/Signup';
@@ -186,6 +187,13 @@ const OrgProfileTab = createStackNavigator(
             screen: EditBio,
             navigationOptions: {
                 title: 'Edit Bio',
+                headerTintColor: THEME_COLOR,
+            },
+        },
+        EditGoal: {
+            screen: EditGoal,
+            navigationOptions: {
+                title: 'Edit Goal Amount',
                 headerTintColor: THEME_COLOR,
             },
         }

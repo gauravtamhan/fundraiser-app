@@ -52,7 +52,7 @@ export default class Payment extends Component {
         return (
             <Content contentContainerStyle={{flex: 1}} showsVerticalScrollIndicator={false}>
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={styles.bigText}>Payment Status: {status}</Text>
+                    <Text style={styles.bigText}>Payment Status: <Text style={{color: THEME_COLOR}}>{status}</Text></Text>
                 </View>
                 <View style={{ flex: 4 }}>
                     <View style={{paddingHorizontal: 22}}>

@@ -14,15 +14,16 @@ export default class Signup extends Component {
             email: '',
             password: '',
             name: '',
+            goal: '',
             loaderVisible: false,
             isDonor: true,
         };
     }
 
     onSubmit() {
-        const { email, password, name, isDonor } = this.state;
+        const { email, password, name, isDonor, goal } = this.state;
 
-        this.createAccount(email, password, name, isDonor);
+        this.createAccount(email, password, name, isDonor, goal);
     }
 
     showLoader() {
@@ -33,16 +34,23 @@ export default class Signup extends Component {
         this.setState({ loaderVisible: false });
     }
 
-    writeUserData(userId, isDonor, name, bio, email) {
+    writeUserData(userId, isDonor, name, bio, email, goal) {
         database.ref('users/' + userId).set({
             isDonor: isDonor,
             name: name,
             bio: bio,
             email: email,
         });
+
+        if (!isDonor) {
+            database.ref('goals/' + userId).set({
+                amountEarned: 0,
+                goal: goal
+            })
+        }
     }
 
-    async createAccount(email, password, name, isDonor) {
+    async createAccount(email, password, name, isDonor, goal) {
         try {
             this.showLoader();
             await auth.createUserWithEmailAndPassword(email, password);
@@ -50,7 +58,7 @@ export default class Signup extends Component {
                 displayName: name
             })
             const bio = 'A new organization looking to assist members within the community.'
-            await this.writeUserData(auth.currentUser.uid, isDonor, name, bio, email)
+            await this.writeUserData(auth.currentUser.uid, isDonor, name, bio, email, goal)
         } catch (e) {
             this.hideLoader();
             Alert.alert('Could Not Create Account', e.toString().substring(6))
@@ -102,17 +110,7 @@ export default class Signup extends Component {
                                     </Button>
                                 </Segment>
                             </View>
-                            <Item rounded style={styles.roundedItem}>
-                                <Input
-                                    placeholder={'Full Name'}
-                                    placeholderTextColor={'#9b9b9f'}
-                                    value={this.state.name}
-                                    autoCapitalize={'words'}
-                                    clearButtonMode={'while-editing'}
-                                    autoCorrect={false}
-                                    onChangeText={(name) => this.setState({ name })}
-                                />
-                            </Item>
+
                             <Item rounded style={styles.roundedItem}>
                                 <Input
                                     placeholder={'E-mail'}
@@ -137,6 +135,32 @@ export default class Signup extends Component {
                                     onChangeText={(password) => this.setState({ password })}
                                 />
                             </Item>
+                            <Item rounded style={styles.roundedItem}>
+                                <Input
+                                    placeholder={isDonor ? 'Full Name' : 'Organization Name'}
+                                    placeholderTextColor={'#9b9b9f'}
+                                    value={this.state.name}
+                                    autoCapitalize={'words'}
+                                    clearButtonMode={'while-editing'}
+                                    autoCorrect={false}
+                                    onChangeText={(name) => this.setState({ name })}
+                                />
+                            </Item>
+                            {
+                                !isDonor && (
+                                    <Item rounded style={styles.roundedItem}>
+                                        <Input
+                                            placeholder={'Fundraising Goal ($)'}
+                                            placeholderTextColor={'#9b9b9f'}
+                                            value={this.state.goal}
+                                            keyboardType={'number-pad'}
+                                            clearButtonMode={'while-editing'}
+                                            autoCorrect={false}
+                                            onChangeText={(goal) => this.setState({ goal })}
+                                        />
+                                    </Item>
+                                )
+                            }
                         </Form>
                         {
                             this.state.loaderVisible ? (

@@ -21,7 +21,7 @@ export default class OrgCard extends Component {
             >
                 <View style={{ flex: 1, height: 180, paddingHorizontal: 8, paddingVertical: 6 }}>
                     <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, paddingVertical: 8 }}>
-                        <Text style={styles.cardHeaderText}>{data.name}</Text>
+                        <Text adjustsFontSizeToFit numberOfLines={1} style={styles.cardHeaderText}>{data.name}</Text>
                     </View>
                     <View style={{ flex: 3, justifyContent: 'flex-start', alignItems: 'center'}}>
                         <Text numberOfLines={4} style={[styles.cardBodyText, { fontSize: 15, textAlign: 'center' }]}>{data.bio}</Text>

@@ -43,12 +43,14 @@ export default class TaskDetails extends Component {
         const task = navigation.getParam('item');
 
         database.ref(`tasks/${task.key}`).on('value', (snapshot) => {
-            var s = snapshot.val().status
-            this.setState({ taskStatus: s }, () => {
-                if (s == 2) {
-                    this.getAssignedUser()
-                }
-            })
+            if (snapshot.exists()) {
+                var s = snapshot.val().status
+                this.setState({ taskStatus: s }, () => {
+                    if (s == 2) {
+                        this.getAssignedUser()
+                    }
+                })
+            }
         })
     }
 

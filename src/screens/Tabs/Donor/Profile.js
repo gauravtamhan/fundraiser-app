@@ -64,7 +64,7 @@ export default class Profile extends Component {
             <Container>
                 <Content style={{backgroundColor: 'rgb(250, 250, 250)'}}>
                     <View style={{ paddingVertical: 60 }}>
-                        <H1 style={styles.title}>{'Hi, ' + this.currentUser.displayName}</H1>
+                        <H1 style={styles.title}>{this.currentUser.displayName}</H1>
                     </View>
                     <List style={{ backgroundColor: 'white', borderTopWidth: 0.5, borderColor: '#c9c9c9' }}>
                         <ListItem onPress={() => { console.log('1')} }>
