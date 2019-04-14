@@ -115,7 +115,7 @@ export default class OrgDetails extends Component {
                                             this.handleResponse(data)
                                         }
                                         injectedJavaScript={
-                                            `document.getElementById("price").value="${ price === undefined ? '0' : price }"`
+                                            `document.getElementById("price").value="${ price === undefined ? '1' : price }";`
                                             +
                                             'document.getElementById("fundraiseremail").value="' + fundraiseremail + '";'
                                             +
