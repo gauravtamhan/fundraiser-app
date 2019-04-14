@@ -4,6 +4,7 @@ import { auth, database, provider } from '../../firebase';
 import { Content, Text, H1, Form, Item, Label, Input, Button, Segment } from 'native-base'
 import { THEME_COLOR } from '@assets/colors';
 import styles from '@assets/styles';
+import { Permissions, Notifications } from 'expo';
 
 export default class Signup extends Component {
 
@@ -33,13 +34,14 @@ export default class Signup extends Component {
         this.setState({ loaderVisible: false });
     }
 
-    writeUserData(userId, isDonor, name, bio, email) {
+    writeUserData(userId, isDonor, name, bio, email, token) {
         // Will add notification token to here
         database.ref('users/' + userId).set({
             isDonor: isDonor,
             name: name,
             bio: bio,
             email: email,
+            token: token
         });
     }
 
@@ -51,12 +53,42 @@ export default class Signup extends Component {
                 displayName: name
             })
             const bio = 'A new organization looking to assist members within the community.'
-            await this.writeUserData(auth.currentUser.uid, isDonor, name, bio, email)
+
+            const token = await this.registerForPushNotificationsAsync();
+            console.log("token: " + token)
+            await this.writeUserData(auth.currentUser.uid, isDonor, name, bio, email, token);
         } catch (e) {
             this.hideLoader();
             Alert.alert('Could Not Create Account', e.toString().substring(6))
         }
+    }
 
+    async registerForPushNotificationsAsync() {
+        const { status: existingStatus } = await Permissions.getAsync(
+            Permissions.NOTIFICATIONS
+        );
+        let finalStatus = existingStatus;
+      
+        // only ask if permissions have not already been determined, because
+        // iOS won't necessarily prompt the user a second time.
+        if (existingStatus !== 'granted') {
+            // Android remote notification permissions are granted during the app
+            // install, so this will only ask on iOS
+            const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+            finalStatus = status;
+        }
+      
+        // Stop here if the user did not grant permissions
+        if (finalStatus !== 'granted') {
+            return;
+        }
+      
+        // Get the token that uniquely identifies this device
+        let token = await Notifications.getExpoPushTokenAsync();
+      
+        // POST the token to your backend server from where you can retrieve it to send push notifications.
+        // await this.writeUserData(userId, isDonor, name, bio, email, token);
+        return token;
     }
 
     render() {
