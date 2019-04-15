@@ -55,7 +55,7 @@ export default class AllTasks extends Component {
 
                     this.setState({
                         data: tasks.filter((t) => {
-                            return t.assigneeID !== this.currentUser.uid;
+                            return (t.assigneeID === null || ( t.isRequested && t.assigneeID !== this.currentUser.uid )) && t.status !== 3;
                         }),
                         loaderVisible: false,
                         refreshing: false,
