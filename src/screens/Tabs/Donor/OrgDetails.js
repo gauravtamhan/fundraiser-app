@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator, Modal, WebView, SafeAreaView } from 'react-native';
+import { View, ActivityIndicator, Modal, SafeAreaView } from 'react-native';
 import { Button, Text, Content, Container, H1, Form, Item, Input } from 'native-base';
 import { auth, database, provider } from '@src/firebase';
 import { THEME_COLOR } from '@assets/colors';
@@ -54,13 +54,13 @@ export default class OrgDetails extends Component {
         database.ref(`goals/${org.key}`).on('value', (snapshot) => {
             const goal = snapshot.val().goal;
             const amount = snapshot.val().amountEarned;
-            
+
             this.setState({
                 amount: amount,
                 progress: amount * 1.0 / goal * 100,
                 loaderVisible: false
             })
-            
+
         });
 
     }
@@ -73,7 +73,7 @@ export default class OrgDetails extends Component {
 
         return (
             <Container>
-                { 
+                {
                     loaderVisible ? (
                         <View style={styles.loaderContainer}>
                             <ActivityIndicator size="large" />
@@ -109,7 +109,8 @@ export default class OrgDetails extends Component {
                                 visible={showModal}
                                 onRequestClose={() => this.setState({ showModal: false })}>
                                 <SafeAreaView style={{ flex: 1 }}>
-                                    <WebView
+                                    <Text>The service used to connect to the PayPal API is no longer working</Text>
+                                    {/* <WebView
                                         source={{ uri: "http://ec2-52-15-55-149.us-east-2.compute.amazonaws.com:3000" }}
                                         onNavigationStateChange={data =>
                                             this.handleResponse(data)
@@ -120,7 +121,7 @@ export default class OrgDetails extends Component {
                                             'document.getElementById("fundraiseremail").value="' + fundraiseremail + '";'
                                             +
                                             'document.f1.submit();'}
-                                    />
+                                    /> */}
                                 </SafeAreaView>
                             </Modal>
                             <View style={{ paddingTop: 50, paddingBottom: 10, paddingHorizontal: 14 }}>
@@ -138,11 +139,11 @@ export default class OrgDetails extends Component {
                                     <Text style={styles.taskListHeaderText}>{`${Math.round(progress * 100) / 100}%`}</Text>
                                 </ProgressCircle>
                             </View>
-                        </Content> 
+                        </Content>
                     )
                 }
             </Container>
-           
+
         );
     }
 }

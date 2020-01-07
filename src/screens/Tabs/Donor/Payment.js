@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Modal, WebView, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, SafeAreaView } from 'react-native';
 import { Content, Button } from 'native-base';
 import { THEME_COLOR } from '@assets/colors';
 import { auth, database, provider } from '@src/firebase';
@@ -46,7 +46,7 @@ export default class Payment extends Component {
         const { navigation } = this.props;
         const user = navigation.getParam('user');
         const amount = navigation.getParam('amount');
-        
+
         const userEmail = user.email ? user.email : '';
 
         return (
@@ -76,7 +76,8 @@ export default class Payment extends Component {
                     visible={showModal}
                     onRequestClose={() => this.setState({ showModal: false })}>
                     <SafeAreaView style={{ flex: 1 }}>
-                        <WebView
+                        <Text>The service used to connect to the PayPal API is no longer working</Text>
+                        {/* <WebView
                             source={{ uri: "http://ec2-52-15-55-149.us-east-2.compute.amazonaws.com:3000" }}
                             onNavigationStateChange={data =>
                                 this.handleResponse(data)
@@ -87,7 +88,7 @@ export default class Payment extends Component {
                                 'document.getElementById("fundraiseremail").value="' + userEmail + '";'
                                 +
                                 'document.f1.submit();'}
-                        />
+                        /> */}
                     </SafeAreaView>
                 </Modal>
             </Content>
